@@ -3,20 +3,20 @@
 # --------------------------------------
 
 menu:
-  # Home: / || fas fa-home
-  # Archives: /archives/ || fas fa-archive
-  # Tags: /tags/ || fas fa-tags
-  # Categories: /categories/ || fas fa-folder-open
+   主页: / || fas fa-home
+   归档: /archives/ || fas fa-archive
+   标签: /tags/ || fas fa-tags
+   分类: /categories/ || fas fa-folder-open
   # List||fas fa-list:
   #   Music: /music/ || fas fa-music
   #   Movie: /movies/ || fas fa-video
-  # Link: /link/ || fas fa-link
-  # About: /about/ || fas fa-heart
+   摸鱼: /moyu/ || fas fa-video
+   关于: /about/ || fas fa-heart
 
 # Code Blocks (代碼相關)
-# --------------------------------------
+# index_post_content
 
-highlight_theme: light #  darker / pale night / light / ocean / mac / mac light / false
+highlight_theme: darker #  darker / pale night / light / ocean / mac / mac light / false
 highlight_copy: true # copy button
 highlight_lang: true # show the code language
 highlight_shrink: false # true: shrink the code blocks / false: expand the code blocks | none: expand code blocks and hide the button
@@ -50,7 +50,7 @@ algolia_search:
 
 # Local search
 local_search:
-  enable: false
+  enable: true
   preload: false
   CDN:
 
@@ -80,17 +80,17 @@ katex:
 
 # Avatar (頭像)
 avatar:
-  img: /img/head.jpg
+  img: /img/dog.jpg
   effect: false
 
 # Disable all banner image
 disable_top_img: false
 
 # The banner image of home page
-index_img: /img/blockchain.jpg
+index_img: /img/mou.jpeg
 
 # If the banner of page not setting, it will show the top_img
-default_top_img: 
+default_top_img: /img/mou.jpeg
 
 # The banner image of archive page
 archive_img: 
@@ -185,7 +185,7 @@ toc:
 post_copyright:
   enable: true
   decode: false
-  author_href:
+  author_href: https://guangjin.fun
   license: CC BY-NC-SA 4.0
   license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
 
@@ -246,7 +246,7 @@ addThis:
 # https://github.com/overtrue/share.js
 sharejs:
   enable: true
-  sites: facebook,twitter,wechat,weibo,qq
+  sites: wechat,weibo,qq
 
 # AddToAny
 # https://www.addtoany.com/
@@ -569,7 +569,7 @@ fireworks:
 
 # Mouse click effects: Heart symbol (鼠標點擊效果: 愛心)
 click_heart:
-  enable: false
+  enable: true
   mobile: false
 
 # Mouse click effects: words (鼠標點擊效果: 文字)
@@ -589,7 +589,7 @@ display_mode: light
 
 # Beautify (美化頁面顯示)
 beautify:
-  enable: false
+  enable: true
   field: post # site/post
   title-prefix-icon: # '\f0c1'
   title-prefix-icon-color: # '#F47466'
@@ -611,8 +611,8 @@ blog_title_font:
 # The setting of divider icon (水平分隔線圖標設置)
 hr_icon:
   enable: true
-  icon: # the unicode value of Font Awesome icon, such as '\3423'
-  icon-top:
+  icon: '\f197'# the unicode value of Font Awesome icon, such as '\3423'
+  icon-top: 
 
 # the subtitle on homepage (主頁subtitle)
 subtitle:
@@ -657,7 +657,7 @@ aside:
     enable: true
     description:
     button:
-      enable: true
+      enable: false
       icon: fab fa-github
       text: Follow Me
       link: https://github.com/xxxxxx

@@ -5,7 +5,7 @@
 # Site
 title: Coder-King
 subtitle: ''
-description: '我很菜，但我绿色环保无害'
+description: '我很菜，绿色环保无害'
 keywords: 
 author: King Chan
 language: zh-CN
@@ -105,3 +105,9 @@ deploy:
   type: git
   repo: https://github.com/guangjin2/guangjin2.github.io.git
   branch: master
+
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
