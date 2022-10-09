@@ -2,9 +2,54 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://example.com/2022/10/08/test/</loc>
+    <loc>http://guangjin.fun/about/index.html</loc>
     
-    <lastmod>2022-10-08</lastmod>
+    <lastmod>2022-10-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://guangjin.fun/tags/index.html</loc>
+    
+    <lastmod>2022-10-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://guangjin.fun/moyu/index.html</loc>
+    
+    <lastmod>2022-10-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://guangjin.fun/link/index.html</loc>
+    
+    <lastmod>2022-10-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://guangjin.fun/categories/index.html</loc>
+    
+    <lastmod>2022-10-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://guangjin.fun/2022/10/08/test/</loc>
+    
+    <lastmod>2022-10-09</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -12,16 +57,16 @@
   
 
   <url>
-    <loc>http://example.com/</loc>
-    <lastmod>2022-10-08</lastmod>
+    <loc>http://guangjin.fun/</loc>
+    <lastmod>2022-10-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>http://example.com/tags/test/</loc>
-    <lastmod>2022-10-08</lastmod>
+    <loc>http://guangjin.fun/tags/test/</loc>
+    <lastmod>2022-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

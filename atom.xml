@@ -3,11 +3,11 @@
   <title>Coder-King</title>
   
   
-  <link href="http://example.com/atom.xml" rel="self"/>
+  <link href="http://guangjin.fun/atom.xml" rel="self"/>
   
-  <link href="http://example.com/"/>
-  <updated>2022-10-08T13:06:35.453Z</updated>
-  <id>http://example.com/</id>
+  <link href="http://guangjin.fun/"/>
+  <updated>2022-10-09T01:33:43.437Z</updated>
+  <id>http://guangjin.fun/</id>
   
   <author>
     <name>King Chan</name>
@@ -18,16 +18,16 @@
   
   <entry>
     <title>test</title>
-    <link href="http://example.com/2022/10/08/test/"/>
-    <id>http://example.com/2022/10/08/test/</id>
+    <link href="http://guangjin.fun/2022/10/08/test/"/>
+    <id>http://guangjin.fun/2022/10/08/test/</id>
     <published>2022-10-07T20:05:17.000Z</published>
-    <updated>2022-10-08T13:06:35.453Z</updated>
+    <updated>2022-10-09T01:33:43.437Z</updated>
     
     
     
     
     
-    <category term="test" scheme="http://example.com/tags/test/"/>
+    <category term="test" scheme="http://guangjin.fun/tags/test/"/>
     
   </entry>
   
