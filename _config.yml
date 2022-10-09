@@ -5,7 +5,7 @@
 # Site
 title: Coder-King
 subtitle: ''
-description: '我很菜，绿色环保无害'
+description: '菜，绿色环保无害'
 keywords: 
 author: King Chan
 language: zh-CN
@@ -13,7 +13,7 @@ timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: http://guangjin.fun
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
