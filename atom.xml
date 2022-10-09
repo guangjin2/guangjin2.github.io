@@ -6,7 +6,7 @@
   <link href="http://guangjin.fun/atom.xml" rel="self"/>
   
   <link href="http://guangjin.fun/"/>
-  <updated>2022-10-09T03:17:43.303Z</updated>
+  <updated>2022-10-09T06:11:47.405Z</updated>
   <id>http://guangjin.fun/</id>
   
   <author>
@@ -21,14 +21,14 @@
     <link href="http://guangjin.fun/2022/10/08/test/"/>
     <id>http://guangjin.fun/2022/10/08/test/</id>
     <published>2022-10-07T20:05:17.000Z</published>
-    <updated>2022-10-09T03:17:43.303Z</updated>
+    <updated>2022-10-09T06:11:47.405Z</updated>
     
-    <content type="html"><![CDATA[<p>aaa</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="hello"><a href="#hello" class="headerlink" title="hello"></a>hello</h1><p>*world</p>]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;aaa&lt;/p&gt;
+    <summary type="html">&lt;h1 id=&quot;hello&quot;&gt;&lt;a href=&quot;#hello&quot; class=&quot;headerlink&quot; title=&quot;hello&quot;&gt;&lt;/a&gt;hello&lt;/h1&gt;&lt;p&gt;*world&lt;/p&gt;
 </summary>
       
     
