@@ -5,6 +5,9 @@
     <url>/2022/10/08/test/</url>
     <content><![CDATA[<h1 id="hello"><a href="#hello" class="headerlink" title="hello"></a>hello</h1><p>*world</p>
 ]]></content>
+      <categories>
+        <category>test</category>
+      </categories>
       <tags>
         <tag>test</tag>
       </tags>

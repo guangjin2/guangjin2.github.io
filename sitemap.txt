@@ -1,8 +1,9 @@
-http://guangjin.fun/about/index.html
+http://guangjin.fun/moyu/Cantonese_Music.html
 http://guangjin.fun/2022/10/08/test/
-http://guangjin.fun/tags/index.html
-http://guangjin.fun/moyu/index.html
 http://guangjin.fun/link/index.html
+http://guangjin.fun/about/index.html
+http://guangjin.fun/tags/index.html
 http://guangjin.fun/categories/index.html
 http://guangjin.fun/
 http://guangjin.fun/tags/test/
+http://guangjin.fun/categories/test/
