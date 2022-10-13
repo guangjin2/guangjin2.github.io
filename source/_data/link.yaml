@@ -1,0 +1,39 @@
+- class_name: 摸鱼
+  class_desc: 
+  link_list:
+    - name: 我的歌单
+      link: ../moyu/Cantonese_Music.html
+      avatar: https://s1.ax1x.com/2022/10/13/xa08PJ.md.png
+      descr: 网易云音乐
+
+- class_name: 专业摸鱼
+  class_desc: 
+  link_list:
+    - name: InfoQ
+      link: https://www.infoq.cn/
+      avatar: https://s1.ax1x.com/2022/10/13/xasXc9.png
+      descr: 行业动态
+    - name: Github
+      link: https://github.com/
+      avatar: https://s1.ax1x.com/2022/10/13/xacRpD.jpg
+      descr: 开源平台
+      
+- class_name: 眼看世界
+  class_desc: 
+  link_list:
+    - name: Youtube
+      link: https://www.youtube.com/
+      avatar: https://i.loli.net/2020/05/14/9ZkGg8v3azHJfM1.png
+      descr: 视频平台
+    - name: Linkin
+      link: https://www.linkedin.com/
+      avatar: https://s1.ax1x.com/2022/10/13/xarV8H.png
+      descr: 职场社交
+    - name: Twitter
+      link: https://twitter.com/
+      avatar: https://i.loli.net/2020/05/14/5VyHPQqR6LWF39a.png
+      descr: 社交媒体
+    - name: Facebook
+      link: https://www.facebook.com/
+      avatar: https://s1.ax1x.com/2022/10/13/xargMR.png
+      descr: 社交媒体
