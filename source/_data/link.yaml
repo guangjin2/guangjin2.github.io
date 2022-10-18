@@ -2,7 +2,7 @@
   class_desc: 
   link_list:
     - name: 我的歌单
-      link: ../moyu/Cantonese_Music.html
+      link: ../moyu/music.html
       avatar: https://s1.ax1x.com/2022/10/13/xa08PJ.md.png
       descr: 网易云音乐
 
