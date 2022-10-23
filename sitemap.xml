@@ -2,18 +2,36 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://guangjin.fun/moyu/music.html</loc>
+    <loc>http://guangjin.fun/2022/10/20/CPPBase3/</loc>
     
-    <lastmod>2022-10-18</lastmod>
+    <lastmod>2022-10-23</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://guangjin.fun/2022/10/08/test/</loc>
+    <loc>http://guangjin.fun/2022/10/20/CPPBase2/</loc>
     
-    <lastmod>2022-10-13</lastmod>
+    <lastmod>2022-10-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://guangjin.fun/2022/10/19/CPPBase1/</loc>
+    
+    <lastmod>2022-10-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://guangjin.fun/moyu/music.html</loc>
+    
+    <lastmod>2022-10-18</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -58,15 +76,15 @@
 
   <url>
     <loc>http://guangjin.fun/</loc>
-    <lastmod>2022-10-18</lastmod>
+    <lastmod>2022-10-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>http://guangjin.fun/tags/test/</loc>
-    <lastmod>2022-10-18</lastmod>
+    <loc>http://guangjin.fun/tags/c-%E5%85%A5%E9%97%A8/</loc>
+    <lastmod>2022-10-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -74,8 +92,8 @@
 
   
   <url>
-    <loc>http://guangjin.fun/categories/test/</loc>
-    <lastmod>2022-10-18</lastmod>
+    <loc>http://guangjin.fun/categories/c/</loc>
+    <lastmod>2022-10-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
