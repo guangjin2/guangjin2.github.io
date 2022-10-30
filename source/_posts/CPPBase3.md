@@ -1,7 +1,9 @@
 ---
 title: c++快速入门（3）--STL
-date: 2022-10-20 00:00:17
-tags: c++入门
+date: 2022-10-20 01:00:17
+tags: 
+  - c++入门
+  - STL基础使用
 categories: c++
 top_img: /img/mou.jpeg
 cover: false
@@ -9,7 +11,7 @@ copyright: false
 toc_number: false
 ---
 
-> **声明**：本文是[c++快速入门视频](https://www.bilibili.com/video/BV1et411b73Z/?share_source=copy_web) 的讲义，可能会有部分的修改。一般培训班的课相对填鸭一些，但也是能让人最快感知新芝士的方式之一。其他推荐书籍c++ Primer Plus以及侯捷老师的面向对象c++视频
+> **前言**：本文是[c++快速入门视频](https://www.bilibili.com/video/BV1et411b73Z/?share_source=copy_web) 的讲义，可能会有部分的修改。一般培训班的课相对填鸭一些，但也是能让人最快感知新芝士的方式之一。其他推荐书籍c++ Primer Plus以及侯捷老师的面向对象c++视频
 
 
 
