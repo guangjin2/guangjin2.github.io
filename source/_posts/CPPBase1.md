@@ -1,6 +1,6 @@
 ---
 title: c++快速入门（1）--基础语法
-date: 2022-10-19 23:25:17
+date: 2022-10-19 00:00:00
 tags: 
   - c++入门
 categories: c++
@@ -10,7 +10,7 @@ copyright: false
 toc_number: false
 ---
 
-> **前言**：本文是[c++快速入门视频](https://www.bilibili.com/video/BV1et411b73Z/?share_source=copy_web) 的讲义，可能会有部分的修改。一般培训班的课相对填鸭一些，但也是能让人最快感知新芝士的方式之一。其他推荐书籍c++ Primer Plus以及侯捷老师的面向对象c++视频
+> **声明**：本文是[c++快速入门视频](https://www.bilibili.com/video/BV1et411b73Z/?share_source=copy_web) 的讲义，可能会有部分的修改。一般培训班的课相对填鸭一些，但也是能让人最快感知新芝士的方式之一。其他推荐书籍c++ Primer Plus以及侯捷老师的面向对象c++视频
 
 ## 1 C++初识
 
