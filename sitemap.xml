@@ -2,27 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://guangjin.fun/about/index.html</loc>
-    
-    <lastmod>2022-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://guangjin.fun/2022/10/26/SelfImproment/</loc>
     
-    <lastmod>2022-10-27</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://guangjin.fun/2022/10/20/CPPBase2/</loc>
-    
-    <lastmod>2022-10-26</lastmod>
+    <lastmod>2022-11-05</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -31,7 +13,7 @@
   <url>
     <loc>http://guangjin.fun/2022/10/19/CPPBase1/</loc>
     
-    <lastmod>2022-10-26</lastmod>
+    <lastmod>2022-11-05</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -40,7 +22,25 @@
   <url>
     <loc>http://guangjin.fun/2022/10/20/CPPBase3/</loc>
     
-    <lastmod>2022-10-26</lastmod>
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://guangjin.fun/2022/10/21/CPPBase2/</loc>
+    
+    <lastmod>2022-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://guangjin.fun/about/index.html</loc>
+    
+    <lastmod>2022-10-30</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -85,7 +85,7 @@
 
   <url>
     <loc>http://guangjin.fun/</loc>
-    <lastmod>2022-10-30</lastmod>
+    <lastmod>2022-11-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -93,28 +93,28 @@
   
   <url>
     <loc>http://guangjin.fun/tags/c-%E5%85%A5%E9%97%A8/</loc>
-    <lastmod>2022-10-30</lastmod>
+    <lastmod>2022-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://guangjin.fun/tags/c-%E6%8F%90%E9%AB%98/</loc>
-    <lastmod>2022-10-30</lastmod>
+    <lastmod>2022-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://guangjin.fun/tags/%E9%93%BE%E6%8E%A5%E3%80%81%E8%A3%85%E8%BD%BD%E4%B8%8E%E5%BA%93/</loc>
-    <lastmod>2022-10-30</lastmod>
+    <lastmod>2022-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://guangjin.fun/tags/STL%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</loc>
-    <lastmod>2022-10-30</lastmod>
+    <lastmod>2022-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -123,7 +123,7 @@
   
   <url>
     <loc>http://guangjin.fun/categories/c/</loc>
-    <lastmod>2022-10-30</lastmod>
+    <lastmod>2022-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
