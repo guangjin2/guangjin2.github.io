@@ -1,8 +1,9 @@
+http://guangjin.fun/about/index.html
+http://guangjin.fun/2022/11/05/StepIntro/
 http://guangjin.fun/2022/10/26/SelfImproment/
 http://guangjin.fun/2022/10/19/CPPBase1/
 http://guangjin.fun/2022/10/20/CPPBase3/
 http://guangjin.fun/2022/10/21/CPPBase2/
-http://guangjin.fun/about/index.html
 http://guangjin.fun/moyu/music.html
 http://guangjin.fun/link/index.html
 http://guangjin.fun/tags/index.html
@@ -11,5 +12,7 @@ http://guangjin.fun/
 http://guangjin.fun/tags/c-%E5%85%A5%E9%97%A8/
 http://guangjin.fun/tags/c-%E6%8F%90%E9%AB%98/
 http://guangjin.fun/tags/%E9%93%BE%E6%8E%A5%E3%80%81%E8%A3%85%E8%BD%BD%E4%B8%8E%E5%BA%93/
+http://guangjin.fun/tags/step%E6%96%87%E4%BB%B6/
 http://guangjin.fun/tags/STL%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/
 http://guangjin.fun/categories/c/
+http://guangjin.fun/categories/%E5%B7%A5%E4%B8%9A%E5%BB%BA%E6%A8%A1/

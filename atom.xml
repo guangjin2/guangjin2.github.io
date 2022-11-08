@@ -6,7 +6,7 @@
   <link href="http://guangjin.fun/atom.xml" rel="self"/>
   
   <link href="http://guangjin.fun/"/>
-  <updated>2022-11-05T10:04:49.773Z</updated>
+  <updated>2022-11-05T10:49:46.201Z</updated>
   <id>http://guangjin.fun/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>step文件初探</title>
+    <link href="http://guangjin.fun/2022/11/05/StepIntro/"/>
+    <id>http://guangjin.fun/2022/11/05/StepIntro/</id>
+    <published>2022-11-04T16:00:00.000Z</published>
+    <updated>2022-11-05T10:49:46.201Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p><strong>声明</strong>：本文简单介绍step 文件的基础知识</p></blockquote><p>参考文献：<br>1.ISO 10303-1:1994<br>2.ISO 10303-21:2002<br>3.ISO 10303-214-2003<br>4.<a href="https://blog.csdn.net/lyalong0616/article/details/90231001">https://blog.csdn.net/lyalong0616/article/details/90231001</a><br>5.<a href="https://dev.opencascade.org/doc/overview/html/occt_user_guides__step.html">https://dev.opencascade.org/doc/overview/html/occt_user_guides__step.html</a> </p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;声明&lt;/strong&gt;：本文简单介绍step 文件的基础知识&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;参考文献：&lt;br&gt;1.ISO 10303-1:1994&lt;br&gt;2.ISO 10303-21:2002&lt;br&gt;3.ISO 1030</summary>
+      
+    
+    
+    
+    <category term="工业建模" scheme="http://guangjin.fun/categories/%E5%B7%A5%E4%B8%9A%E5%BB%BA%E6%A8%A1/"/>
+    
+    
+    <category term="step文件" scheme="http://guangjin.fun/tags/step%E6%96%87%E4%BB%B6/"/>
+    
+  </entry>
   
   <entry>
     <title>程序员的自我修养</title>
