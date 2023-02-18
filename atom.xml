@@ -6,7 +6,7 @@
   <link href="http://guangjin.fun/atom.xml" rel="self"/>
   
   <link href="http://guangjin.fun/"/>
-  <updated>2022-11-19T16:30:07.442Z</updated>
+  <updated>2023-02-18T06:00:35.823Z</updated>
   <id>http://guangjin.fun/</id>
   
   <author>
@@ -15,6 +15,121 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>有限元基础数学</title>
+    <link href="http://guangjin.fun/2023/01/01/FEMBasic/"/>
+    <id>http://guangjin.fun/2023/01/01/FEMBasic/</id>
+    <published>2022-12-31T16:00:00.000Z</published>
+    <updated>2023-02-18T06:00:35.823Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-矩阵（Matrix）"><a href="#1-矩阵（Matrix）" class="headerlink" title="1. 矩阵（Matrix）"></a>1. 矩阵（Matrix）</h3><h4 id="1-1-矩阵表示"><a href="#1-1-矩阵表示" class="headerlink" title="1.1 矩阵表示"></a>1.1 矩阵表示</h4><p><strong>a</strong>&#x3D;<br>$$\sum_{i&#x3D;0}^N\int_{a}^{b}g(t,i)\text{d}t$$</p><p>参考文献：<br>1.<a href="https://www.bilibili.com/video/BV1FW411i7p6?p=1&amp;vd_source=86c1ad7f51cb73781eb44a0799117b7a">https://www.bilibili.com/video/BV1FW411i7p6?p=1&amp;vd_source=86c1ad7f51cb73781eb44a0799117b7a</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;1-矩阵（Matrix）&quot;&gt;&lt;a href=&quot;#1-矩阵（Matrix）&quot; class=&quot;headerlink&quot; title=&quot;1. 矩阵（Matrix）&quot;&gt;&lt;/a&gt;1. 矩阵（Matrix）&lt;/h3&gt;&lt;h4 id=&quot;1-1-矩阵表示&quot;&gt;&lt;a href=&quot;#1-1</summary>
+      
+    
+    
+    
+    <category term="数学" scheme="http://guangjin.fun/categories/%E6%95%B0%E5%AD%A6/"/>
+    
+    
+    <category term="FEM" scheme="http://guangjin.fun/tags/FEM/"/>
+    
+    <category term="数学" scheme="http://guangjin.fun/tags/%E6%95%B0%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>c++设计模式</title>
+    <link href="http://guangjin.fun/2022/12/12/CPPDesignPattern/"/>
+    <id>http://guangjin.fun/2022/12/12/CPPDesignPattern/</id>
+    <published>2022-12-11T16:00:00.000Z</published>
+    <updated>2023-02-18T08:19:11.818Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p><strong>声明</strong>：本文记录c++ 设计模式及示例代码</p></blockquote><h3 id="1-面向对象设计原则"><a href="#1-面向对象设计原则" class="headerlink" title="1. 面向对象设计原则"></a>1. 面向对象设计原则</h3><h5 id="1-1"><a href="#1-1" class="headerlink" title="1.1"></a>1.1</h5><p>参考文献：</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;声明&lt;/strong&gt;：本文记录c++ 设计模式及示例代码&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;1-面向对象设计原则&quot;&gt;&lt;a href=&quot;#1-面向对象设计原则&quot; class=&quot;headerlink&quot; title=&quot;</summary>
+      
+    
+    
+    
+    <category term="c++" scheme="http://guangjin.fun/categories/c/"/>
+    
+    
+    <category term="设计模式" scheme="http://guangjin.fun/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Effetive Modern C++</title>
+    <link href="http://guangjin.fun/2022/12/11/EMC++/"/>
+    <id>http://guangjin.fun/2022/12/11/EMC++/</id>
+    <published>2022-12-10T16:00:00.000Z</published>
+    <updated>2022-12-11T07:31:07.645Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p><strong>声明</strong>：本文系 Effective Modern c++（Scott Meyers）的个人笔记</p></blockquote><h3 id="1-类型推导"><a href="#1-类型推导" class="headerlink" title="1. 类型推导"></a>1. 类型推导</h3><p>c++98 只有一种类型推导规则：函数模板</p><h3 id="2-auto关键字"><a href="#2-auto关键字" class="headerlink" title="2. auto关键字"></a>2. auto关键字</h3><h3 id="3-使用现代c"><a href="#3-使用现代c" class="headerlink" title="3. 使用现代c++"></a>3. 使用现代c++</h3><h3 id="4-智能指针"><a href="#4-智能指针" class="headerlink" title="4. 智能指针"></a>4. 智能指针</h3><h3 id="5-右值引用、移动语义和完美转发"><a href="#5-右值引用、移动语义和完美转发" class="headerlink" title="5. 右值引用、移动语义和完美转发"></a>5. 右值引用、移动语义和完美转发</h3><h3 id="6-Lambda-表达式"><a href="#6-Lambda-表达式" class="headerlink" title="6. Lambda 表达式"></a>6. Lambda 表达式</h3><h3 id="7-并发API"><a href="#7-并发API" class="headerlink" title="7. 并发API"></a>7. 并发API</h3><h3 id="8-改进"><a href="#8-改进" class="headerlink" title="8. 改进"></a>8. 改进</h3><p>参考文献：<br>1.&lt;&lt;Effective Modern c++ &gt;&gt; 2015 Scott Meyer</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;声明&lt;/strong&gt;：本文系 Effective Modern c++（Scott Meyers）的个人笔记&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;1-类型推导&quot;&gt;&lt;a href=&quot;#1-类型推导&quot; class=&quot;h</summary>
+      
+    
+    
+    
+    <category term="c++" scheme="http://guangjin.fun/categories/c/"/>
+    
+    
+    <category term="c++11" scheme="http://guangjin.fun/tags/c-11/"/>
+    
+    <category term="c++2.0" scheme="http://guangjin.fun/tags/c-2-0/"/>
+    
+    <category term="modern c++" scheme="http://guangjin.fun/tags/modern-c/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>c++11 新特性</title>
+    <link href="http://guangjin.fun/2022/12/04/CPP11/"/>
+    <id>http://guangjin.fun/2022/12/04/CPP11/</id>
+    <published>2022-12-03T16:00:00.000Z</published>
+    <updated>2022-12-15T02:47:28.006Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p><strong>声明</strong>：本文简单记录c++11 常用标准</p></blockquote><h3 id="1-c-11标准概述"><a href="#1-c-11标准概述" class="headerlink" title="1. c++11标准概述"></a>1. c++11标准概述</h3><p>C++11 是 C++的第二个主要版本，对比于第一个标准化版本C++98而言做出了许多重要的修改，也引进了许多现代化的改进，因而c++11也被c++2.0, morden c++. 其正式代号为 ISO&#x2F;IEC 14882:2011 - Information technology – Programming languages – C++.<br>一般而言c++标准化内容我们可以通过 <a href="https://zh.cppreference.com/w/%E9%A6%96%E9%A1%B5">cppreference</a> 查看所有的标准内容，另一个费劲的方法也即直接阅读ISO 14882文档。<br>c++11标准的修改大致可以分为语言和标准库两类， 本文列举一些常用的c++11新特性。</p><h3 id="2-语言新特性"><a href="#2-语言新特性" class="headerlink" title="2. 语言新特性"></a>2. 语言新特性</h3><h4 id="2-1-自动类型推导"><a href="#2-1-自动类型推导" class="headerlink" title="2.1 自动类型推导"></a>2.1 自动类型推导</h4><h5 id="2-1-1-auto"><a href="#2-1-1-auto" class="headerlink" title="2.1.1 auto"></a>2.1.1 auto</h5><p>关键字auto 用于</p><h5 id="2-1-2-decltype"><a href="#2-1-2-decltype" class="headerlink" title="2.1.2 decltype"></a>2.1.2 decltype</h5><h3 id="3-标准库新特性"><a href="#3-标准库新特性" class="headerlink" title="3. 标准库新特性"></a>3. 标准库新特性</h3><h3 id="3-1-标准库头文件引入"><a href="#3-1-标准库头文件引入" class="headerlink" title="3.1 标准库头文件引入"></a>3.1 标准库头文件引入</h3><p>新式标准头文件引入不带.h</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span> <span class="comment">//新式， 推荐使用</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span> <span class="comment">// 旧式</span></span></span><br></pre></td></tr></table></figure><p>参考文献：<br>1.<a href="https://zh.cppreference.com/">https://zh.cppreference.com/</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;声明&lt;/strong&gt;：本文简单记录c++11 常用标准&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;1-c-11标准概述&quot;&gt;&lt;a href=&quot;#1-c-11标准概述&quot; class=&quot;headerlink&quot; title=&quot;1</summary>
+      
+    
+    
+    
+    <category term="c++" scheme="http://guangjin.fun/categories/c/"/>
+    
+    
+    <category term="c++11" scheme="http://guangjin.fun/tags/c-11/"/>
+    
+    <category term="c++2.0" scheme="http://guangjin.fun/tags/c-2-0/"/>
+    
+    <category term="modern c++" scheme="http://guangjin.fun/tags/modern-c/"/>
+    
+  </entry>
   
   <entry>
     <title>step文件初探</title>
