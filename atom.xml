@@ -6,7 +6,7 @@
   <link href="http://guangjin.fun/atom.xml" rel="self"/>
   
   <link href="http://guangjin.fun/"/>
-  <updated>2023-03-21T15:48:28.814Z</updated>
+  <updated>2023-04-16T08:46:20.883Z</updated>
   <id>http://guangjin.fun/</id>
   
   <author>
@@ -17,18 +17,23 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>uml类图中的类关系及其图示</title>
+    <title>uml类图及类关系图示</title>
     <link href="http://guangjin.fun/2023/03/19/UMLDraw/"/>
     <id>http://guangjin.fun/2023/03/19/UMLDraw/</id>
     <published>2023-03-18T16:00:00.000Z</published>
-    <updated>2023-03-21T15:48:28.814Z</updated>
+    <updated>2023-04-16T08:46:20.883Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="1-泛化（继承）"><a href="#1-泛化（继承）" class="headerlink" title="1.泛化（继承）"></a>1.泛化（继承）</h3><h3 id="2-实现"><a href="#2-实现" class="headerlink" title="2.实现"></a>2.实现</h3><h3 id="3-关联"><a href="#3-关联" class="headerlink" title="3.关联"></a>3.关联</h3><h4 id="3-1-聚合"><a href="#3-1-聚合" class="headerlink" title="3.1 聚合"></a>3.1 聚合</h4><h4 id="3-2-组合"><a href="#3-2-组合" class="headerlink" title="3.2 组合"></a>3.2 组合</h4><p>参考文献：<br>1.<a href="https://blog.csdn.net/k346k346/article/details/59582926">https://blog.csdn.net/k346k346/article/details/59582926</a></p>]]></content>
+    <content type="html"><![CDATA[<h3 id="1-类的图示"><a href="#1-类的图示" class="headerlink" title="1. 类的图示"></a>1. 类的图示</h3><table><thead><tr><th>形式</th><th>示例</th><th>代码</th></tr></thead><tbody><tr><td><img src="/assets/UML/class.png" alt="class.png"></td><td><img src="/assets/UML/class_k.png" alt="class_k.png"></td><td><img src="/assets/UML/class_v.png" alt="class_v.png"></td></tr></tbody></table><p>说明：</p><ol><li>由三个部分组成：类名，属性和操作</li><li>抽象和抽象操作用斜体表示</li><li>静态成员、操作用下划线表示</li></ol><h3 id="2-类关系图示"><a href="#2-类关系图示" class="headerlink" title="2. 类关系图示"></a>2. 类关系图示</h3><table><thead><tr><th>关系</th><th>图示</th><th>代码</th></tr></thead><tbody><tr><td>继承(泛化)</td><td><img src="/assets/UML/gen.png" alt="gen.png"></td><td><img src="/assets/UML/gen_v.png" alt="gen_v.png"></td></tr><tr><td>实现(泛化)</td><td><img src="/assets/UML/Impl.png" alt="Impl.png"></td><td><img src="/assets/UML/Impl_v.png" alt="Impl_v.png"></td></tr><tr><td>依赖</td><td><img src="/assets/UML/denp.png" alt="denp.png"></td><td><img src="/assets/UML/denp_v.png" alt="denp_v.png"></td></tr><tr><td>关联</td><td><img src="/assets/UML/asso.png" alt="asso.png"></td><td><img src="/assets/UML/asso_v.png" alt="asso_v.png"></td></tr><tr><td>聚合</td><td><img src="/assets/UML/aggr.png" alt="aggr.png"></td><td><img src="/assets/UML/aggr_v.png" alt="aggr_v.png"></td></tr><tr><td>组合</td><td><img src="/assets/UML/comp.png" alt="comp.png"></td><td><img src="/assets/UML/comp_v.png" alt="comp_v.png"></td></tr></tbody></table><p>说明：</p><ol><li>依赖在代码中主要体现返回值、形参、局部变量或静态方法中对另一类的使用</li><li>关联在代码上主要体现为成员变量</li><li>聚合是关联的一种， 强调整体与部分的拥有关系，整体与部分不必有一致的生命周期</li><li>组合也是关联的一种， 强调整体与部分的拥有构成关系，整体与部分有一致的生命周期</li></ol><p>参考文献：<br>1.<a href="https://zhuanlan.zhihu.com/p/109655171">https://zhuanlan.zhihu.com/p/109655171</a><br>2.<a href="https://blog.csdn.net/k346k346/article/details/59582926">https://blog.csdn.net/k346k346/article/details/59582926</a></p>]]></content>
     
     
       
       
-    <summary type="html">&lt;h3 id=&quot;1-泛化（继承）&quot;&gt;&lt;a href=&quot;#1-泛化（继承）&quot; class=&quot;headerlink&quot; title=&quot;1.泛化（继承）&quot;&gt;&lt;/a&gt;1.泛化（继承）&lt;/h3&gt;&lt;h3 id=&quot;2-实现&quot;&gt;&lt;a href=&quot;#2-实现&quot; class=&quot;headerlink&quot; </summary>
+    <summary type="html">&lt;h3 id=&quot;1-类的图示&quot;&gt;&lt;a href=&quot;#1-类的图示&quot; class=&quot;headerlink&quot; title=&quot;1. 类的图示&quot;&gt;&lt;/a&gt;1. 类的图示&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;形式&lt;/th&gt;
+&lt;th&gt;示例&lt;/th&gt;
+&lt;th&gt;代码&lt;/th</summary>
       
     
     
