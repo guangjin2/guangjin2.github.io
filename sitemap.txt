@@ -1,3 +1,4 @@
+http://guangjin.fun/2023/10/04/CPP11NewFeat/
 http://guangjin.fun/2023/03/19/UMLDraw/
 http://guangjin.fun/2022/12/12/CPPDesignPattern/
 http://guangjin.fun/2022/10/22/CPPBase3/
