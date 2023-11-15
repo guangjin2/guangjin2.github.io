@@ -6,7 +6,7 @@
   <link href="http://guangjin.fun/atom.xml" rel="self"/>
   
   <link href="http://guangjin.fun/"/>
-  <updated>2023-11-05T14:56:08.133Z</updated>
+  <updated>2023-11-15T18:03:48.168Z</updated>
   <id>http://guangjin.fun/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>中医基础理论</title>
+    <link href="http://guangjin.fun/2023/11/16/TCM/"/>
+    <id>http://guangjin.fun/2023/11/16/TCM/</id>
+    <published>2023-11-15T16:00:00.000Z</published>
+    <updated>2023-11-15T18:03:48.168Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p><strong>声明</strong>：本文是<a href="https://www.bilibili.com/video/BV1RR4y147uY/?spm_id_from=333.880.my_history.page.click&vd_source=86c1ad7f51cb73781eb44a0799117b7a">中医学基础理论视频（广中医·潘毅）</a> 的学习笔记</p></blockquote><h2 id="1-绪论"><a href="#1-绪论" class="headerlink" title="1.绪论"></a>1.绪论</h2><ol><li><p>概念：中医学是指发祥于中国古代，建立在中国传统文化基础上，以整体观念为主导思想，以脏腑经络的生理病理为基础，以辩证论治为诊疗特点，研究人体生命，健康疾病的科学</p></li><li><p>本文中的中医基础理论包括</p></li></ol><ul><li>中医学哲学基础</li><li>中医对正常人体的认识</li><li>中医对疾病的认识</li><li>中医养生和诊疗疾病的原则</li></ul><ol start="3"><li>学科属性</li></ol><ul><li>自然科学（物质运动发展变化本质的学科）与社会科学（社会发展运动变化的规律）的交叉性</li><li>基础学科（回答为什么）与应用学科（回答怎么办）的双重性<ul><li>即道理， 道为大规律，理为具体实施，由道生理</li></ul></li><li>东方传统文化的综合性<ul><li>受儒释道，诸子百家影响尤其是农学地理及兵法</li></ul></li><li>科学、仁术和技艺的融合性</li></ul><ol start="4"><li>形成与发展</li></ol><ul><li><p>形成基础：经验积累足够后上升成理论</p><ul><li>医药学的积累</li><li>对人体生命现象和自然现象的观察</li><li>古代哲学思想形成，中医基于此来归纳总结</li></ul></li><li><p>体系确立：以黄帝内经（多篇论文组成）为框架扩充</p><ul><li>扁鹊《难经》对黄帝内经补充</li><li>张仲景《伤寒杂病论》第一部确立辨证论治法则的著作</li><li>《神农本草经》建立中药理论框架</li></ul></li><li><p>发展<br>  魏晋隋唐</p><ul><li>王叔和《脉经》第一本脉学专著</li><li>皇甫谧《针灸甲乙经》现存最早第一部针灸学专著</li><li>巢元方《诸病源候论》第一步病因病机证候学专著</li></ul><p>  宋金元</p><ul><li>陈无择《三因极》综合著作</li><li>金元四大家<ul><li>刘元素寒凉派</li><li>李东桓易水派</li><li>张从正攻邪派</li><li>朱震亨养阴派</li></ul></li></ul><p>  明清<br>      + 王肯堂《证治准绳子》<br>      + 吴谦《医宗金鉴》<br>      + 陈梦雷《古今图书集成·医部全录》<br>      + 吴又可《温疫论》<br>      + 叶天士《温热论》<br>      + 吴鞠通《温病条辨》<br>      + 薛生白《湿热条辨》<br>      + 王清任《医林改错》</p></li></ul><h2 id="2-哲学基础"><a href="#2-哲学基础" class="headerlink" title="2.哲学基础"></a>2.哲学基础</h2><h3 id="2-1-阴阳学说"><a href="#2-1-阴阳学说" class="headerlink" title="2.1 阴阳学说"></a>2.1 阴阳学说</h3><h3 id="2-2-五行学说"><a href="#2-2-五行学说" class="headerlink" title="2.2 五行学说"></a>2.2 五行学说</h3><h3 id="2-3-精气学说"><a href="#2-3-精气学说" class="headerlink" title="2.3 精气学说"></a>2.3 精气学说</h3><p>参考文献：</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;声明&lt;/strong&gt;：本文是&lt;a href=&quot;https://www.bilibili.com/video/BV1RR4y147uY/?spm_id_from=333.880.my_history.page.click&amp;vd_so</summary>
+      
+    
+    
+    
+    <category term="中医" scheme="http://guangjin.fun/categories/%E4%B8%AD%E5%8C%BB/"/>
+    
+    
+    <category term="中医" scheme="http://guangjin.fun/tags/%E4%B8%AD%E5%8C%BB/"/>
+    
+  </entry>
   
   <entry>
     <title>c++11 新特性</title>
