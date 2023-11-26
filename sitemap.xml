@@ -151,7 +151,14 @@
   </url>
   
   <url>
-    <loc>http://guangjin.fun/tags/%E4%B8%AD%E5%8C%BB/</loc>
+    <loc>http://guangjin.fun/tags/step/</loc>
+    <lastmod>2023-11-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://guangjin.fun/tags/STL%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2023-11-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -172,14 +179,7 @@
   </url>
   
   <url>
-    <loc>http://guangjin.fun/tags/STL%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</loc>
-    <lastmod>2023-11-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://guangjin.fun/tags/step/</loc>
+    <loc>http://guangjin.fun/tags/%E4%B8%AD%E5%8C%BB/</loc>
     <lastmod>2023-11-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -202,14 +202,14 @@
   </url>
   
   <url>
-    <loc>http://guangjin.fun/categories/%E4%B8%AD%E5%8C%BB/</loc>
+    <loc>http://guangjin.fun/categories/%E5%B7%A5%E4%B8%9A%E8%BD%AF%E4%BB%B6/</loc>
     <lastmod>2023-11-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://guangjin.fun/categories/%E5%B7%A5%E4%B8%9A%E8%BD%AF%E4%BB%B6/</loc>
+    <loc>http://guangjin.fun/categories/%E4%B8%AD%E5%8C%BB/</loc>
     <lastmod>2023-11-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
