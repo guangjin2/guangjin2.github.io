@@ -2773,290 +2773,6 @@
       </tags>
   </entry>
   <entry>
-    <title>step文件初探</title>
-    <url>/2022/11/05/StepIntro/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>声明</strong>：本文简单介绍step 文件的基础知识</p>
-</blockquote>
-<h3 id="1-什么是STEP标准"><a href="#1-什么是STEP标准" class="headerlink" title="1. 什么是STEP标准"></a>1. 什么是STEP标准</h3><p>STEP 全称Starndard for Exchange of Product Model Data,即产品模型数据交换规范，代号为<strong>ISO-10303</strong>. 它提供一种不依赖具体系统的中性机制，旨在实现产品间数据的交换和共享，从而提高产品的开发效率。<br>比如说芯片设计环节可能先建模，再对模型求解，此时就可能需要在建模软件和求解软件这两种产品间传递模型数据。目前工业应用中涉及模型的部分基本会兼容这种格式，比如CAD, HFSS等。 </p>
-<h3 id="2-STEP标准层次结构"><a href="#2-STEP标准层次结构" class="headerlink" title="2. STEP标准层次结构"></a>2. STEP标准层次结构</h3><p>STEP 系统主要分为三个层次， 如图（出自参考资料④）</p>
-<p><img src="/assets/StepIntro/step.png" alt="step"></p>
-<blockquote>
-<p>每part对应一个ISO文档，每个ISO 文档都要收费，不过 <a href="https://www.doc88.com/">道巴客客</a> 还能看到免费的文档， 国标也有一些协议会直接引用这些ISO协议（国标对于我们是免费查看的）</p>
-</blockquote>
-<p>一般而言，我们只需要关注应用层协议即可， 主流的建模协议主要如下（出自参考资料 ⑤ ，其各自特性可以前往参考， 目前最广泛的应该是AP214）：</p>
-<ul>
-<li>AP203:Configuration controlled 3d design of mechanical parts and assemblies.</li>
-<li>AP214:Core data for automotive mechanical design processes.</li>
-<li>AP242：Managed model-based 3D engineering.</li>
-</ul>
-<p>现在我们探讨step文件的话，也就是说实现方法为P21，假设应用层协议使用AP214，描述方法为P11，那么三者的关系可以简单的理解为：<br>P11 描述Express语法<br>P21 描述.step 的文件格式及其与P11的转换<br>P214 使用P11定义了一系列汽车行业的实体</p>
-<p>如果P214中定义了车如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Entity car</span><br><span class="line"> year: Integer</span><br><span class="line"> color: COLOR</span><br><span class="line">Entity</span><br><span class="line"></span><br><span class="line">Entity color</span><br><span class="line">  name: string</span><br><span class="line">Entity</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>当我们设计两辆车之后, 保存为step文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">HEADER</span><br><span class="line">...</span><br><span class="line">ENDSEC</span><br><span class="line">DATA</span><br><span class="line">#1=CAR(1993，#2)</span><br><span class="line">#2=COLOR(&#x27;red&#x27;)</span><br><span class="line">#3=Car(1994，#2)</span><br><span class="line">ENDSEC</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>STEP文件分为头部和数据段，应用协议其实就是定义数据段的实体（’#’代表一个实体），也就是schema</p>
-</blockquote>
-<h3 id="3-STEP文件格式"><a href="#3-STEP文件格式" class="headerlink" title="3. STEP文件格式"></a>3. STEP文件格式</h3><p>上文介绍了step文件的生成， 以下简单介绍一下格式，用<b>&#x2F;&#x2F;</b>和<b>&#x2F;**&#x2F;</b>注释说明，实际文件不会出现这种标志</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">ISO<span class="number">-10303</span><span class="number">-21</span>; <span class="comment">//表明文件协议类型，文件格式实际定义在ISO-10303-21 Table3</span></span><br><span class="line">HEADER;	<span class="comment">//头段开始, 每个文件有且仅有一个头段，但可以有多个数据段</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> 在ISO-10303-21搜索file_description对应8.2.1节定义如下</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> ENTITY file_description;</span></span><br><span class="line"><span class="comment">  description : LIST [1:?] OF STRING (256) ; //至少有一个值的string list</span></span><br><span class="line"><span class="comment">  implementation_level : STRING (256) ;//这个等级需要对应文档确定</span></span><br><span class="line"><span class="comment"> END_ENTITY;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> 其余头部实体均可类似查找, Express语法不明确时可以参照ISO-10303-11</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="built_in">FILE_DESCRIPTION</span>((<span class="string">&#x27;FreeCAD Model&#x27;</span>),<span class="string">&#x27;2;1&#x27;</span>); <span class="comment">//（）表示list</span></span><br><span class="line"><span class="built_in">FILE_NAME</span>(<span class="string">&#x27;Open CASCADE Shape Model&#x27;</span>,<span class="string">&#x27;2022-11-19T22:00:49&#x27;</span>,(<span class="string">&#x27;Author&#x27;</span>),(</span><br><span class="line">    <span class="string">&#x27;&#x27;),&#x27;</span>Open CASCADE STEP processor <span class="number">7.6&#x27;</span>,<span class="string">&#x27;FreeCAD&#x27;</span>,<span class="string">&#x27;Unknown&#x27;</span>);</span><br><span class="line"><span class="built_in">FILE_SCHEMA</span>((<span class="string">&#x27;AUTOMOTIVE_DESIGN &#123; 1 0 10303 214 1 1 1 1 &#125;&#x27;</span>));<span class="comment">//表明数据段schema</span></span><br><span class="line">ENDSEC;<span class="comment">//段结束标志，上面三个实体在必须出现且按顺序出现，其余可选</span></span><br><span class="line">DATA;<span class="comment">//数据段开始</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> 在ISO-10303-214 中搜索entity APPLICATION_PROTOCOL_DEFINITION 可以找到</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> ENTITY application_protocol_definition;</span></span><br><span class="line"><span class="comment">   status : label;</span></span><br><span class="line"><span class="comment">   application_interpreted_model_schema_name : label;</span></span><br><span class="line"><span class="comment">   application_protocol_year : year_number;</span></span><br><span class="line"><span class="comment">   application : application_context; //引用entity application_context</span></span><br><span class="line"><span class="comment"> END_ENTITY;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> 其余数据段类似查找</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">#<span class="number">1</span> = <span class="built_in">APPLICATION_PROTOCOL_DEFINITION</span>(<span class="string">&#x27;international standard&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;automotive_design&#x27;</span>,<span class="number">2000</span>,#<span class="number">2</span>); </span><br><span class="line">#<span class="number">2</span> = <span class="built_in">APPLICATION_CONTEXT</span>(</span><br><span class="line">  <span class="string">&#x27;core data for automotive mechanical design processes&#x27;</span>);</span><br><span class="line">...</span><br><span class="line">ENDSEC; <span class="comment">//结束段</span></span><br><span class="line">END-ISO<span class="number">-10303</span><span class="number">-21</span>; <span class="comment">//协议结束</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>对于step文件的解析目前比较知名的开源免费软件是OpenCasCade（LGPL授权），目前能支持AP214CD,AP214DIS,AP203,AP214IS,AP242DIS 5个版本。 对于使用OCC的开发而言可能一般只关注TopoDSToStep和 StepToTopo里面的图形转换，自行开发step引擎的话还是需要仔细阅读ISO-10303相关文档</p>
-<br/>
-<br/>
-<br/>
-
-<p>参考文献：<br>1.ISO 10303-1:1994<br>2.ISO 10303-21:2002<br>3.ISO 10303-214-2003<br>4.<a href="https://blog.csdn.net/lyalong0616/article/details/90231001">https://blog.csdn.net/lyalong0616/article/details/90231001</a><br>5.<a href="https://www.capvidia.com/blog/best-step-file-to-use-ap203-vs-ap214-vs-ap242">https://www.capvidia.com/blog/best-step-file-to-use-ap203-vs-ap214-vs-ap242</a><br>6.<a href="https://dev.opencascade.org/doc/overview/html/occt_user_guides__step.html">https://dev.opencascade.org/doc/overview/html/occt_user_guides__step.html</a> </p>
-]]></content>
-      <categories>
-        <category>工业软件</category>
-      </categories>
-      <tags>
-        <tag>step</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>中医基础理论</title>
-    <url>/2023/11/16/TCM/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>声明</strong>：本文是<a href="https://www.bilibili.com/video/BV1RR4y147uY/?spm_id_from=333.880.my_history.page.click&vd_source=86c1ad7f51cb73781eb44a0799117b7a">中医学基础理论视频（广中医·潘毅）</a> 的学习笔记</p>
-</blockquote>
-<h2 id="1-绪论"><a href="#1-绪论" class="headerlink" title="1.绪论"></a>1.绪论</h2><ol>
-<li><p>概念：中医学是指发祥于中国古代，建立在中国传统文化基础上，以整体观念为主导思想，以脏腑经络的生理病理为基础，以辩证论治为诊疗特点，研究人体生命，健康疾病的科学</p>
-</li>
-<li><p>本文中的中医基础理论包括</p>
-</li>
-</ol>
-<ul>
-<li>中医学哲学基础</li>
-<li>中医对正常人体的认识</li>
-<li>中医对疾病的认识</li>
-<li>中医养生和诊疗疾病的原则</li>
-</ul>
-<ol start="3">
-<li>学科属性</li>
-</ol>
-<ul>
-<li>自然科学（物质运动发展变化本质的学科）与社会科学（社会发展运动变化的规律）的交叉性</li>
-<li>基础学科（回答为什么）与应用学科（回答怎么办）的双重性<ul>
-<li>即道理， 道为大规律，理为具体实施，由道生理</li>
-</ul>
-</li>
-<li>东方传统文化的综合性<ul>
-<li>受儒释道，诸子百家影响尤其是农学地理及兵法</li>
-</ul>
-</li>
-<li>科学、仁术和技艺的融合性</li>
-</ul>
-<ol start="4">
-<li>形成与发展</li>
-</ol>
-<ul>
-<li><p>形成基础：经验积累足够后上升成理论</p>
-<ul>
-<li>医药学的积累</li>
-<li>对人体生命现象和自然现象的观察</li>
-<li>古代哲学思想形成，中医基于此来归纳总结</li>
-</ul>
-</li>
-<li><p>体系确立：以黄帝内经（多篇论文组成）为框架扩充</p>
-<ul>
-<li>扁鹊《难经》对黄帝内经补充</li>
-<li>张仲景《伤寒杂病论》第一部确立辨证论治法则的著作</li>
-<li>《神农本草经》建立中药理论框架</li>
-</ul>
-</li>
-<li><p>发展	<br>  魏晋隋唐</p>
-<ul>
-<li>王叔和《脉经》第一本脉学专著</li>
-<li>皇甫谧《针灸甲乙经》现存最早第一部针灸学专著</li>
-<li>巢元方《诸病源候论》第一步病因病机证候学专著</li>
-</ul>
-<p>  宋金元</p>
-<ul>
-<li>陈无择《三因极》综合著作</li>
-<li>金元四大家<ul>
-<li>刘元素寒凉派</li>
-<li>李东桓易水派</li>
-<li>张从正攻邪派</li>
-<li>朱震亨养阴派</li>
-</ul>
-</li>
-</ul>
-<p>  明清</p>
-<ul>
-<li>王肯堂《证治准绳子》</li>
-<li>吴谦《医宗金鉴》</li>
-<li>陈梦雷《古今图书集成·医部全录》</li>
-<li>吴又可《温疫论》</li>
-<li>叶天士《温热论》</li>
-<li>吴鞠通《温病条辨》</li>
-<li>薛生白《湿热条辨》</li>
-<li>王清任《医林改错》</li>
-</ul>
-</li>
-</ul>
-<h2 id="2-哲学基础"><a href="#2-哲学基础" class="headerlink" title="2.哲学基础"></a>2.哲学基础</h2><p>论道解决两个问题， 世界本源和自然规律</p>
-<h3 id="2-1-阴阳学说"><a href="#2-1-阴阳学说" class="headerlink" title="2.1 阴阳学说"></a>2.1 阴阳学说</h3><p>一阴一阳谓之道， 求天道推人事， 阴阳学说用以解决自然规律的问题</p>
-<h4 id="2-1-1-事物的阴阳属性"><a href="#2-1-1-事物的阴阳属性" class="headerlink" title="2.1.1 事物的阴阳属性"></a>2.1.1 事物的阴阳属性</h4><ul>
-<li><p>事物的阴阳属性1：（接受阳光多的为阳）</p>
-<ul>
-<li>阳：上，外，左，南，天，昼，春，夏，温，热，干，轻，清，明</li>
-<li>阴：下，内，右，北，地，夜，秋，冬，寒，凉，湿，重，浊，暗<blockquote>
-<p>太极图上南下北， 故上阳下阴，左阳右阴</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>事物的阴阳属性2：（古代重阳抑阴，褒义多为阳）</p>
-<ul>
-<li>阳：化气，上升，运动，兴奋，亢进</li>
-<li>阴：成形，下降，静止，抑制，衰退<blockquote>
-<p>阳光照射下来无形， 而阴影有形，故化气为阳，成形为阴，顺推到中医功能为阳， 物质为阴</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>阴阳必须相互关联且相互对立，例如上下可分阴阳， 上内不可分阴阳</p>
-</li>
-<li><p>阴阳有相对性，例如多次划分， 例如不同参考系 （20°，60°，90°两两比较）<br><img src="/assets/TCM/taiji.png" alt="taiji.png"><br><img src="/assets/TCM/bagua.png" alt="bagua.png"></p>
-</li>
-</ul>
-<h4 id="2-1-2-阴阳学说的基本内容"><a href="#2-1-2-阴阳学说的基本内容" class="headerlink" title="2.1.2 阴阳学说的基本内容"></a>2.1.2 阴阳学说的基本内容</h4><ul>
-<li>对立制约：例如上火吃凉性食物</li>
-<li>互根互用：例如深呼吸呼入多呼出多</li>
-<li>阴阳消长：此消彼长（制约），此长彼长（互根互用）</li>
-<li>阴阳转换：某些条件下可以互转，即物极必反，例如高热一段时间后可能出现四肢厥冷</li>
-<li>阴阳自和与平衡：阴阳有自我调节能力， 如天气在一定范围内变化</li>
-<li>阴阳交合与互藏：阴阳交会在一起产生新事物，如天气下为雨， 地气上为云</li>
-</ul>
-<h4 id="2-1-3-阴阳学说在中医中的应用"><a href="#2-1-3-阴阳学说在中医中的应用" class="headerlink" title="2.1.3 阴阳学说在中医中的应用"></a>2.1.3 阴阳学说在中医中的应用</h4><ul>
-<li><p>说明人体组织结构：</p>
-<ul>
-<li>阳：上 体表 背 腑 四肢外侧 三阳筋 督脉 气 皮肉</li>
-<li>阴：下 体内 腹 脏 四肢内测 三阴筋 任脉 血 筋骨</li>
-</ul>
-</li>
-<li><p>概括人体生理功能：人体正常生理功能是阴阳协调的</p>
-</li>
-<li><p>阐述人体病理变化：正气（对应西医抵抗力，适应能力等）不能压制邪气或正气阴阳偏衰<br><img src="/assets/TCM/yinyang.png" alt="yinyang.png">	</p>
-<ul>
-<li>阴阳偏盛：阳多为热，阴多为寒，外邪偏盛为实， 正气偏衰为虚，典型症：<ul>
-<li>实热：发热，口干，小便黄，大便干，舌红苔黄， 面红，脉朔</li>
-<li>实寒：恶寒&#x2F;畏寒、局部冷感，分泌物清稀， 舌淡苔白， 面白，脉迟</li>
-<li>虚寒：畏寒，局部冷感，分泌物清稀，舌淡苔白， 面白，脉迟，神疲乏力，少气懒言（寒像+虚像）</li>
-<li>虚热：低热，五心烦热，潮热，颧红， 面色潮红，舌红少苔，脉细，发热，口干，小便黄（虚热不及实热火旺，即实热 + 限制）<blockquote>
-<p>穿衣后缓解为畏寒，无法缓解为恶寒<br>五心指的是手脚心+心胸， 潮热指的是定时低热<br>初学可用病程长短判断虚实， 实证一般病程短，虚证一般病程长<br>阳盛久而不治可导致阴虚，阴虚久而不治最终导致阴阳双虚（互根性）</p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>用于疾病诊断</p>
-<ul>
-<li>四诊：望闻问切<ul>
-<li>脉象： 快为阳，慢为阴，有力为阳，无力为阴，浮属阳，沉属阴</li>
-<li>望诊： 鲜明为阳，灰暗为阴，</li>
-<li>闻诊： 声高有利为阳，低落无力为阴， 味道重为阳，淡为阴</li>
-<li>问诊： 暂时无法讲解</li>
-</ul>
-</li>
-<li>证候分类<ul>
-<li>阴： 里证 寒证 虚证</li>
-<li>阳： 标证 热证 实证</li>
-</ul>
-</li>
-<li>指导养生： 春夏养阳，秋冬养阴</li>
-<li>确定治疗原则： 调整阴阳， 补不足，损有余<br><img src="/assets/TCM/yinyangzongjie.png" alt="yinyangzongjie.png"><blockquote>
-<p>高级一些的有阴中求阳（在补阳药中略加补阴药），阳中求阴， 如补阳药比较燥热容易上火，方中加入一些补阴药减少其副作用</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>疾病防治</p>
-<ul>
-<li>中药分类： 四气五味，升降浮沉<table>
-<thead>
-<tr>
-<th></th>
-<th>药性</th>
-<th>五味</th>
-<th>升降浮沉</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>阳</td>
-<td>温热</td>
-<td>辛甘淡</td>
-<td>升浮</td>
-</tr>
-<tr>
-<td>阴</td>
-<td>寒凉</td>
-<td>酸苦咸</td>
-<td>沉降</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>升浮：病位在上（如肺系统，头部问题）或 病势向下（如内脏下垂）<br>沉降：病位在下（如肾虚）或病势向上（如呕吐）<br>大概特点：温热药升浮居多, 寒凉药沉降居多, 花叶升浮居多,果根籽沉降居多，金石90%是沉降</p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="2-2-五行学说"><a href="#2-2-五行学说" class="headerlink" title="2.2 五行学说"></a>2.2 五行学说</h3><p>以木，火，土，金，水为（大体）分类标志的五大体系及其相互之间的关系的一门学说， 它用于解释自然规律的工具</p>
-<h4 id="2-2-1-五行特点"><a href="#2-2-1-五行特点" class="headerlink" title="2.2.1 五行特点"></a>2.2.1 五行特点</h4><ul>
-<li>木曰曲直：生长、生发、条达、舒畅</li>
-<li>火曰炎上：温热、上升、光明</li>
-<li>土曰稼穑：生化、承载、受纳</li>
-<li>金曰从革：沉降、肃杀、收敛</li>
-<li>水曰润下：滋润、寒凉、下行、闭藏<blockquote>
-<p>中医中五行可以跟阴阳结合使用，如阴木，阳木</p>
-</blockquote>
-</li>
-</ul>
-<h4 id="2-2-2-五行分类"><a href="#2-2-2-五行分类" class="headerlink" title="2.2.2 五行分类"></a>2.2.2 五行分类</h4><h5 id="2-2-2-1-取象比类法"><a href="#2-2-2-1-取象比类法" class="headerlink" title="2.2.2.1 取象比类法"></a>2.2.2.1 取象比类法</h5><ul>
-<li><p>总图：本节只解释外（自然界）五行， 内（人体）五行参考藏象章节<br><img src="/assets/TCM/wuxingguilei.png" alt="wuxingguilei.png"></p>
-</li>
-<li><p>五行<br><img src="/assets/TCM/taijiwuxing.png" alt="taijiwuxing.png"></p>
-<blockquote>
-<p>火主炎上，阳之特性最明显;木主生;金主沉降;土载四行，万物归土<br>以土为地平线，木在土之上，火在木之上;金在土之下，水在金之下； 木火为阳，金水为阴</p>
-</blockquote>
-</li>
-<li><p>五季<br><img src="/assets/TCM/taijiwuji.png" alt="taijiwuji.png"></p>
-<blockquote>
-<p>大致位置确定，春生，夏长，秋收，冬藏，故左春，右秋，上夏，下冬<br>确定土载万物，季月（每季最后一月，精确的话大约是每季最后18天左右）归长夏（土），如春中寅卯归春，辰归长夏</p>
-</blockquote>
-</li>
-<li><p>五气： 春风，夏暑， 秋干燥，冬寒， 长夏湿润</p>
-</li>
-<li><p>五方：南方炎热，北方寒冷， 东升西落</p>
-</li>
-<li><p>五化：生长收藏中加入化，代表变化，对应土</p>
-</li>
-<li><p>五色：木青，火赤，土黄，金白，水黑</p>
-<blockquote>
-<p>后面两个解释视频中个人觉得有些牵强，查阅后觉得应该是金石多为白色，而井水望上去是黑色的，水深可以吸收所有的光</p>
-</blockquote>
-</li>
-<li><p>五味：植物酸涩，海水咸，金属冶炼时发出辛味，土为甘味（水土不服熬土的味道是甘的）， 火大对应烧焦为苦</p>
-</li>
-<li><p>五音：主要对应脉象，用的不多，懂的人太少<br><img src="/assets/TCM/wuyin.png" alt="wuyin.png"></p>
-</li>
-</ul>
-<h5 id="2-2-2-2-推演络绎类"><a href="#2-2-2-2-推演络绎类" class="headerlink" title="2.2.2.2 推演络绎类"></a>2.2.2.2 推演络绎类</h5><h3 id="2-3-精气学说"><a href="#2-3-精气学说" class="headerlink" title="2.3 精气学说"></a>2.3 精气学说</h3><p>参考文献：</p>
-]]></content>
-      <categories>
-        <category>中医</category>
-      </categories>
-      <tags>
-        <tag>中医</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>c++快速入门（3）--STL</title>
     <url>/2022/10/22/CPPBase3/</url>
     <content><![CDATA[<blockquote>
@@ -5427,6 +5143,432 @@
       <tags>
         <tag>c++提高</tag>
         <tag>链接、装载与库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>step文件初探</title>
+    <url>/2022/11/05/StepIntro/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>声明</strong>：本文简单介绍step 文件的基础知识</p>
+</blockquote>
+<h3 id="1-什么是STEP标准"><a href="#1-什么是STEP标准" class="headerlink" title="1. 什么是STEP标准"></a>1. 什么是STEP标准</h3><p>STEP 全称Starndard for Exchange of Product Model Data,即产品模型数据交换规范，代号为<strong>ISO-10303</strong>. 它提供一种不依赖具体系统的中性机制，旨在实现产品间数据的交换和共享，从而提高产品的开发效率。<br>比如说芯片设计环节可能先建模，再对模型求解，此时就可能需要在建模软件和求解软件这两种产品间传递模型数据。目前工业应用中涉及模型的部分基本会兼容这种格式，比如CAD, HFSS等。 </p>
+<h3 id="2-STEP标准层次结构"><a href="#2-STEP标准层次结构" class="headerlink" title="2. STEP标准层次结构"></a>2. STEP标准层次结构</h3><p>STEP 系统主要分为三个层次， 如图（出自参考资料④）</p>
+<p><img src="/assets/StepIntro/step.png" alt="step"></p>
+<blockquote>
+<p>每part对应一个ISO文档，每个ISO 文档都要收费，不过 <a href="https://www.doc88.com/">道巴客客</a> 还能看到免费的文档， 国标也有一些协议会直接引用这些ISO协议（国标对于我们是免费查看的）</p>
+</blockquote>
+<p>一般而言，我们只需要关注应用层协议即可， 主流的建模协议主要如下（出自参考资料 ⑤ ，其各自特性可以前往参考， 目前最广泛的应该是AP214）：</p>
+<ul>
+<li>AP203:Configuration controlled 3d design of mechanical parts and assemblies.</li>
+<li>AP214:Core data for automotive mechanical design processes.</li>
+<li>AP242：Managed model-based 3D engineering.</li>
+</ul>
+<p>现在我们探讨step文件的话，也就是说实现方法为P21，假设应用层协议使用AP214，描述方法为P11，那么三者的关系可以简单的理解为：<br>P11 描述Express语法<br>P21 描述.step 的文件格式及其与P11的转换<br>P214 使用P11定义了一系列汽车行业的实体</p>
+<p>如果P214中定义了车如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Entity car</span><br><span class="line"> year: Integer</span><br><span class="line"> color: COLOR</span><br><span class="line">Entity</span><br><span class="line"></span><br><span class="line">Entity color</span><br><span class="line">  name: string</span><br><span class="line">Entity</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>当我们设计两辆车之后, 保存为step文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">HEADER</span><br><span class="line">...</span><br><span class="line">ENDSEC</span><br><span class="line">DATA</span><br><span class="line">#1=CAR(1993，#2)</span><br><span class="line">#2=COLOR(&#x27;red&#x27;)</span><br><span class="line">#3=Car(1994，#2)</span><br><span class="line">ENDSEC</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>STEP文件分为头部和数据段，应用协议其实就是定义数据段的实体（’#’代表一个实体），也就是schema</p>
+</blockquote>
+<h3 id="3-STEP文件格式"><a href="#3-STEP文件格式" class="headerlink" title="3. STEP文件格式"></a>3. STEP文件格式</h3><p>上文介绍了step文件的生成， 以下简单介绍一下格式，用<b>&#x2F;&#x2F;</b>和<b>&#x2F;**&#x2F;</b>注释说明，实际文件不会出现这种标志</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">ISO<span class="number">-10303</span><span class="number">-21</span>; <span class="comment">//表明文件协议类型，文件格式实际定义在ISO-10303-21 Table3</span></span><br><span class="line">HEADER;	<span class="comment">//头段开始, 每个文件有且仅有一个头段，但可以有多个数据段</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> 在ISO-10303-21搜索file_description对应8.2.1节定义如下</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> ENTITY file_description;</span></span><br><span class="line"><span class="comment">  description : LIST [1:?] OF STRING (256) ; //至少有一个值的string list</span></span><br><span class="line"><span class="comment">  implementation_level : STRING (256) ;//这个等级需要对应文档确定</span></span><br><span class="line"><span class="comment"> END_ENTITY;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> 其余头部实体均可类似查找, Express语法不明确时可以参照ISO-10303-11</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="built_in">FILE_DESCRIPTION</span>((<span class="string">&#x27;FreeCAD Model&#x27;</span>),<span class="string">&#x27;2;1&#x27;</span>); <span class="comment">//（）表示list</span></span><br><span class="line"><span class="built_in">FILE_NAME</span>(<span class="string">&#x27;Open CASCADE Shape Model&#x27;</span>,<span class="string">&#x27;2022-11-19T22:00:49&#x27;</span>,(<span class="string">&#x27;Author&#x27;</span>),(</span><br><span class="line">    <span class="string">&#x27;&#x27;),&#x27;</span>Open CASCADE STEP processor <span class="number">7.6&#x27;</span>,<span class="string">&#x27;FreeCAD&#x27;</span>,<span class="string">&#x27;Unknown&#x27;</span>);</span><br><span class="line"><span class="built_in">FILE_SCHEMA</span>((<span class="string">&#x27;AUTOMOTIVE_DESIGN &#123; 1 0 10303 214 1 1 1 1 &#125;&#x27;</span>));<span class="comment">//表明数据段schema</span></span><br><span class="line">ENDSEC;<span class="comment">//段结束标志，上面三个实体在必须出现且按顺序出现，其余可选</span></span><br><span class="line">DATA;<span class="comment">//数据段开始</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> 在ISO-10303-214 中搜索entity APPLICATION_PROTOCOL_DEFINITION 可以找到</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> ENTITY application_protocol_definition;</span></span><br><span class="line"><span class="comment">   status : label;</span></span><br><span class="line"><span class="comment">   application_interpreted_model_schema_name : label;</span></span><br><span class="line"><span class="comment">   application_protocol_year : year_number;</span></span><br><span class="line"><span class="comment">   application : application_context; //引用entity application_context</span></span><br><span class="line"><span class="comment"> END_ENTITY;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> 其余数据段类似查找</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">#<span class="number">1</span> = <span class="built_in">APPLICATION_PROTOCOL_DEFINITION</span>(<span class="string">&#x27;international standard&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;automotive_design&#x27;</span>,<span class="number">2000</span>,#<span class="number">2</span>); </span><br><span class="line">#<span class="number">2</span> = <span class="built_in">APPLICATION_CONTEXT</span>(</span><br><span class="line">  <span class="string">&#x27;core data for automotive mechanical design processes&#x27;</span>);</span><br><span class="line">...</span><br><span class="line">ENDSEC; <span class="comment">//结束段</span></span><br><span class="line">END-ISO<span class="number">-10303</span><span class="number">-21</span>; <span class="comment">//协议结束</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>对于step文件的解析目前比较知名的开源免费软件是OpenCasCade（LGPL授权），目前能支持AP214CD,AP214DIS,AP203,AP214IS,AP242DIS 5个版本。 对于使用OCC的开发而言可能一般只关注TopoDSToStep和 StepToTopo里面的图形转换，自行开发step引擎的话还是需要仔细阅读ISO-10303相关文档</p>
+<br/>
+<br/>
+<br/>
+
+<p>参考文献：<br>1.ISO 10303-1:1994<br>2.ISO 10303-21:2002<br>3.ISO 10303-214-2003<br>4.<a href="https://blog.csdn.net/lyalong0616/article/details/90231001">https://blog.csdn.net/lyalong0616/article/details/90231001</a><br>5.<a href="https://www.capvidia.com/blog/best-step-file-to-use-ap203-vs-ap214-vs-ap242">https://www.capvidia.com/blog/best-step-file-to-use-ap203-vs-ap214-vs-ap242</a><br>6.<a href="https://dev.opencascade.org/doc/overview/html/occt_user_guides__step.html">https://dev.opencascade.org/doc/overview/html/occt_user_guides__step.html</a> </p>
+]]></content>
+      <categories>
+        <category>工业软件</category>
+      </categories>
+      <tags>
+        <tag>step</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>中医基础理论</title>
+    <url>/2023/11/16/TCM/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>声明</strong>：本文是<a href="https://www.bilibili.com/video/BV1RR4y147uY/?spm_id_from=333.880.my_history.page.click&vd_source=86c1ad7f51cb73781eb44a0799117b7a">中医学基础理论视频（广中医·潘毅）</a> 的学习笔记</p>
+</blockquote>
+<h2 id="1-绪论"><a href="#1-绪论" class="headerlink" title="1.绪论"></a>1.绪论</h2><ol>
+<li><p>概念：中医学是指发祥于中国古代，建立在中国传统文化基础上，以整体观念为主导思想，以脏腑经络的生理病理为基础，以辩证论治为诊疗特点，研究人体生命，健康疾病的科学</p>
+</li>
+<li><p>本文中的中医基础理论包括</p>
+</li>
+</ol>
+<ul>
+<li>中医学哲学基础</li>
+<li>中医对正常人体的认识</li>
+<li>中医对疾病的认识</li>
+<li>中医养生和诊疗疾病的原则</li>
+</ul>
+<ol start="3">
+<li>学科属性</li>
+</ol>
+<ul>
+<li>自然科学（物质运动发展变化本质的学科）与社会科学（社会发展运动变化的规律）的交叉性</li>
+<li>基础学科（回答为什么）与应用学科（回答怎么办）的双重性<ul>
+<li>即道理， 道为大规律，理为具体实施，由道生理</li>
+</ul>
+</li>
+<li>东方传统文化的综合性<ul>
+<li>受儒释道，诸子百家影响尤其是农学地理及兵法</li>
+</ul>
+</li>
+<li>科学、仁术和技艺的融合性</li>
+</ul>
+<ol start="4">
+<li>形成与发展</li>
+</ol>
+<ul>
+<li><p>形成基础：经验积累足够后上升成理论</p>
+<ul>
+<li>医药学的积累</li>
+<li>对人体生命现象和自然现象的观察</li>
+<li>古代哲学思想形成，中医基于此来归纳总结</li>
+</ul>
+</li>
+<li><p>体系确立：以黄帝内经（多篇论文组成）为框架扩充</p>
+<ul>
+<li>扁鹊《难经》对黄帝内经补充</li>
+<li>张仲景《伤寒杂病论》第一部确立辨证论治法则的著作</li>
+<li>《神农本草经》建立中药理论框架</li>
+</ul>
+</li>
+<li><p>发展	<br>  魏晋隋唐</p>
+<ul>
+<li>王叔和《脉经》第一本脉学专著</li>
+<li>皇甫谧《针灸甲乙经》现存最早第一部针灸学专著</li>
+<li>巢元方《诸病源候论》第一步病因病机证候学专著</li>
+</ul>
+<p>  宋金元</p>
+<ul>
+<li>陈无择《三因极》综合著作</li>
+<li>金元四大家<ul>
+<li>刘元素寒凉派</li>
+<li>李东桓易水派</li>
+<li>张从正攻邪派</li>
+<li>朱震亨养阴派</li>
+</ul>
+</li>
+</ul>
+<p>  明清</p>
+<ul>
+<li>王肯堂《证治准绳子》</li>
+<li>吴谦《医宗金鉴》</li>
+<li>陈梦雷《古今图书集成·医部全录》</li>
+<li>吴又可《温疫论》</li>
+<li>叶天士《温热论》</li>
+<li>吴鞠通《温病条辨》</li>
+<li>薛生白《湿热条辨》</li>
+<li>王清任《医林改错》</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-哲学基础"><a href="#2-哲学基础" class="headerlink" title="2.哲学基础"></a>2.哲学基础</h2><p>论道解决两个问题， 世界本源和自然规律</p>
+<h3 id="2-1-阴阳学说"><a href="#2-1-阴阳学说" class="headerlink" title="2.1 阴阳学说"></a>2.1 阴阳学说</h3><p>一阴一阳谓之道， 求天道推人事， 阴阳学说用以解决自然规律的问题</p>
+<h4 id="2-1-1-事物的阴阳属性"><a href="#2-1-1-事物的阴阳属性" class="headerlink" title="2.1.1 事物的阴阳属性"></a>2.1.1 事物的阴阳属性</h4><ul>
+<li><p>事物的阴阳属性1：（接受阳光多的为阳）</p>
+<ul>
+<li>阳：上，外，左，南，天，昼，春，夏，温，热，干，轻，清，明</li>
+<li>阴：下，内，右，北，地，夜，秋，冬，寒，凉，湿，重，浊，暗<blockquote>
+<p>太极图上南下北， 故上阳下阴，左阳右阴</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>事物的阴阳属性2：（古代重阳抑阴，褒义多为阳）</p>
+<ul>
+<li>阳：化气，上升，运动，兴奋，亢进</li>
+<li>阴：成形，下降，静止，抑制，衰退<blockquote>
+<p>阳光照射下来无形， 而阴影有形，故化气为阳，成形为阴，顺推到中医功能为阳， 物质为阴</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>阴阳必须相互关联且相互对立，例如上下可分阴阳， 上内不可分阴阳</p>
+</li>
+<li><p>阴阳有相对性，例如多次划分， 例如不同参考系 （20°，60°，90°两两比较）<br><img src="/assets/TCM/taiji.png" alt="taiji.png"><br><img src="/assets/TCM/bagua.png" alt="bagua.png"></p>
+</li>
+</ul>
+<h4 id="2-1-2-阴阳学说的基本内容"><a href="#2-1-2-阴阳学说的基本内容" class="headerlink" title="2.1.2 阴阳学说的基本内容"></a>2.1.2 阴阳学说的基本内容</h4><ul>
+<li>对立制约：例如上火吃凉性食物</li>
+<li>互根互用：例如深呼吸呼入多呼出多</li>
+<li>阴阳消长：此消彼长（制约），此长彼长（互根互用）</li>
+<li>阴阳转换：某些条件下可以互转，即物极必反，例如高热一段时间后可能出现四肢厥冷</li>
+<li>阴阳自和与平衡：阴阳有自我调节能力， 如天气在一定范围内变化</li>
+<li>阴阳交合与互藏：阴阳交会在一起产生新事物，如天气下为雨， 地气上为云</li>
+</ul>
+<h4 id="2-1-3-阴阳学说在中医中的应用"><a href="#2-1-3-阴阳学说在中医中的应用" class="headerlink" title="2.1.3 阴阳学说在中医中的应用"></a>2.1.3 阴阳学说在中医中的应用</h4><ul>
+<li><p>说明人体组织结构：</p>
+<ul>
+<li>阳：上 体表 背 腑 四肢外侧 三阳筋 督脉 气 皮肉</li>
+<li>阴：下 体内 腹 脏 四肢内测 三阴筋 任脉 血 筋骨</li>
+</ul>
+</li>
+<li><p>概括人体生理功能：人体正常生理功能是阴阳协调的</p>
+</li>
+<li><p>阐述人体病理变化：正气（对应西医抵抗力，适应能力等）不能压制邪气或正气阴阳偏衰<br><img src="/assets/TCM/yinyang.png" alt="yinyang.png">	</p>
+<ul>
+<li>阴阳偏盛：阳多为热，阴多为寒，外邪偏盛为实， 正气偏衰为虚，典型症：<ul>
+<li>实热：发热，口干，小便黄，大便干，舌红苔黄， 面红，脉朔</li>
+<li>实寒：恶寒&#x2F;畏寒、局部冷感，分泌物清稀， 舌淡苔白， 面白，脉迟</li>
+<li>虚寒：畏寒，局部冷感，分泌物清稀，舌淡苔白， 面白，脉迟，神疲乏力，少气懒言（寒像+虚像）</li>
+<li>虚热：低热，五心烦热，潮热，颧红， 面色潮红，舌红少苔，脉细，发热，口干，小便黄（虚热不及实热火旺，即实热 + 限制）<blockquote>
+<p>穿衣后缓解为畏寒，无法缓解为恶寒<br>五心指的是手脚心+心胸， 潮热指的是定时低热<br>初学可用病程长短判断虚实， 实证一般病程短，虚证一般病程长<br>阳盛久而不治可导致阴虚，阴虚久而不治最终导致阴阳双虚（互根性）</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>用于疾病诊断</p>
+<ul>
+<li>四诊：望闻问切<ul>
+<li>脉象： 快为阳，慢为阴，有力为阳，无力为阴，浮属阳，沉属阴</li>
+<li>望诊： 鲜明为阳，灰暗为阴，</li>
+<li>闻诊： 声高有利为阳，低落无力为阴， 味道重为阳，淡为阴</li>
+<li>问诊： 暂时无法讲解</li>
+</ul>
+</li>
+<li>证候分类<ul>
+<li>阴： 里证 寒证 虚证</li>
+<li>阳： 标证 热证 实证</li>
+</ul>
+</li>
+<li>指导养生： 春夏养阳，秋冬养阴</li>
+<li>确定治疗原则： 调整阴阳， 补不足，损有余<br><img src="/assets/TCM/yinyangzongjie.png" alt="yinyangzongjie.png"><blockquote>
+<p>高级一些的有阴中求阳（在补阳药中略加补阴药），阳中求阴， 如补阳药比较燥热容易上火，方中加入一些补阴药减少其副作用</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>疾病防治</p>
+<ul>
+<li>中药分类： 四气五味，升降浮沉<table>
+<thead>
+<tr>
+<th></th>
+<th>药性</th>
+<th>五味</th>
+<th>升降浮沉</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>阳</td>
+<td>温热</td>
+<td>辛甘淡</td>
+<td>升浮</td>
+</tr>
+<tr>
+<td>阴</td>
+<td>寒凉</td>
+<td>酸苦咸</td>
+<td>沉降</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>升浮：病位在上（如肺系统，头部问题）或 病势向下（如内脏下垂）<br>沉降：病位在下（如肾虚）或病势向上（如呕吐）<br>大概特点：温热药升浮居多, 寒凉药沉降居多, 花叶升浮居多,果根籽沉降居多，金石90%是沉降</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-2-五行学说"><a href="#2-2-五行学说" class="headerlink" title="2.2 五行学说"></a>2.2 五行学说</h3><p>以木，火，土，金，水为（大体）分类标志的五大体系及其相互之间的关系的一门学说， 它用于解释自然规律的工具</p>
+<h4 id="2-2-1-五行特点"><a href="#2-2-1-五行特点" class="headerlink" title="2.2.1 五行特点"></a>2.2.1 五行特点</h4><ul>
+<li>木曰曲直：生长、生发、条达、舒畅</li>
+<li>火曰炎上：温热、上升、光明</li>
+<li>土曰稼穑：生化、承载、受纳</li>
+<li>金曰从革：沉降、肃杀、收敛</li>
+<li>水曰润下：滋润、寒凉、下行、闭藏<blockquote>
+<p>中医中五行可以跟阴阳结合使用，如阴木，阳木</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="2-2-2-五行分类"><a href="#2-2-2-五行分类" class="headerlink" title="2.2.2 五行分类"></a>2.2.2 五行分类</h4><h5 id="2-2-2-1-取象比类法"><a href="#2-2-2-1-取象比类法" class="headerlink" title="2.2.2.1 取象比类法"></a>2.2.2.1 取象比类法</h5><ul>
+<li><p>总图：本节只解释外（自然界）五行， 内（人体）五行参考藏象章节<br><img src="/assets/TCM/wuxingguilei.png" alt="wuxingguilei.png"></p>
+</li>
+<li><p>五行<br><img src="/assets/TCM/taijiwuxing.png" alt="taijiwuxing.png"></p>
+<blockquote>
+<p>火主炎上，阳之特性最明显;木主生;金主沉降;土载四行，万物归土<br>以土为地平线，木在土之上，火在木之上;金在土之下，水在金之下； 木火为阳，金水为阴</p>
+</blockquote>
+</li>
+<li><p>五季<br><img src="/assets/TCM/taijiwuji.png" alt="taijiwuji.png"></p>
+<blockquote>
+<p>大致位置确定，春生，夏长，秋收，冬藏，故左春，右秋，上夏，下冬<br>确定土载万物，季月（每季最后一月，精确的话大约是每季最后18天左右）归长夏（土），如春中寅卯归春，辰归长夏</p>
+</blockquote>
+</li>
+<li><p>五气： 春风，夏暑， 秋干燥，冬寒， 长夏湿润</p>
+</li>
+<li><p>五方：南方炎热，北方寒冷， 东升西落</p>
+</li>
+<li><p>五化：生长收藏中加入化，代表变化，对应土</p>
+</li>
+<li><p>五色：木青，火赤，土黄，金白，水黑</p>
+<blockquote>
+<p>后面两个解释视频中个人觉得有些牵强，查阅后觉得应该是金石多为白色，而井水望上去是黑色的，水深可以吸收所有的光</p>
+</blockquote>
+</li>
+<li><p>五味：植物酸涩，海水咸，金属冶炼时发出辛味，土为甘味（水土不服熬土的味道是甘的）， 火大对应烧焦为苦</p>
+</li>
+<li><p>五音：主要对应脉象，用的不多，懂的人太少<br><img src="/assets/TCM/wuyin.png" alt="wuyin.png"></p>
+</li>
+<li><p>五脏：心提供内能属火（乾）， 肝疏泄气机属木，脾运化饮食属土，肺沉降气机并唯一可抵御外邪属金， 肾滋润全身属水</p>
+</li>
+</ul>
+<h5 id="2-2-2-2-推演络绎类"><a href="#2-2-2-2-推演络绎类" class="headerlink" title="2.2.2.2 推演络绎类"></a>2.2.2.2 推演络绎类</h5><ul>
+<li>肝-筋-目-泪-胆（肝主筋，开窍于目，在液为泪）肝胆筋目泪关联较大因而共同归类与木</li>
+</ul>
+<h4 id="2-2-3-基本内容"><a href="#2-2-3-基本内容" class="headerlink" title="2.2.3 基本内容"></a>2.2.3 基本内容</h4><ul>
+<li><p>五行的相生与相克</p>
+<ul>
+<li>相生： 五行存在着有序的递相资生，助长和促进关系<ul>
+<li>木生火，火生土，土生金，金生水，水生木</li>
+</ul>
+</li>
+<li>相克： 五行存在着有序的递相克制，制约关系<ul>
+<li>木克土，土克水，水克火，火克金，金克木<br>  <img src="/assets/TCM/wuxingshengke.png" alt="wuxingshengke.png"><blockquote>
+<p>速记：（左手指头编号）木火土金水，顺时针，顺序相生，隔一相克</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p>	</p>
+</li>
+<li><p>五行的制化与胜复</p>
+<ul>
+<li>制化： 利用相生相克来制约和生化，例如木多了，加火消耗木，减少水制约木等</li>
+<li>胜复（用的不广）： 其中一行亢盛引起其所不胜的报复性制约，而使五行之间复归与协调平衡，即阈值内自平衡</li>
+</ul>
+</li>
+<li><p>五行的相相乘与相侮（病态的相生相克）</p>
+<ul>
+<li>相乘: 五行中对其所胜的过度制约或克制<ul>
+<li>木乘土，土乘水，水乘火，火乘金，金乘木<blockquote>
+<p>例如木：土&#x3D; 2：1</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>相侮：五行中对所不胜的反向制约与克制，即反克<ul>
+<li>土侮木，水侮土，火侮水，金侮火，木侮金<blockquote>
+<p>例如：木：土&#x3D;1：2</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>五行的母子相及（暂时略过）</p>
+</li>
+</ul>
+<h4 id="2-2-4-五行学说在中医中应用"><a href="#2-2-4-五行学说在中医中应用" class="headerlink" title="2.2.4 五行学说在中医中应用"></a>2.2.4 五行学说在中医中应用</h4><ul>
+<li><p>说明五脏的生理功能及其相互关系</p>
+<ul>
+<li>说明五脏的生理特点：五行与五脏挂钩</li>
+<li>构建天人一体的五脏系统：例如肾主水，冬天可能肾病更甚</li>
+<li>说明五脏之间的生理联系<ul>
+<li>相生<ul>
+<li>木生火：肝助心</li>
+<li>火生土：心助脾</li>
+<li>土生金：脾助肺</li>
+<li>金生水：肺助肾</li>
+<li>水生木：肾助肝</li>
+</ul>
+</li>
+<li>相克	<ul>
+<li>木克土：肝协（调）脾</li>
+<li>火克金：心协肺</li>
+<li>土克水：脾协肾</li>
+<li>金克木：肺协肝</li>
+<li>水克火：肾协心</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>说明五脏病变的相互影响<ul>
+<li>相生关系传变<ul>
+<li>例如肾病：及子-肝；犯母-肺；乘-心；侮-脾</li>
+</ul>
+</li>
+<li>相克关系传变</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>用于疾病的诊断</p>
+<ul>
+<li>确定部位<ul>
+<li>例如，面色青（肝），喜吃酸（肝）， 消化症状（脾）</li>
+</ul>
+</li>
+<li>推断轻重</li>
+</ul>
+</li>
+<li><p>指导疾病治疗</p>
+<ul>
+<li>指导脏腑用药：四气五味<ul>
+<li>黑入肾几乎，红入血八成，白入肺七成， 黄入脾六成，青入肝一般</li>
+<li>辛入肺九成， 咸入肾八成，甘入脾一般，酸入肝七成， 苦入心较低</li>
+</ul>
+</li>
+<li>控制疾病传变</li>
+<li>确定治则与治法<ul>
+<li>治则<ul>
+<li>相生：虚则补其母，实则泄其子<ul>
+<li>如，心肝火盛，心肝共泄， 泄心火为主</li>
+</ul>
+</li>
+<li>相克：抑强扶弱</li>
+</ul>
+</li>
+<li>治法举例<ul>
+<li>相克治法<ul>
+<li>抑木扶土法：疏肝健脾</li>
+<li>培土制水法：补脾利水</li>
+<li>佐金平木法： 泻肝清肺</li>
+<li>泄南补北法： 泄心火滋肾阴</li>
+</ul>
+</li>
+<li>相生治法<ul>
+<li>滋水涵木法：滋肾阴以养肝阴</li>
+<li>溢火补土法： 温肾阳以补脾阳</li>
+<li>培土生金法：健脾气以补肺气</li>
+<li>金水相生法：养肺阴以滋肾阴<blockquote>
+<p> 溢火补土法,在经络中温心阳以补脾阳，方剂中因为火曰炎上，心阳上升至肺部，而脾在心之下肾的位置在脾的下面，故而温肾阳以补脾阳，且肾阳为人身一切元气之根本，可温煦五脏、六腑乃至全身</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>指导疾病的针灸与取穴</li>
+<li>指导情志病的治疗（用的比较少，情志不好把控， 心理学较合适）<ul>
+<li>心在志为喜，肝在志为怒， 脾在志为思，肺在志为忧，肾在志为恐<blockquote>
+<p>所有情绪均由心发出来， 志的意思是怒从心发出来，对肝影响较大，比如思而不得则茶饭不思<br>  +治疗：怒胜思， 思胜恐， 恐胜喜，喜胜忧，忧胜怒<br>胜得意思，比如沉思最好得办法是引之发怒， 范进中举岳父一巴掌使其恢复正常</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-3-精气学说"><a href="#2-3-精气学说" class="headerlink" title="2.3 精气学说"></a>2.3 精气学说</h3><p>参考文献：</p>
+]]></content>
+      <categories>
+        <category>中医</category>
+      </categories>
+      <tags>
+        <tag>中医</tag>
       </tags>
   </entry>
   <entry>
