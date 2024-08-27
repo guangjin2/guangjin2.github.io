@@ -6,7 +6,7 @@
   <link href="http://guangjin.fun/atom.xml" rel="self"/>
   
   <link href="http://guangjin.fun/"/>
-  <updated>2024-08-26T15:35:31.654Z</updated>
+  <updated>2024-08-27T16:04:52.005Z</updated>
   <id>http://guangjin.fun/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python爬虫初探</title>
+    <link href="http://guangjin.fun/2024/08/26/Spider/"/>
+    <id>http://guangjin.fun/2024/08/26/Spider/</id>
+    <published>2024-08-25T16:00:00.000Z</published>
+    <updated>2024-08-27T16:04:52.005Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p><strong>声明</strong>：本文记录使用python抓取数据过程，仅供学习！</p></blockquote><h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h2><p>爬虫的原理总的来说就是向目标网站发送请求，然后根据需要过滤返回的数据，问题关键在于如何提取数据和破解目标网站反扒。<br>主要有两个思路<br>一是通过抓包分析获取相应取数据的api，大网站一般需要逆向模拟加密算法， 优点是取到的数据纯粹，缺点是需要分析代码，算法更新之后需要重新定分<br>二是模拟用户点击浏览器的操作，再配合分析工具提取数据，优点是简单方便，缺点执行比较慢<br>以下记录个人提取指定视频点赞数的学习过程</p><h2 id="2-环境安装"><a href="#2-环境安装" class="headerlink" title="2. 环境安装"></a>2. 环境安装</h2><ol><li>下载python </li><li>下载pythoncharm</li><li>pycharm 安装 pyinstaller(需要打包exe的话)<ul><li>pip install pyinstaller</li><li>pyinstaller -F {target.py}</li></ul></li></ol><h2 id="3-方案一"><a href="#3-方案一" class="headerlink" title="3. 方案一"></a>3. 方案一</h2><ol><li>抓包分析</li><li>打开网页，打开浏览器开发者工具，找到网络，逐个分析想要的数据是哪个请求得到的<br><img src="/assets/Spider/sp1.png" alt="sp1.png"></li><li>伪造http请求,发现返回数据为空，逐个修改请求参数发现逆向字段为a_bogus</li></ol><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">cookie = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">url=<span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="string">&#x27;?...&#x27;</span></span><br><span class="line"><span class="string">&#x27;&amp;msToken=&#x27;</span></span><br><span class="line"><span class="string">&#x27;&amp;a_bogus=&#x27;</span></span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;Accept-Language&#x27;</span>:<span class="string">&#x27;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Priority&#x27;</span>:<span class="string">&#x27;u=1, i&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Ch-Ua&#x27;</span>:<span class="string">&#x27;&quot;Microsoft Edge&quot;;v=&quot;125&quot;, &quot;Chromium&quot;;v=&quot;125&quot;, &quot;Not.A/Brand&quot;;v=&quot;24&quot;&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Ch-Ua-Mobile&#x27;</span>:<span class="string">&#x27;?0&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Ch-Ua-Platform&#x27;</span>:<span class="string">&#x27;&quot;Windows&quot;&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Fetch-Dest&#x27;</span>:<span class="string">&#x27;empty&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Fetch-Mode&#x27;</span>: <span class="string">&#x27;cors&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Fetch-Site&#x27;</span>:<span class="string">&#x27;same-origin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Accept&#x27;</span>:<span class="string">&#x27;application/json, text/plain, */*&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Accept-Encoding&#x27;</span>:<span class="string">&#x27;gzip, deflate, br, zstd&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Cookie&#x27;</span>:cookie,</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>:<span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">r = requests.get(url=url, headers=headers)</span><br><span class="line">r.encoding = <span class="string">&#x27;utf-8&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(r.content)</span><br></pre></td></tr></table></figure><ol start="4"><li>通过对调用堆栈，使用XHR断点条件断点，控制台输出来确定加密代码的位置</li><li>拷贝加密代码，测试好之后使用execjs 调用</li></ol><blockquote><p>一些静态网站也可以直接发http请求之后分析html元素，一些知名网站可以直接在网上搜索逆向分析</p></blockquote><h2 id="4-方案二"><a href="#4-方案二" class="headerlink" title="4.方案二"></a>4.方案二</h2><ol><li><p>模拟浏览器点击网页</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> lxml</span><br><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.edge.service <span class="keyword">import</span> Service</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.edge.options <span class="keyword">import</span> Options</span><br><span class="line"></span><br><span class="line">options = Options()</span><br><span class="line">options.add_argument(<span class="string">&quot;--incognito&quot;</span>)</span><br><span class="line">options.add_argument(<span class="string">&quot;--mute-audio&quot;</span>)</span><br><span class="line"><span class="comment"># 无窗口模式,更多参数参考资料2</span></span><br><span class="line"><span class="keyword">if</span> HideBroser:</span><br><span class="line">    options.add_argument(<span class="string">&quot;--headless&quot;</span>)</span><br><span class="line">    options.add_argument(<span class="string">&quot;--disable-gpu&quot;</span>)</span><br><span class="line"></span><br><span class="line">service = Service()</span><br><span class="line">browser = webdriver.Edge(service=service, options=options)</span><br><span class="line">browser.get(url=url)</span><br><span class="line">time.sleep(sec)</span><br></pre></td></tr></table></figure></li><li><p>分析网页标签重点，发现点赞数总是位于data-e2e&#x3D;video-player-digg的标签的第二个子div标签下，故而提取数据</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lxml</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line">tag = <span class="string">&#x27;data-e2e&#x27;</span></span><br><span class="line">key = <span class="string">&#x27;video-player-digg&#x27;</span></span><br><span class="line">soup = BeautifulSoup(browser.page_source, <span class="string">&#x27;lxml&#x27;</span>)</span><br><span class="line">base_tag = soup.find(<span class="string">&#x27;div&#x27;</span>, attrs=&#123;tag: key&#125;)</span><br><span class="line">children_tag = father_tag.select(<span class="string">&#x27;div&#x27;</span>)</span><br><span class="line">result = children_tag[<span class="number">2</span>].text</span><br></pre></td></tr></table></figure></li></ol><p>参考文献：</p><ol><li><a href="https://blog.csdn.net/weixin_43804047/article/details/119704965">https://blog.csdn.net/weixin_43804047/article/details/119704965</a></li><li><a href="https://peter.sh/experiments/chromium-command-line-switches/">https://peter.sh/experiments/chromium-command-line-switches/</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;声明&lt;/strong&gt;：本文记录使用python抓取数据过程，仅供学习！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;1-背景&quot;&gt;&lt;a href=&quot;#1-背景&quot; class=&quot;headerlink&quot; title=&quot;1. 背景</summary>
+      
+    
+    
+    
+    <category term="编程" scheme="http://guangjin.fun/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term="python" scheme="http://guangjin.fun/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>中医基础理论-3</title>
@@ -38,33 +65,6 @@
     
     
     <category term="中医" scheme="http://guangjin.fun/tags/%E4%B8%AD%E5%8C%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python爬虫初探</title>
-    <link href="http://guangjin.fun/2024/08/03/Spider/"/>
-    <id>http://guangjin.fun/2024/08/03/Spider/</id>
-    <published>2024-08-02T16:00:00.000Z</published>
-    <updated>2024-08-27T15:11:21.687Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p><strong>声明</strong>：本文记录使用python抓取数据过程，仅供学习！</p></blockquote><h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h2><p>爬虫的原理总的来说就是向目标网站发送请求，然后根据需要过滤返回的数据，问题关键在于如何提取数据和破解目标网站反扒。<br>主要有两个思路<br>一是通过抓包分析获取相应取数据的api，大网站一般需要逆向模拟加密算法， 优点是取到的数据纯粹，缺点是需要分析代码，算法更新之后需要重新定分<br>二是模拟用户点击浏览器的操作，再配合分析工具提取数据，优点是简单方便，缺点执行比较慢<br>以下记录个人提取指定视频点赞数的学习过程</p><h2 id="2-环境安装"><a href="#2-环境安装" class="headerlink" title="2. 环境安装"></a>2. 环境安装</h2><ol><li>下载python </li><li>下载pythoncharm</li><li>pycharm 安装 pyinstaller(需要打包exe的话)<ul><li><pre><code>pip install pyinstaller</code></pre><ul><li><pre><code>pyinstaller -F &#123;target.py&#125;</code></pre></li></ul></li></ul></li></ol><h2 id="3-方案一"><a href="#3-方案一" class="headerlink" title="3. 方案一"></a>3. 方案一</h2><ol><li>抓包分析<ul><li>打开网页，打开浏览器开发者工具，找到网络，逐个分析想要的数据是哪个请求得到的<br> <img src="/assets/Spider/sp1.png" alt="sp1.png"></li><li></li></ul></li></ol><h2 id="4-方案二"><a href="#4-方案二" class="headerlink" title="4.方案二"></a>4.方案二</h2><p>参考文献：</p><ol><li><a href="https://blog.csdn.net/weixin_43804047/article/details/119704965">https://blog.csdn.net/weixin_43804047/article/details/119704965</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;声明&lt;/strong&gt;：本文记录使用python抓取数据过程，仅供学习！&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;1-背景&quot;&gt;&lt;a href=&quot;#1-背景&quot; class=&quot;headerlink&quot; title=&quot;1. 背景</summary>
-      
-    
-    
-    
-    <category term="编程" scheme="http://guangjin.fun/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    
-    <category term="python" scheme="http://guangjin.fun/tags/python/"/>
     
   </entry>
   
@@ -303,9 +303,9 @@
     <category term="编程" scheme="http://guangjin.fun/categories/%E7%BC%96%E7%A8%8B/"/>
     
     
-    <category term="STL基础使用" scheme="http://guangjin.fun/tags/STL%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/"/>
-    
     <category term="c++" scheme="http://guangjin.fun/tags/c/"/>
+    
+    <category term="STL基础使用" scheme="http://guangjin.fun/tags/STL%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/"/>
     
   </entry>
   
