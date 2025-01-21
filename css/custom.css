@@ -1,0 +1,10 @@
+.mindmap-container {
+  width: 100% !important;  /* 设置宽度为100% */
+  height: 600px !important; /* 设置高度为600px，可以根据需要修改 */
+  margin: 0 auto; /* 居中显示 */
+}
+
+.mindmap-container iframe {
+  width: 100% !important;  /* 设置iframe宽度为100% */
+  height: 100% !important;  /* 设置iframe的高度为100% */
+}
