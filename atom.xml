@@ -6,7 +6,7 @@
   <link href="http://guangjin.fun/atom.xml" rel="self"/>
   
   <link href="http://guangjin.fun/"/>
-  <updated>2026-08-09T16:55:35.344Z</updated>
+  <updated>2026-08-11T16:14:27.565Z</updated>
   <id>http://guangjin.fun/</id>
   
   <author>
@@ -17,26 +17,54 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>经济学原理</title>
-    <link href="http://guangjin.fun/2026/08/08/Economics/"/>
-    <id>http://guangjin.fun/2026/08/08/Economics/</id>
+    <title>宏观经济学1-宏观经济的基本指标及其衡量</title>
+    <link href="http://guangjin.fun/2026/08/08/Macro_Economics_1/"/>
+    <id>http://guangjin.fun/2026/08/08/Macro_Economics_1/</id>
     <published>2026-08-07T16:00:00.000Z</published>
-    <updated>2026-08-09T16:55:35.344Z</updated>
+    <updated>2026-08-11T16:14:27.565Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p><strong>声明</strong>：本文介绍经济学原理学习记录。</p></blockquote><h1 id="经济学十个原理"><a href="#经济学十个原理" class="headerlink" title="经济学十个原理"></a>经济学十个原理</h1><ul><li>人们如何决策。 How people make decisions<ol><li>人们面临权衡取舍。 People face tradoffs.</li><li>某物的成本是为此放弃的东西。 The cost of something is what you give up to get it.</li><li>理性人思考边际量。 Rational people think at the margin.</li><li>人们会对激励做出反应。 People respond to incentives.</li></ol></li><li>人们如何相互作用。 How people interact.<ol start="5"><li>贸易使每个人收益。Trade can make everone better off.</li><li>市场通常是组织经济活动的好方法。 Markets are usually a good way to organize economic activity.</li><li>市场有时可以改进市场结果。 Governments can somtimes improve market outcomes.</li></ol></li><li>整体经济如何运行。 How the economic as a whole works.<ol start="8"><li>一国的生活水平取决于它的生产。 The standard of living depends on a conuntry’s production.</li><li>当政府发行了过多的货币时，物价上涨。 Prices rise when govermment prints too much money.</li><li>社会面临通货膨胀和失业之间的短期得失交换。 Society facecs a short-run tradeoff bettween inflation and unemployment.</li></ol></li></ul><h2 id="宏观经济学"><a href="#宏观经济学" class="headerlink" title="宏观经济学"></a>宏观经济学</h2><ul><li>定义<ul><li>萨缪尔森： 宏观经济学是把整个经济作为一个整体来进行研究的学科</li><li>高鸿业： 宏观经济学是研究社会总体的经济行为及其后果的学科</li><li>与微观经济学的区别：<ul><li>微观解决个体效益最大化，研究个量分析，资源分配</li><li>宏观解决全社会效益最大化， 研究总量分析，资源利用</li><li>微观以价格为核心，宏观以产出为核心<blockquote><p>微观在个体成本收益曲线上追求最佳配置，但可能存在某些原因失衡导致个体无法在曲线上配置最佳资源的情况，此时宏观需要解决如何将其拉回到正常成本收益曲线</p></blockquote></li></ul></li><li>分析框架： 三个部门在三个市场围绕研究对象展开的分析<ul><li>研究对象（宏观经济的“三大目标”）：就业(失业)，经济（产出），物价水平（通胀）</li><li>社会整体（宏观经济的“四大部门”）：家庭，企业，政府（，外部环境）</li><li>市场（宏观经济的“运行机制”）： 产品市场，货币市场，劳动力市场</li></ul></li></ul></li></ul><h3 id="宏观经济的基本指标及其衡量"><a href="#宏观经济的基本指标及其衡量" class="headerlink" title="宏观经济的基本指标及其衡量"></a>宏观经济的基本指标及其衡量</h3><ul><li>GDP(Gross Domestic Product): 国内生产总值<ul><li>定义：一段时间内一个地区新生产的所有最终产品和劳动的全部市场价值<ul><li>一段时间内</li><li>一个地域范围内，例如外资在国内设厂，GDP计入国内</li><li>新生产的，即流量（新增量，区别于存量）</li><li>最终产品和劳务：被最后的使用者使用而且消费掉的产品或者劳务</li><li>市场，必须是进入市场中才计入，资产自销不计</li><li>价值，用钱来衡量</li></ul></li><li>核算方法：一段时间内总产出&#x3D;总支出&#x3D;总收入（最后价值为最终购买价格，同时每个环节增值部分都等于要素提供者的收入）<ul><li>支出法：GDP &#x3D; C+I+G+（X-M），即消费+投资+政府购买+（出口额-进口额）<ul><li>家庭：纯消费者<ul><li>耐用消费品、 非耐用消费品， 服务</li></ul></li><li>企业：主要是生产者，支出认为是投资行为<ul><li>固定资产投资：新的， 不包括原材料<blockquote><p>折旧：不能一次性用完的生产资料在生产过程中产生的磨损</p></blockquote></li><li>存货投资： 新生产而没有卖出去的</li></ul></li><li>政府：<ul><li>政府购买:转移支付不能计入GDP</li></ul></li><li>净出口&#x3D;出口总额-进口总额</li></ul></li><li>收入法</li><li>生产法</li></ul></li><li>QA<ol><li>为什么从公司债中得到的利息收入能算入GDP，而从政府公债中得到的利息就不算GDP?</li><li>买卖股票赚的钱为什么不计入GDP?</li><li>生产了10个亿，卖了8个亿品动算存货投资。那明年把今年剩下的2亿库存卖出去了，明年消费支出那边就增加了2个亿，而这2个亿在今年已经算成投资支出了，明年要是再算一次消费支出，是不是就重复计算了呢?</li><li>以下各项交易能否计入我国的GDP?如果能，说明计入到哪部分，不能的话，说明理由。<br> a. 买一台二手的海信电视<br> b. 买2000股海信的股票<br> c. 海信电器库存电视增加了一万台<br> d. 也门政府购买1000台海信电视<br> e. 政府向海信电视的下岗工人提供失业救济金</li></ol></li></ul></li></ul><p>参考文献：<br><a href="https://www.bilibili.com/video/BV1nP411t7fu?spm_id_from=333.788.videopod.episodes&vd_source=86c1ad7f51cb73781eb44a0799117b7a">宏观经济学</a></p><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+    <content type="html"><![CDATA[<h2 id="宏观经济学"><a href="#宏观经济学" class="headerlink" title="宏观经济学"></a>宏观经济学</h2><ul><li>定义<ul><li>萨缪尔森： 宏观经济学是把整个经济作为一个整体来进行研究的学科</li><li>高鸿业： 宏观经济学是研究社会总体的经济行为及其后果的学科</li><li>与微观经济学的区别：<ul><li>微观解决个体效益最大化，研究个量分析，资源分配</li><li>宏观解决全社会效益最大化， 研究总量分析，资源利用</li><li>微观以价格为核心，宏观以产出为核心<blockquote><p>微观在个体成本收益曲线上追求最佳配置，但可能存在某些原因失衡导致个体无法在曲线上配置最佳资源的情况，此时宏观需要解决如何将其拉回到正常成本收益曲线</p></blockquote></li></ul></li><li>分析框架： 三个部门在三个市场围绕研究对象展开的分析<ul><li>研究对象（宏观经济的“三大目标”）：就业(失业)，经济（产出），物价水平（通胀）</li><li>社会整体（宏观经济的“四大部门”）：家庭，企业，政府（，外部环境）</li><li>市场（宏观经济的“运行机制”）： 产品市场，货币市场，劳动力市场</li></ul></li></ul></li></ul><h3 id="宏观经济的基本指标及其衡量"><a href="#宏观经济的基本指标及其衡量" class="headerlink" title="宏观经济的基本指标及其衡量"></a>宏观经济的基本指标及其衡量</h3><ul><li><p>GDP(Gross Domestic Product): 国内生产总值</p><ul><li>定义：一段时间内一个地区新生产的所有最终产品和劳动的全部市场价值<ul><li>一段时间内</li><li>一个地域范围内，例如外资在国内设厂，GDP计入国内</li><li>新生产的，即流量（新增量，区别于存量）</li><li>最终产品和劳务：被最后的使用者使用而且消费掉的产品或者劳务</li><li>市场，必须是进入市场中才计入，资产自销不计</li><li>价值，用钱来衡量</li></ul></li><li>核算方法：一段时间内总产出&#x3D;总支出&#x3D;总收入（最后价值为最终购买价格，同时每个环节增值部分都等于要素提供者的收入）<ul><li>支出法：GDP &#x3D; C+I+G+（X-M），即消费+投资+政府购买+（出口额-进口额）<ul><li>家庭：纯消费者<ul><li>耐用消费品、 非耐用消费品， 服务</li></ul></li><li>企业：主要是生产者，支出认为是投资行为<ul><li>固定资产投资：新的， 不包括原材料<blockquote><p>折旧：不能一次性用完的生产资料在生产过程中产生的磨损</p></blockquote></li><li>存货投资： 新生产而没有卖出去的</li></ul></li><li>政府：<ul><li>政府购买:转移支付不能计入GDP</li></ul></li><li>净出口&#x3D;出口总额-进口总额</li></ul></li><li>收入法（按要素成本）：GDP &#x3D; 工资+利息+利润+租金+间接税+企业转移支付+折旧+统计误差</li><li>产出法：各环节价值增值总和（或最终产品价值总和）<blockquote><p>支出法侧重描绘消费方面, 收入法侧重描绘生产成本,产出法侧重描绘劳动和服务价值增值</p></blockquote></li></ul></li><li>GDP的4大缺陷:<ol><li>GDP不能反映社会成本</li><li>GDP不能反映经济增长质量</li><li>GDP不能反映经济增长效率</li><li>GDP不能反映人民生活质量</li></ol></li><li>QA<ol><li>为什么从公司债中得到的利息收入能算入GDP，而从政府公债中得到的利息就不算GDP?</li><li>买卖股票赚的钱为什么不计入GDP?</li><li>生产了10个亿，卖了8个亿品动算存货投资。那明年把今年剩下的2亿库存卖出去了，明年消费支出那边就增加了2个亿，而这2个亿在今年已经算成投资支出了，明年要是再算一次消费支出，是不是就重复计算了呢?</li><li>以下各项交易能否计入我国的GDP?如果能，说明计入到哪部分，不能的话，说明理由。<br> a. 买一台二手的海信电视<br> b. 买2000股海信的股票<br> c. 海信电器库存电视增加了一万台<br> d. 也门政府购买1000台海信电视<br> e. 政府向海信电视的下岗工人提供失业救济金</li></ol></li></ul></li><li><p>其他指标</p><ul><li>国民生产总值GNP（Gross National Product）: 区别与GDP属地原则, GNP属人原则，几乎没什么用</li><li>国内生产净值NDP（Net Domestic Product）: NDP &#x3D; GDP-折旧</li><li>国民收入NI（National Income）: NI &#x3D; NDP-间接税- 企业转移支付+政府给企业的补贴</li><li>个人收入PI（Personal Income）: PI&#x3D;NI-企业未分配利润-公司所得税-社会保险+政府转移支付</li><li>个人可支配收入DPI（Disposable Personal Income）: PI-个税</li></ul></li><li><p>国民经济恒等式：投资&#x3D;储蓄</p></li><li><p>名义GDP和实际GDP: 考虑物价水平</p><ul><li>名义GDP： 单纯用当年的物价水平确定的全部最终产品和劳务</li><li>实际GDP： 以某一年的物价作为基期价格计算出来的全部最终产品和劳务</li></ul></li><li><p>失业的衡量</p><ul><li>失业： 有劳动能力而且想工作的人找不到工作就叫失业</li><li>失业率 &#x3D; 失业人数&#x2F;劳动力人数</li><li>缺陷<ol><li>失业结构</li><li>就业质量</li><li>容易造假</li></ol></li></ul></li><li><p>物价水平的衡量</p><ul><li><p>CPI(Consumer Price Index）:消费品价值指数，衡量消费品</p><ul><li>CPI &#x3D;（计算期加权消费品价格总和&#x2F;基期消费品加权价格总和）* 100 ， &gt;100物价上涨, &lt;100 下降<blockquote><p>（基期篮子<em>计算期间价格）&#x2F;（基期篮子</em>基期价格）</p></blockquote></li><li>缺陷：<ol><li>商品不能变</li><li>无法反应新商品淘汰了旧商品，导致CPI被高估，产生CPI替代偏向</li><li>反映不出商品质量更好或更便宜了，消费数量被高估，导致CPI被高估</li></ol></li></ul></li><li><p>PPI(Producer Price Index):生产者价格指数，衡量工业品</p></li><li><p>GDP平减指数： 衡量所有</p><ul><li>GDP平减指数 &#x3D; 名义GDP&#x2F;实际GDP &#x3D; （计算期间篮子<em>计算期间价格）&#x2F;（计算期间篮子</em>基期价格）</li><li>缺点：<ol><li>太笼统，缺乏针对性</li><li>计算期篮子内的新商品，基期可能不存在</li></ol></li></ul></li></ul><blockquote><p>CPI是“用老眼光看新世界”（拉式指数，使用基期的消费结构作为权重），GDP平减指数是“用新眼光看新世界”（帕式， 计算期的实际产出结构作为权重）。前者容易高估通胀，后者更贴近实际经济结构，但计算更复杂、发布更滞后。</p></blockquote></li></ul><p>参考文献：<br><a href="https://www.bilibili.com/video/BV1nP411t7fu?spm_id_from=333.788.videopod.episodes&vd_source=86c1ad7f51cb73781eb44a0799117b7a">宏观经济学（老邢）</a></p><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
     
     
       
       
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;声明&lt;/strong&gt;：本文介绍经济学原理学习记录。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&quot;经济学十个原理&quot;&gt;&lt;a href=&quot;#经济学十个原理&quot; class=&quot;headerlink&quot; title=&quot;经济学十个原理&quot;&gt;</summary>
+    <summary type="html">&lt;h2 id=&quot;宏观经济学&quot;&gt;&lt;a href=&quot;#宏观经济学&quot; class=&quot;headerlink&quot; title=&quot;宏观经济学&quot;&gt;&lt;/a&gt;宏观经济学&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;定义&lt;ul&gt;
+&lt;li&gt;萨缪尔森： 宏观经济学是把整个经济作为一个整体来进行研究的学科&lt;/li&gt;
+&lt;li&gt;</summary>
       
     
     
     
-    <category term="经济学原理" scheme="http://guangjin.fun/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    <category term="经济学" scheme="http://guangjin.fun/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
+    
+    
+    <category term="经济学原理" scheme="http://guangjin.fun/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
+    
+    <category term="宏观经济学" scheme="http://guangjin.fun/tags/%E5%AE%8F%E8%A7%82%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>经济学原理</title>
+    <link href="http://guangjin.fun/2026/08/07/Economics/"/>
+    <id>http://guangjin.fun/2026/08/07/Economics/</id>
+    <published>2026-08-06T16:00:00.000Z</published>
+    <updated>2026-08-11T16:20:21.759Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="经济学十个原理"><a href="#经济学十个原理" class="headerlink" title="经济学十个原理"></a>经济学十个原理</h1><ul><li>人们如何决策。 How people make decisions<ol><li>人们面临权衡取舍。 People face tradoffs.</li><li>某物的成本是为此放弃的东西。 The cost of something is what you give up to get it.</li><li>理性人思考边际量。 Rational people think at the margin.</li><li>人们会对激励做出反应。 People respond to incentives.</li></ol></li><li>人们如何相互作用。 How people interact.<ol start="5"><li>贸易使每个人收益。Trade can make everone better off.</li><li>市场通常是组织经济活动的好方法。 Markets are usually a good way to organize economic activity.</li><li>市场有时可以改进市场结果。 Governments can somtimes improve market outcomes.</li></ol></li><li>整体经济如何运行。 How the economic as a whole works.<ol start="8"><li>一国的生活水平取决于它的生产。 The standard of living depends on a conuntry’s production.</li><li>当政府发行了过多的货币时，物价上涨。 Prices rise when govermment prints too much money.</li><li>社会面临通货膨胀和失业之间的短期得失交换。 Society facecs a short-run tradeoff bettween inflation and unemployment.</li></ol></li></ul><p>参考文献：</p><ol><li>《经济学原理》 曼昆</li></ol><script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;经济学十个原理&quot;&gt;&lt;a href=&quot;#经济学十个原理&quot; class=&quot;headerlink&quot; title=&quot;经济学十个原理&quot;&gt;&lt;/a&gt;经济学十个原理&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;人们如何决策。 How people make decisions&lt;ol&gt;
+&lt;li&gt;人们</summary>
+      
+    
+    
+    
+    <category term="经济学" scheme="http://guangjin.fun/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
     
     
     <category term="经济学原理" scheme="http://guangjin.fun/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
@@ -99,8 +127,8 @@
   
   <entry>
     <title>中医诊断学</title>
-    <link href="http://guangjin.fun/2024/11/03/TCMD1/"/>
-    <id>http://guangjin.fun/2024/11/03/TCMD1/</id>
+    <link href="http://guangjin.fun/2024/11/03/TCMD_1/"/>
+    <id>http://guangjin.fun/2024/11/03/TCMD_1/</id>
     <published>2024-11-02T16:00:00.000Z</published>
     <updated>2025-01-20T15:12:04.907Z</updated>
     
@@ -203,8 +231,8 @@
   
   <entry>
     <title>中医基础理论-2</title>
-    <link href="http://guangjin.fun/2023/12/14/TCM2/"/>
-    <id>http://guangjin.fun/2023/12/14/TCM2/</id>
+    <link href="http://guangjin.fun/2023/12/14/TCM_2/"/>
+    <id>http://guangjin.fun/2023/12/14/TCM_2/</id>
     <published>2023-12-13T16:00:00.000Z</published>
     <updated>2024-11-06T16:02:20.458Z</updated>
     
@@ -228,8 +256,8 @@
   
   <entry>
     <title>中医基础理论-1</title>
-    <link href="http://guangjin.fun/2023/11/16/TCM/"/>
-    <id>http://guangjin.fun/2023/11/16/TCM/</id>
+    <link href="http://guangjin.fun/2023/11/16/TCM_1/"/>
+    <id>http://guangjin.fun/2023/11/16/TCM_1/</id>
     <published>2023-11-15T16:00:00.000Z</published>
     <updated>2024-05-18T07:17:22.164Z</updated>
     
@@ -392,8 +420,8 @@
   
   <entry>
     <title>c++快速入门（3）--STL</title>
-    <link href="http://guangjin.fun/2022/10/22/CPPBase3/"/>
-    <id>http://guangjin.fun/2022/10/22/CPPBase3/</id>
+    <link href="http://guangjin.fun/2022/10/22/CPPBase_3/"/>
+    <id>http://guangjin.fun/2022/10/22/CPPBase_3/</id>
     <published>2022-10-21T16:00:00.000Z</published>
     <updated>2024-08-26T15:38:32.729Z</updated>
     
@@ -419,8 +447,8 @@
   
   <entry>
     <title>c++快速入门（2）--面向对象</title>
-    <link href="http://guangjin.fun/2022/10/21/CPPBase2/"/>
-    <id>http://guangjin.fun/2022/10/21/CPPBase2/</id>
+    <link href="http://guangjin.fun/2022/10/21/CPPBase_2/"/>
+    <id>http://guangjin.fun/2022/10/21/CPPBase_2/</id>
     <published>2022-10-20T16:00:00.000Z</published>
     <updated>2024-08-26T15:38:51.119Z</updated>
     
@@ -444,8 +472,8 @@
   
   <entry>
     <title>c++快速入门（1）--基础语法</title>
-    <link href="http://guangjin.fun/2022/10/19/CPPBase1/"/>
-    <id>http://guangjin.fun/2022/10/19/CPPBase1/</id>
+    <link href="http://guangjin.fun/2022/10/19/CPPBase_1/"/>
+    <id>http://guangjin.fun/2022/10/19/CPPBase_1/</id>
     <published>2022-10-18T16:00:00.000Z</published>
     <updated>2024-08-26T15:39:01.667Z</updated>
     
