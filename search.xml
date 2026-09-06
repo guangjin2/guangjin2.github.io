@@ -3302,6 +3302,468 @@
       </tags>
   </entry>
   <entry>
+    <title>有限元基础矩阵知识</title>
+    <url>/2024/01/07/FEM_Matrix/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>声明</strong>：本文是<a href="https://www.bilibili.com/video/BV1FW411i7p6/?spm_id_from=333.999.0.0&vd_source=86c1ad7f51cb73781eb44a0799117b7a">初等有限元教程</a> 矩阵部分的学习笔记。</p>
+</blockquote>
+<h3 id="基础定义"><a href="#基础定义" class="headerlink" title="基础定义"></a>基础定义</h3><ul>
+<li><p>向量：只有一列或一行的矩阵， 通常用加粗小写字母表示<br>  <strong>a</strong> &#x3D; $\begin{bmatrix}a\\d\end{bmatrix}$</p>
+</li>
+<li><p>方阵：行数&#x3D;列数</p>
+</li>
+<li><p>转置：行列互换<br>  <strong>B</strong>&#x3D;$\begin{bmatrix}a&amp;b&amp;c\\d&amp;e&amp;f\end{bmatrix}$ <strong>B<sup>T</sup></strong>&#x3D;$\begin{bmatrix}a&amp;d\\b&amp;e\\c&amp;f\end{bmatrix}$</p>
+</li>
+<li><p>对称矩阵：<strong>B</strong>&#x3D;<strong>B<sup>T</sup></strong> 的方阵(<strong>M<sub>ij</sub></strong>&#x3D;<strong>M<sub>ji</sub></strong>)<br>  <strong>B</strong>&#x3D;$\begin{bmatrix}a&amp;b&amp;c\\b&amp;e&amp;f\\c&amp;f&amp;f\end{bmatrix}$</p>
+</li>
+<li><p>对角矩阵：仅对角线非零</p>
+</li>
+<li><p>单位矩阵<strong>I</strong>：对角线均为1的对角矩阵</p>
+</li>
+<li><p>零矩阵：所有的元素为0</p>
+</li>
+</ul>
+<h3 id="矩阵加减法"><a href="#矩阵加减法" class="headerlink" title="矩阵加减法"></a>矩阵加减法</h3><ul>
+<li>运算：相同维度矩阵下，对应位置元素相加减</li>
+<li>符合规律<ul>
+<li>$\mathbf A \pm \mathbf B &#x3D; \pm \mathbf B + \mathbf A $</li>
+<li>$\mathbf A^T \pm \mathbf B^T &#x3D; \pm \mathbf B^T + \mathbf A^T $</li>
+</ul>
+</li>
+</ul>
+<h3 id="矩阵乘法"><a href="#矩阵乘法" class="headerlink" title="矩阵乘法"></a>矩阵乘法</h3><ul>
+<li>运算：<ul>
+<li>与常数c相乘：每个元素都乘以c</li>
+<li>点积：$\mathbf a^T \mathbf b&#x3D;\begin{bmatrix}a_1&amp;a_2&amp;a_3\end{bmatrix} \begin{bmatrix}b_1\\b_2\\b_3\end{bmatrix} &#x3D; a1b1+a2b2+a3b3 &#x3D; \sum_1^n a_ib_i &#x3D;\mathbf b^T\mathbf a$</li>
+<li>向量<strong>a</strong>的长度:$|a|&#x3D;\sqrt[2]{a^2+b^2+c^2}$&#x3D; $\sqrt[2]{\mathbf a^T*\mathbf a}$ </li>
+<li>矩阵相乘：相邻矩阵维度相同<blockquote>
+<p>维度mxn * 维度nxp 得到维度mxp</p>
+</blockquote>
+<ul>
+<li><p>$\mathbf c&#x3D;\mathbf A \mathbf x &#x3D;\begin{bmatrix}A_{11} &amp;A_{12}\\A_{21}&amp;A_{22}\\A_{31}&amp;A_{32}\end{bmatrix}\begin{bmatrix}x_1\\x_2\end{bmatrix}&#x3D;\begin{bmatrix}A_{11}x_1+A_{12}x_2\\A_{21}x_1+A_{22}x_2\\A_{31}x_1+A_{32}x_2&amp;\end{bmatrix}$</p>
+</li>
+<li><p>$\mathbf C&#x3D;\mathbf A \mathbf B &#x3D;\begin{bmatrix}A_{11}&amp;A_{12}\\A_{21}&amp;A_{22}\\A_{31}&amp;A_{32}\end{bmatrix}\begin{bmatrix}B_{11}&amp;B_{12}\\B_{21}&amp;B_{22}\end{bmatrix}&#x3D;\begin{bmatrix}A_{11}B_{11}+A_{12}B_{21}&amp;A_{11}B_{12}+A_{12}B_{22}\\A_{21}B_{11}+A_{22}B_{21}&amp;A_{21}B_{12}+A_{22}B_{22}\\A_{31}B_{11}+A_{32}B_{21}&amp;A_{31}B_{32}+A_{12}B_{22}\end{bmatrix}$</p>
+</li>
+<li><p>乘法规律</p>
+<ul>
+<li>$\mathbf A\mathbf I &#x3D;\mathbf A$</li>
+<li>$(\mathbf {AB})^T &#x3D; \mathbf B^T\mathbf A^T$</li>
+<li>$(\mathbf {ABC})^T&#x3D;((\mathbf {AB})\mathbf C)^T&#x3D;\mathbf C^T(\mathbf {AB})^T&#x3D;\mathbf C^T \mathbf B^T \mathbf A^T$</li>
+<li>$(\mathbf {Ax})^T&#x3D;\mathbf x^T\mathbf A^T$</li>
+<li>$c \mathbf {AB}&#x3D;\mathbf A(c\mathbf B)$</li>
+</ul>
+</li>
+<li><p>分配律</p>
+<ul>
+<li>$(\mathbf A + \mathbf B)\mathbf x &#x3D; \mathbf {Ax}+\mathbf {Bx}$</li>
+<li>$\mathbf x^T(\mathbf A+\mathbf B)&#x3D;\mathbf x^T \mathbf A+\mathbf x^T \mathbf B$</li>
+<li>$(\mathbf A+\mathbf B)\mathbf C&#x3D;\mathbf {AC}+\mathbf {BC}$</li>
+<li>$\mathbf C(\mathbf A+\mathbf B)&#x3D;\mathbf {CA}+\mathbf {CB}$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="行列式"><a href="#行列式" class="headerlink" title="行列式"></a>行列式</h3><p>假设$\mathbf A&#x3D;\begin{bmatrix}A11&amp;A12\\A21&amp;A22\end{bmatrix}$</p>
+<ul>
+<li>对于维度为nxn方阵<strong>A</strong>可以计算A的行列式，记作det <strong>A</strong></li>
+<li>A的次（Minor）矩阵（$detM_{ik}$）<ul>
+<li>将元素所在的i行和k列删除得到一个(n-1)x(n-1)维度的方阵</li>
+<li>e.g:$detM_{11}&#x3D;A_{22}$ $detM_{21}&#x3D;A_{12}$</li>
+</ul>
+</li>
+<li>A的余子（Cofactor）矩阵($A_{ik}^c$)<ul>
+<li>$A_{ik}^c&#x3D;(-1)^{i+k}detM_{ik}$</li>
+</ul>
+</li>
+<li>A的行列式：<ul>
+<li>$detA&#x3D;\sum_1^nA_{ik}A_{ik}^c$</li>
+<li>e.g.: i&#x3D;1时<br>  $detA &#x3D; \sum_1^nA_{1k}A_{1k}^c<br>  &#x3D;A_{11}(-1)^{1+1}detM_{11}+A_{12}(-1)^{1+2}detM_{12}<br>  &#x3D;A_{11}A_{22}-A_{12}A_{21}$<blockquote>
+<p>可以用对角线快速计算（主对角线-次对角线）</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>性质：<ul>
+<li>$det\mathbf A^T&#x3D;det\mathbf A$</li>
+<li>$det\mathbf{AB}&#x3D;det\mathbf A det\mathbf B$</li>
+<li>$det(\mathbf A+\mathbf B)\neq det\mathbf A+det\mathbf B$</li>
+<li>存在整行(列)的行列式均为0的方阵的行列式为0</li>
+<li>存在两行(列)成比例的方阵行列式为0</li>
+<li>整行(列)乘以c则行列式也乘以c</li>
+<li>行(列)运算不影响行列式的值（整行放大加减另一行）</li>
+<li>整行(列)交换，行列式互换符号</li>
+</ul>
+</li>
+</ul>
+<h3 id="逆矩阵"><a href="#逆矩阵" class="headerlink" title="逆矩阵"></a>逆矩阵</h3><ul>
+<li>定义$A^{-1}A&#x3D;AA^{-1}&#x3D;I$</li>
+<li>伴随矩阵是余子式的逆矩阵 记作$adj\mathbf A$, $\mathbf A^{-1} &#x3D; adj\mathbf A&#x2F;det\mathbf A (det\mathbf A\neq 0)$</li>
+<li>当$det\mathbf A &#x3D; 0$ 时为奇异(singular)矩阵</li>
+<li>当$\mathbf A^{T} &#x3D; $\mathbf A^{-1} $时， 称为正交(Othogonal)矩阵</li>
+</ul>
+<h3 id="线性方程式"><a href="#线性方程式" class="headerlink" title="线性方程式"></a>线性方程式</h3><ul>
+<li>线性方程形如：$\mathbf Ax&#x3D; \mathbf b$<ul>
+<li>当$\mathbf b &#x3D; 0$时称为齐次(homogenoes)方程式<ul>
+<li>当$det\mathbf A&#x3D;0$时，存在非平凡(non-trivial)解</li>
+<li>当$det\mathbf A \neq 0$时，只存在存在平凡(trivial)解$x$</li>
+</ul>
+</li>
+<li>当$\mathbf b \neq 0$时称为非齐次(homogenoes)方程式，有限元通常关心这种<ul>
+<li>当$det\mathbf A \neq 0$ 时，有唯一解 $x &#x3D; \mathbf A^{-1}b$</li>
+<li>当$det\mathbf A&#x3D;0$时，没有唯一解，可能无解，也可能无数解</li>
+<li>高斯消元法， 先将矩阵三角化成上三角矩阵，则最后一个元素可解，不断向上迭代可以求得整个解</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="线性方程式切割"><a href="#线性方程式切割" class="headerlink" title="线性方程式切割"></a>线性方程式切割</h3><ul>
+<li>每个方程式切割(partition)需要注意同时切割同一行 <ul>
+<li>eg：$\mathbf Ax&#x3D;f$ 展开为 $\begin{bmatrix}<br>  a11 &amp; a12 &amp; a13 \\<br>  a21 &amp; a22 &amp; a23 \\<br>  a31 &amp; a32 &amp; a33<br>  \end{bmatrix}$ $\begin{bmatrix}<br>  x1 \\ x2 \\ x3<br>  \end{bmatrix}$ &#x3D; $\begin{bmatrix}<br>  f1 \\ f2 \\ f3<br>  \end{bmatrix}$<br>  可以将其拆解为$\begin{bmatrix}<br>  \mathbf B &amp; \mathbf C \\<br>  \mathbf D &amp; \mathbf E<br>  \end{bmatrix}$ , $\begin{bmatrix}<br>  y \\ z<br>  \end{bmatrix}$ &#x3D; $\begin{bmatrix}<br>  g \\ h<br>  \end{bmatrix}$	<br>  此时左端项为 $\mathbf B &#x3D; \begin{bmatrix}<br>  a11 &amp; a12 \\<br>  a21 &amp; a22 \\<br>  \end{bmatrix}$ $\mathbf C &#x3D; \begin{bmatrix}<br>  a13 \\ a23<br>  \end{bmatrix}$  $\mathbf D &#x3D; \begin{bmatrix}<br>  a31 &amp; a32<br>  \end{bmatrix}$ $\mathbf E &#x3D; \begin{bmatrix}<br>  a33<br>  \end{bmatrix}$<br>  未知项$\mathbf y &#x3D; \begin{bmatrix}<br>  x1 \\ x2<br>  \end{bmatrix}$ $\mathbf z &#x3D; \begin{bmatrix}<br>  x3<br>  \end{bmatrix}$<br>  右端项$\mathbf g &#x3D; \begin{bmatrix}<br>  f1 \\ f2<br>  \end{bmatrix}$ $\mathbf h &#x3D; \begin{bmatrix}<br>  f3<br>  \end{bmatrix}$</li>
+</ul>
+</li>
+</ul>
+<h3 id="矩阵的微分与积分"><a href="#矩阵的微分与积分" class="headerlink" title="矩阵的微分与积分"></a>矩阵的微分与积分</h3><p>每个矩阵对应元素做积分或微分即可</p>
+<p>参考文献：<br>1.MD数学公式参考<a href="https://www.cnblogs.com/blknemo/p/16745637.html">https://www.cnblogs.com/blknemo/p/16745637.html</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>数学</category>
+      </categories>
+      <tags>
+        <tag>有限元</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>宏观经济学1-宏观经济的基本指标及其衡量</title>
+    <url>/2026/08/08/Macro_Economics_1/</url>
+    <content><![CDATA[<h2 id="宏观经济学"><a href="#宏观经济学" class="headerlink" title="宏观经济学"></a>宏观经济学</h2><ul>
+<li>定义<ul>
+<li>萨缪尔森： 宏观经济学是把整个经济作为一个整体来进行研究的学科</li>
+<li>高鸿业： 宏观经济学是研究社会总体的经济行为及其后果的学科</li>
+<li>与微观经济学的区别：<ul>
+<li>微观解决个体效益最大化，研究个量分析，资源分配</li>
+<li>宏观解决全社会效益最大化， 研究总量分析，资源利用</li>
+<li>微观以价格为核心，宏观以产出为核心<blockquote>
+<p>微观在个体成本收益曲线上追求最佳配置，但可能存在某些原因失衡导致个体无法在曲线上配置最佳资源的情况，此时宏观需要解决如何将其拉回到正常成本收益曲线</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>分析框架： 三个部门在三个市场围绕研究对象展开的分析<ul>
+<li>研究对象（宏观经济的“三大目标”）：就业(失业)，经济（产出），物价水平（通胀）</li>
+<li>社会整体（宏观经济的“四大部门”）：家庭，企业，政府（，外部环境）</li>
+<li>市场（宏观经济的“运行机制”）： 产品市场，货币市场，劳动力市场</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="宏观经济的基本指标及其衡量"><a href="#宏观经济的基本指标及其衡量" class="headerlink" title="宏观经济的基本指标及其衡量"></a>宏观经济的基本指标及其衡量</h3><h4 id="国内生产总值GDP"><a href="#国内生产总值GDP" class="headerlink" title="国内生产总值GDP"></a>国内生产总值GDP</h4><ul>
+<li>GDP(Gross Domestic Product): 一段时间内一个地区新生产的所有最终产品和劳动的全部市场价值<ul>
+<li>一段时间内</li>
+<li>一个地域范围内，例如外资在国内设厂，GDP计入国内</li>
+<li>新生产的，即流量（新增量，区别于存量）</li>
+<li>最终产品和劳务：被最后的使用者使用而且消费掉的产品或者劳务</li>
+<li>市场，必须是进入市场中才计入，资产自销不计</li>
+<li>价值，用钱来衡量</li>
+</ul>
+</li>
+<li>核算方法：一段时间内总产出&#x3D;总支出&#x3D;总收入（最后价值为最终购买价格，同时每个环节增值部分都等于要素提供者的收入）<ul>
+<li>支出法：GDP &#x3D; C+I+G+（X-M），即消费+投资+政府购买+（出口额-进口额）<ul>
+<li>家庭：纯消费者<ul>
+<li>耐用消费品、 非耐用消费品、 服务</li>
+</ul>
+</li>
+<li>企业：主要是生产者，支出认为是投资行为<ul>
+<li>固定资产投资：新的， 不包括原材料<blockquote>
+<p>折旧：不能一次性用完的生产资料在生产过程中产生的磨损</p>
+</blockquote>
+</li>
+<li>存货投资： 新生产而没有卖出去的</li>
+</ul>
+</li>
+<li>政府：<ul>
+<li>政府购买:转移支付不能计入GDP</li>
+</ul>
+</li>
+<li>净出口&#x3D;出口总额-进口总额</li>
+</ul>
+</li>
+<li>收入法（按要素成本）：GDP &#x3D; 工资+利息+利润+租金+间接税+企业转移支付+折旧+统计误差</li>
+<li>产出法：各环节价值增值总和（或最终产品价值总和）<blockquote>
+<p>支出法侧重描绘消费方面, 收入法侧重描绘生产成本,产出法侧重描绘劳动和服务价值增值</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>GDP的4大缺陷:<ol>
+<li>GDP不能反映社会成本</li>
+<li>GDP不能反映经济增长质量</li>
+<li>GDP不能反映经济增长效率</li>
+<li>GDP不能反映人民生活质量</li>
+</ol>
+</li>
+<li>QA<ol>
+<li>为什么从公司债中得到的利息收入能算入GDP，而从政府公债中得到的利息就不算GDP?</li>
+<li>买卖股票赚的钱为什么不计入GDP?</li>
+<li>生产了10个亿，卖了8个亿品动算存货投资。那明年把今年剩下的2亿库存卖出去了，明年消费支出那边就增加了2个亿，而这2个亿在今年已经算成投资支出了，明年要是再算一次消费支出，是不是就重复计算了呢?</li>
+<li>以下各项交易能否计入我国的GDP?如果能，说明计入到哪部分，不能的话，说明理由。<br> a. 买一台二手的海信电视<br> b. 买2000股海信的股票<br> c. 海信电器库存电视增加了一万台<br> d. 也门政府购买1000台海信电视<br> e. 政府向海信电视的下岗工人提供失业救济金</li>
+</ol>
+</li>
+</ul>
+<h4 id="其他指标"><a href="#其他指标" class="headerlink" title="其他指标"></a>其他指标</h4><ul>
+<li>国民生产总值GNP（Gross National Product）: 区别与GDP属地原则, GNP属人原则，几乎没什么用</li>
+<li>国内生产净值NDP（Net Domestic Product）: NDP &#x3D; GDP-折旧</li>
+<li>国民收入NI（National Income）: NI &#x3D; NDP-间接税- 企业转移支付+政府给企业的补贴</li>
+<li>个人收入PI（Personal Income）: PI&#x3D;NI-企业未分配利润-公司所得税-社会保险+政府转移支付</li>
+<li>个人可支配收入DPI（Disposable Personal Income）: PI-个税</li>
+</ul>
+<h4 id="国民经济恒等式"><a href="#国民经济恒等式" class="headerlink" title="国民经济恒等式"></a>国民经济恒等式</h4><ul>
+<li>投资&#x3D;储蓄</li>
+</ul>
+<h4 id="名义GDP和实际GDP"><a href="#名义GDP和实际GDP" class="headerlink" title="名义GDP和实际GDP"></a>名义GDP和实际GDP</h4><ul>
+<li>名义GDP： 单纯用当年的物价水平确定的全部最终产品和劳务</li>
+<li>实际GDP： 以某一年的物价作为基期价格计算出来的全部最终产品和劳务</li>
+</ul>
+<h4 id="失业的衡量"><a href="#失业的衡量" class="headerlink" title="失业的衡量"></a>失业的衡量</h4><ul>
+<li>失业： 有劳动能力而且想工作的人找不到工作就叫失业</li>
+<li>失业率 &#x3D; 失业人数&#x2F;劳动力人数</li>
+<li>缺陷<ol>
+<li>失业结构</li>
+<li>就业质量</li>
+<li>容易造假</li>
+</ol>
+</li>
+</ul>
+<h4 id="物价水平的衡量"><a href="#物价水平的衡量" class="headerlink" title="物价水平的衡量"></a>物价水平的衡量</h4><ul>
+<li><p>CPI(Consumer Price Index）:消费品价值指数，衡量消费品</p>
+<ul>
+<li>CPI &#x3D;（计算期加权消费品价格总和&#x2F;基期消费品加权价格总和）* 100 ， &gt;100物价上涨, &lt;100 下降<blockquote>
+<p>（基期篮子*计算期间价格）&#x2F;（基期篮子*基期价格）</p>
+</blockquote>
+</li>
+<li>缺陷：<ol>
+<li>商品不能变</li>
+<li>无法反应新商品淘汰了旧商品，导致CPI被高估，产生CPI替代偏向</li>
+<li>反映不出商品质量更好或更便宜了，消费数量被高估，导致CPI被高估</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>PPI(Producer Price Index):生产者价格指数，衡量工业品</p>
+</li>
+<li><p>GDP平减指数： 衡量所有</p>
+<ul>
+<li>GDP平减指数 &#x3D; 名义GDP&#x2F;实际GDP &#x3D; （计算期间篮子*计算期间价格）&#x2F;（计算期间篮子*基期价格）</li>
+<li>缺点：<ol>
+<li>太笼统，缺乏针对性</li>
+<li>计算期篮子内的新商品，基期可能不存在</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>CPI是“用老眼光看新世界”（拉式指数，使用基期的消费结构作为权重），GDP平减指数是“用新眼光看新世界”（帕式， 计算期的实际产出结构作为权重）。前者容易高估通胀，后者更贴近实际经济结构，但计算更复杂、发布更滞后。</p>
+</blockquote>
+</li>
+</ul>
+<p>参考文献：<br><a href="https://www.bilibili.com/video/BV1nP411t7fu?spm_id_from=333.788.videopod.episodes&vd_source=86c1ad7f51cb73781eb44a0799117b7a">宏观经济学（老邢）</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>经济学</category>
+      </categories>
+      <tags>
+        <tag>经济学原理</tag>
+        <tag>宏观经济学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>宏观经济学2-国民收入决定理论</title>
+    <url>/2026/08/12/Macro_Economics_2/</url>
+    <content><![CDATA[<h3 id="国民收入决定理论"><a href="#国民收入决定理论" class="headerlink" title="国民收入决定理论"></a>国民收入决定理论</h3><h4 id="1-凯恩斯定律和萨伊定律"><a href="#1-凯恩斯定律和萨伊定律" class="headerlink" title="1.凯恩斯定律和萨伊定律"></a>1.凯恩斯定律和萨伊定律</h4><ul>
+<li><p>凯恩斯定律</p>
+<ul>
+<li>需求决定供给和均衡产出，一个经济社会的总产出是由需求决定的。</li>
+<li>条件： 生产力较高，生产资料足够</li>
+<li>看的见的手： 市场需要靠政府制定看得见的明确规则来调整。</li>
+</ul>
+</li>
+<li><p>萨伊定律</p>
+<ul>
+<li>供给会创造自己的需求(供给决定需求)</li>
+<li>条件：生产力不能太高，物资匮乏</li>
+<li>看不见的手:市场靠看不见的潜规则自我调整</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-均衡产出"><a href="#2-均衡产出" class="headerlink" title="2.均衡产出"></a>2.均衡产出</h4><ul>
+<li>需求决定供给， 企业的任务是配合需求确定产量， 没有能力改变价格<ul>
+<li>均衡时:1.总供给&#x3D;总需求&#x3D;总产出2.短期内物价水平有粘性</li>
+<li>区别于第一章，总产出不一定等于总支出(核算时相等，但经济发生中不一定总相等)</li>
+<li>计划投资i&#x3D;计划投资s<ul>
+<li>总支出(总需求)E&#x3D;消费+投资&#x3D;c+i</li>
+<li>总收入(总供给)y&#x3D;消费+储蓄&#x3D;c+s</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-消费"><a href="#3-消费" class="headerlink" title="3.消费"></a>3.消费</h4><ul>
+<li>影响因素： 收入、价格、利率、贫富差距、偏好、家庭财产、信用等级、年龄、风俗、社会保障等<ul>
+<li>其中以收入影响最为重要<ul>
+<li>消费函数y &#x3D; f(x)</li>
+<li>边际消费倾向（MPC, Marginal Propensity to Consume）&#x3D; 消费变化量&#x2F;收入变化量 &#x3D; Δc&#x2F;Δy,通常是递减的</li>
+<li>平均消费倾向（APC, Average Propensity to Consume）&#x3D; 消费&#x2F;收入 &#x3D; c&#x2F;y, 通常是递减的<table>
+<thead>
+<tr>
+<th align="center">消费函数</th>
+<th align="center">MPC</th>
+<th align="center">APC</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><img src="/assets/MacroEcon/p1.png" alt="p1.png"></td>
+<td align="center"><img src="/assets/MacroEcon/p2.png" alt="p2.png"></td>
+<td align="center"><img src="/assets/MacroEcon/p3.png" alt="p3.png"></td>
+</tr>
+</tbody></table>
+</li>
+<li>边际储蓄倾向(MPS,Marginal Propensity to Save): MPC[边际消费倾向]+MPS[边际储蓄倾向]&#x3D;1, 通常是递增的</li>
+<li>平均储蓄倾向(APS,Average Propensity to Save): APC[平均消费倾向]+APS[平均储蓄倾向]&#x3D;1, 通常是递增的<br><img src="/assets/MacroEcon/p4.png" alt="p4.png"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-消费函数和储蓄函数"><a href="#4-消费函数和储蓄函数" class="headerlink" title="4.	消费函数和储蓄函数"></a>4.	消费函数和储蓄函数</h4><ul>
+<li>消费函数: c &#x3D; α+βy<ul>
+<li>α:自主消费，维持正常生活的最低消费</li>
+<li>β:边际消费倾向(MPC)</li>
+<li>βy:引致消费</li>
+<li>APC &#x3D; c&#x2F;y &#x3D; (α+βy)&#x2F;y &#x3D; α&#x2F;y+β</li>
+</ul>
+</li>
+<li>储蓄函数: s &#x3D; y-c &#x3D; y-(α+βy) &#x3D; -α+(1-β)y</li>
+<li>均衡产出公式（二部门）<ul>
+<li>y &#x3D; c+i &#x3D; α+βy+i &#x3D;&gt; y&#x3D;(α+i)&#x2F;(1-β) </li>
+<li>y &#x3D; c+s &#x3D; c+i &#x3D; c-α+(1-β)y &#x3D;&gt; y&#x3D;(α+i)&#x2F;(1-β) </li>
+<li>应用:α、β 易统计且短期不怎么变化，假设知道计划投资i,则可以算出均衡产出y和消费c，可知均衡产出主要随投资i变化而变化</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-投资乘数"><a href="#5-投资乘数" class="headerlink" title="5. 投资乘数"></a>5. 投资乘数</h4><blockquote>
+<p><strong>小写字母</strong>代表经济变量的<strong>实际值</strong>, 剔除了价格影响之后的真实价值。<br><strong>大写字母</strong>表示经济变量的<strong>名义值</strong>。</p>
+</blockquote>
+<ul>
+<li>投资乘数： 产生的变化是引起产生这种变化的投资的多少倍数<ul>
+<li>投资:花钱买新的生产资料，或者购买新的生产要素</li>
+<li>投资乘数&#x3D;1&#x2F;(1-MPC) &#x3D; 1&#x2F;(1-β)&#x3D; 1&#x2F;MPS<table>
+<thead>
+<tr>
+<th align="center">定义</th>
+<th align="center">传递形成等比数列</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><img src="/assets/MacroEcon/p5.png" alt="p5.png"></td>
+<td align="center"><img src="/assets/MacroEcon/p6.png" alt="p6.png"></td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="6-多部门均衡与各种乘数"><a href="#6-多部门均衡与各种乘数" class="headerlink" title="6.多部门均衡与各种乘数"></a>6.多部门均衡与各种乘数</h4><ul>
+<li><p>三部门均衡产出</p>
+<ul>
+<li>y &#x3D; c+i+g</li>
+<li>c &#x3D; α+β(y-t), t为税收，y-t即可支配收入</li>
+<li>由上两式可得y&#x3D;(α+i+g-β)&#x2F;(1-β)</li>
+</ul>
+</li>
+<li><p>政府购买乘数： 产生得变化是引起产生这种变化的政府购买变化的多少倍数</p>
+<ul>
+<li>$k_g &#x3D; \frac{\Delta y}{\Delta g} \quad$ &#x3D; 1&#x2F;(1-β)<ul>
+<li>注意区别投资乘数，这里的β是扣除可支配收入后的消费边际倾向</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>税收乘数:均衡产出的变化量是引起均衡产出这种变化的政府税收变化量的多少倍</p>
+<ul>
+<li>$k_t &#x3D; \frac{\Delta y}{\Delta t} \quad$ &#x3D; -β&#x2F;（1-β）</li>
+</ul>
+</li>
+<li><p>转移支付乘数:均衡产出的变化量是引起均衡产出这种变化的政府转移支付变化量的多少倍</p>
+<ul>
+<li>$ k_{t_r} &#x3D; \frac{\Delta y}{\Delta t_r} \quad $ &#x3D; β&#x2F;(1-β)</li>
+</ul>
+</li>
+<li><p>平衡预算乘数:政府购买(支)和税收(收)增加同样数量，也就是政府预算平衡时，总产出多出来那部分与政府收、支变化量的比率。</p>
+<ul>
+<li>$ \Delta y_{\text{(多余)}} &#x3D; k_g \Delta g + k_t \Delta t $</li>
+<li>只考虑税收是定量税的情况下，总是等于1</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>助记： 跟家庭消费相关的乘数分子均与β相关</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">政府购买乘数</th>
+<th align="center">税收乘数</th>
+<th align="center">转移支付乘数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><img src="/assets/MacroEcon/p7.png" alt="p7.png"></td>
+<td align="center"><img src="/assets/MacroEcon/p8.png" alt="p8.png"></td>
+<td align="center"><img src="/assets/MacroEcon/p9.png" alt="p9.png"></td>
+</tr>
+</tbody></table>
+<h4 id="7-节俭悖论"><a href="#7-节俭悖论" class="headerlink" title="7.节俭悖论"></a>7.节俭悖论</h4><ul>
+<li>节俭悖论:家庭勤俭节约，会让国家变穷;而国家要富，家庭就得挥霍无度，败家<ul>
+<li>凯恩斯定律更适合低迷的经济，经济越热，凯恩斯定律(刺激需求)，效果越差。</li>
+</ul>
+</li>
+</ul>
+<h4 id="8-外贸乘数"><a href="#8-外贸乘数" class="headerlink" title="8.外贸乘数"></a>8.外贸乘数</h4><ul>
+<li>四部门总产出y &#x3D; c+i+g+nx, nx&#x3D;x(出口)-m(进口)<ul>
+<li><strong>外生变量</strong>:一种变量，能影响系统中其他变量，而本身却不受系统以及其他变量影响。<ul>
+<li>出口是外生变量， 进口是内生变量</li>
+</ul>
+</li>
+<li>$m &#x3D; m_0 + \gamma y$， 只考虑进口受收入影响时<ul>
+<li>$m_0$: 自发性进口</li>
+<li>$\gamma$： 边际进口倾向</li>
+</ul>
+</li>
+<li>$y&#x3D;(\alpha+\beta(y-t+t_r))+i+g+x-(m_0+\gamma y)$<ul>
+<li>整理得： $ y &#x3D; \frac{\alpha + i + g - \beta t + \beta t_r + x - m_0}{1 - \beta + \gamma} $</li>
+<li>求乘数即是对相关项的求偏导<ul>
+<li>外贸乘数： $ \frac{dy}{dx} &#x3D; \frac{1}{1 - \beta + \gamma} $</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>参考文献：<br><a href="https://www.bilibili.com/video/BV1nP411t7fu?spm_id_from=333.788.videopod.episodes&vd_source=86c1ad7f51cb73781eb44a0799117b7a">宏观经济学（老邢）</a></p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>经济学</category>
+      </categories>
+      <tags>
+        <tag>经济学原理</tag>
+        <tag>宏观经济学</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>c++快速入门（3）--STL</title>
     <url>/2022/10/22/CPPBase_3/</url>
     <content><![CDATA[<blockquote>
@@ -5153,282 +5615,130 @@
       </tags>
   </entry>
   <entry>
-    <title>有限元基础矩阵知识</title>
-    <url>/2024/01/07/FEM_Matrix/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>声明</strong>：本文是<a href="https://www.bilibili.com/video/BV1FW411i7p6/?spm_id_from=333.999.0.0&vd_source=86c1ad7f51cb73781eb44a0799117b7a">初等有限元教程</a> 矩阵部分的学习笔记。</p>
-</blockquote>
-<h3 id="基础定义"><a href="#基础定义" class="headerlink" title="基础定义"></a>基础定义</h3><ul>
-<li><p>向量：只有一列或一行的矩阵， 通常用加粗小写字母表示<br>  <strong>a</strong> &#x3D; $\begin{bmatrix}a\\d\end{bmatrix}$</p>
-</li>
-<li><p>方阵：行数&#x3D;列数</p>
-</li>
-<li><p>转置：行列互换<br>  <strong>B</strong>&#x3D;$\begin{bmatrix}a&amp;b&amp;c\\d&amp;e&amp;f\end{bmatrix}$ <strong>B<sup>T</sup></strong>&#x3D;$\begin{bmatrix}a&amp;d\\b&amp;e\\c&amp;f\end{bmatrix}$</p>
-</li>
-<li><p>对称矩阵：<strong>B</strong>&#x3D;<strong>B<sup>T</sup></strong> 的方阵(<strong>M<sub>ij</sub></strong>&#x3D;<strong>M<sub>ji</sub></strong>)<br>  <strong>B</strong>&#x3D;$\begin{bmatrix}a&amp;b&amp;c\\b&amp;e&amp;f\\c&amp;f&amp;f\end{bmatrix}$</p>
-</li>
-<li><p>对角矩阵：仅对角线非零</p>
-</li>
-<li><p>单位矩阵<strong>I</strong>：对角线均为1的对角矩阵</p>
-</li>
-<li><p>零矩阵：所有的元素为0</p>
-</li>
+    <title>宏观经济学3-国民收入的决定</title>
+    <url>/2026/09/01/Macro_Economics_3/</url>
+    <content><![CDATA[<h3 id="国民收入决定理论"><a href="#国民收入决定理论" class="headerlink" title="国民收入决定理论"></a>国民收入决定理论</h3><h4 id="1-IS-LM曲线"><a href="#1-IS-LM曲线" class="headerlink" title="1.IS-LM曲线"></a>1.IS-LM曲线</h4><ul>
+<li>“IS-LM”模型是凯恩斯流派宏观经济学的核心逻辑理论和思想体系，目前主流的凯恩斯主义宏观经济学，对宏观经济的分析，基本都是从“IS-LM”模型出发的。<ul>
+<li>IS指的是一条曲线，LM指的也是一条曲线</li>
+<li>IS曲线，指的是产品市场均衡的时候，产出y和利率r的关系。<ul>
+<li>I指的是投资Investment，S指的是储蓄Saving</li>
+<li>IS曲线隐含的意思是当投资i等于储蓄s的时候，产出y和利率r是一种什么关系。</li>
 </ul>
-<h3 id="矩阵加减法"><a href="#矩阵加减法" class="headerlink" title="矩阵加减法"></a>矩阵加减法</h3><ul>
-<li>运算：相同维度矩阵下，对应位置元素相加减</li>
-<li>符合规律<ul>
-<li>$\mathbf A \pm \mathbf B &#x3D; \pm \mathbf B + \mathbf A $</li>
-<li>$\mathbf A^T \pm \mathbf B^T &#x3D; \pm \mathbf B^T + \mathbf A^T $</li>
+</li>
+<li>IM曲线，货币供给。这里的L指的是对货币的需求量，M表示的是货币供给<ul>
+<li>L是单词流动性(Liquidity)的首字母， M是单词Money的首字母</li>
+<li>LM曲线表示的是在货币市场达到均衡的情况下，也就是货币需求L等于货币供给M的情况下，产出y和利率r的关系。</li>
 </ul>
 </li>
 </ul>
-<h3 id="矩阵乘法"><a href="#矩阵乘法" class="headerlink" title="矩阵乘法"></a>矩阵乘法</h3><ul>
-<li>运算：<ul>
-<li>与常数c相乘：每个元素都乘以c</li>
-<li>点积：$\mathbf a^T \mathbf b&#x3D;\begin{bmatrix}a_1&amp;a_2&amp;a_3\end{bmatrix} \begin{bmatrix}b_1\\b_2\\b_3\end{bmatrix} &#x3D; a1b1+a2b2+a3b3 &#x3D; \sum_1^n a_ib_i &#x3D;\mathbf b^T\mathbf a$</li>
-<li>向量<strong>a</strong>的长度:$|a|&#x3D;\sqrt[2]{a^2+b^2+c^2}$&#x3D; $\sqrt[2]{\mathbf a^T*\mathbf a}$ </li>
-<li>矩阵相乘：相邻矩阵维度相同<blockquote>
-<p>维度mxn * 维度nxp 得到维度mxp</p>
-</blockquote>
+</li>
+</ul>
+<p><img src="/assets/MacroEcon/p10.png" alt="p10.png"></p>
+<h4 id="2-投资函数"><a href="#2-投资函数" class="headerlink" title="2. 投资函数"></a>2. 投资函数</h4><ul>
+<li>经济学中的字母含义</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">字母</th>
+<th align="center">y</th>
+<th align="center">P</th>
+<th align="center">r</th>
+<th align="center">i</th>
+<th align="center">e</th>
+<th align="center">d</th>
+<th align="center">MEC</th>
+<th align="center">s</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">含义</td>
+<td align="center">1. 产出<br>3. 支出<br>4. 收入</td>
+<td align="center">价格（钱数）</td>
+<td align="center">利率</td>
+<td align="center">投资</td>
+<td align="center">自主投资</td>
+<td align="center">投资对利率的敏感度</td>
+<td align="center">资本边际效率</td>
+<td align="center">储蓄</td>
+</tr>
+</tbody></table>
 <ul>
-<li><p>$\mathbf c&#x3D;\mathbf A \mathbf x &#x3D;\begin{bmatrix}A_{11} &amp;A_{12}\\A_{21}&amp;A_{22}\\A_{31}&amp;A_{32}\end{bmatrix}\begin{bmatrix}x_1\\x_2\end{bmatrix}&#x3D;\begin{bmatrix}A_{11}x_1+A_{12}x_2\\A_{21}x_1+A_{22}x_2\\A_{31}x_1+A_{32}x_2&amp;\end{bmatrix}$</p>
-</li>
-<li><p>$\mathbf C&#x3D;\mathbf A \mathbf B &#x3D;\begin{bmatrix}A_{11}&amp;A_{12}\\A_{21}&amp;A_{22}\\A_{31}&amp;A_{32}\end{bmatrix}\begin{bmatrix}B_{11}&amp;B_{12}\\B_{21}&amp;B_{22}\end{bmatrix}&#x3D;\begin{bmatrix}A_{11}B_{11}+A_{12}B_{21}&amp;A_{11}B_{12}+A_{12}B_{22}\\A_{21}B_{11}+A_{22}B_{21}&amp;A_{21}B_{12}+A_{22}B_{22}\\A_{31}B_{11}+A_{32}B_{21}&amp;A_{31}B_{32}+A_{12}B_{22}\end{bmatrix}$</p>
-</li>
-<li><p>乘法规律</p>
+<li><p>经济学中的投资</p>
 <ul>
-<li>$\mathbf A\mathbf I &#x3D;\mathbf A$</li>
-<li>$(\mathbf {AB})^T &#x3D; \mathbf B^T\mathbf A^T$</li>
-<li>$(\mathbf {ABC})^T&#x3D;((\mathbf {AB})\mathbf C)^T&#x3D;\mathbf C^T(\mathbf {AB})^T&#x3D;\mathbf C^T \mathbf B^T \mathbf A^T$</li>
-<li>$(\mathbf {Ax})^T&#x3D;\mathbf x^T\mathbf A^T$</li>
-<li>$c \mathbf {AB}&#x3D;\mathbf A(c\mathbf B)$</li>
-</ul>
-</li>
-<li><p>分配律</p>
-<ul>
-<li>$(\mathbf A + \mathbf B)\mathbf x &#x3D; \mathbf {Ax}+\mathbf {Bx}$</li>
-<li>$\mathbf x^T(\mathbf A+\mathbf B)&#x3D;\mathbf x^T \mathbf A+\mathbf x^T \mathbf B$</li>
-<li>$(\mathbf A+\mathbf B)\mathbf C&#x3D;\mathbf {AC}+\mathbf {BC}$</li>
-<li>$\mathbf C(\mathbf A+\mathbf B)&#x3D;\mathbf {CA}+\mathbf {CB}$</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="行列式"><a href="#行列式" class="headerlink" title="行列式"></a>行列式</h3><p>假设$\mathbf A&#x3D;\begin{bmatrix}A11&amp;A12\\A21&amp;A22\end{bmatrix}$</p>
-<ul>
-<li>对于维度为nxn方阵<strong>A</strong>可以计算A的行列式，记作det <strong>A</strong></li>
-<li>A的次（Minor）矩阵（$detM_{ik}$）<ul>
-<li>将元素所在的i行和k列删除得到一个(n-1)x(n-1)维度的方阵</li>
-<li>e.g:$detM_{11}&#x3D;A_{22}$ $detM_{21}&#x3D;A_{12}$</li>
-</ul>
-</li>
-<li>A的余子（Cofactor）矩阵($A_{ik}^c$)<ul>
-<li>$A_{ik}^c&#x3D;(-1)^{i+k}detM_{ik}$</li>
-</ul>
-</li>
-<li>A的行列式：<ul>
-<li>$detA&#x3D;\sum_1^nA_{ik}A_{ik}^c$</li>
-<li>e.g.: i&#x3D;1时<br>  $detA &#x3D; \sum_1^nA_{1k}A_{1k}^c<br>  &#x3D;A_{11}(-1)^{1+1}detM_{11}+A_{12}(-1)^{1+2}detM_{12}<br>  &#x3D;A_{11}A_{22}-A_{12}A_{21}$<blockquote>
-<p>可以用对角线快速计算（主对角线-次对角线）</p>
+<li>仅指“能产生<strong>新资本</strong>的<strong>花钱</strong>”行为。如厂房、设备等新资本增加。(投资是一种花钱的行为，只有能让整个经济、社会实际增加新的资本时的花钱行为，才是投资)</li>
+<li>计划投资：正在进行或者还没有发生的投资，是发生在当前或者未来的投资<ul>
+<li>计划投资是内生变量， 实际投资（已实施完）是外生变量<blockquote>
+<p>注意区别于金融学投资</p>
 </blockquote>
 </li>
 </ul>
 </li>
-<li>性质：<ul>
-<li>$det\mathbf A^T&#x3D;det\mathbf A$</li>
-<li>$det\mathbf{AB}&#x3D;det\mathbf A det\mathbf B$</li>
-<li>$det(\mathbf A+\mathbf B)\neq det\mathbf A+det\mathbf B$</li>
-<li>存在整行(列)的行列式均为0的方阵的行列式为0</li>
-<li>存在两行(列)成比例的方阵行列式为0</li>
-<li>整行(列)乘以c则行列式也乘以c</li>
-<li>行(列)运算不影响行列式的值（整行放大加减另一行）</li>
-<li>整行(列)交换，行列式互换符号</li>
 </ul>
 </li>
-</ul>
-<h3 id="逆矩阵"><a href="#逆矩阵" class="headerlink" title="逆矩阵"></a>逆矩阵</h3><ul>
-<li>定义$A^{-1}A&#x3D;AA^{-1}&#x3D;I$</li>
-<li>伴随矩阵是余子式的逆矩阵 记作$adj\mathbf A$, $\mathbf A^{-1} &#x3D; adj\mathbf A&#x2F;det\mathbf A (det\mathbf A\neq 0)$</li>
-<li>当$det\mathbf A &#x3D; 0$ 时为奇异(singular)矩阵</li>
-<li>当$\mathbf A^{T} &#x3D; $\mathbf A^{-1} $时， 称为正交(Othogonal)矩阵</li>
-</ul>
-<h3 id="线性方程式"><a href="#线性方程式" class="headerlink" title="线性方程式"></a>线性方程式</h3><ul>
-<li>线性方程形如：$\mathbf Ax&#x3D; \mathbf b$<ul>
-<li>当$\mathbf b &#x3D; 0$时称为齐次(homogenoes)方程式<ul>
-<li>当$det\mathbf A&#x3D;0$时，存在非平凡(non-trivial)解</li>
-<li>当$det\mathbf A \neq 0$时，只存在存在平凡(trivial)解$x$</li>
-</ul>
-</li>
-<li>当$\mathbf b \neq 0$时称为非齐次(homogenoes)方程式，有限元通常关心这种<ul>
-<li>当$det\mathbf A \neq 0$ 时，有唯一解 $x &#x3D; \mathbf A^{-1}b$</li>
-<li>当$det\mathbf A&#x3D;0$时，没有唯一解，可能无解，也可能无数解</li>
-<li>高斯消元法， 先将矩阵三角化成上三角矩阵，则最后一个元素可解，不断向上迭代可以求得整个解</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="线性方程式切割"><a href="#线性方程式切割" class="headerlink" title="线性方程式切割"></a>线性方程式切割</h3><ul>
-<li>每个方程式切割(partition)需要注意同时切割同一行 <ul>
-<li>eg：$\mathbf Ax&#x3D;f$ 展开为 $\begin{bmatrix}<br>  a11 &amp; a12 &amp; a13 \\<br>  a21 &amp; a22 &amp; a23 \\<br>  a31 &amp; a32 &amp; a33<br>  \end{bmatrix}$ $\begin{bmatrix}<br>  x1 \\ x2 \\ x3<br>  \end{bmatrix}$ &#x3D; $\begin{bmatrix}<br>  f1 \\ f2 \\ f3<br>  \end{bmatrix}$<br>  可以将其拆解为$\begin{bmatrix}<br>  \mathbf B &amp; \mathbf C \\<br>  \mathbf D &amp; \mathbf E<br>  \end{bmatrix}$ , $\begin{bmatrix}<br>  y \\ z<br>  \end{bmatrix}$ &#x3D; $\begin{bmatrix}<br>  g \\ h<br>  \end{bmatrix}$	<br>  此时左端项为 $\mathbf B &#x3D; \begin{bmatrix}<br>  a11 &amp; a12 \\<br>  a21 &amp; a22 \\<br>  \end{bmatrix}$ $\mathbf C &#x3D; \begin{bmatrix}<br>  a13 \\ a23<br>  \end{bmatrix}$  $\mathbf D &#x3D; \begin{bmatrix}<br>  a31 &amp; a32<br>  \end{bmatrix}$ $\mathbf E &#x3D; \begin{bmatrix}<br>  a33<br>  \end{bmatrix}$<br>  未知项$\mathbf y &#x3D; \begin{bmatrix}<br>  x1 \\ x2<br>  \end{bmatrix}$ $\mathbf z &#x3D; \begin{bmatrix}<br>  x3<br>  \end{bmatrix}$<br>  右端项$\mathbf g &#x3D; \begin{bmatrix}<br>  f1 \\ f2<br>  \end{bmatrix}$ $\mathbf h &#x3D; \begin{bmatrix}<br>  f3<br>  \end{bmatrix}$</li>
-</ul>
-</li>
-</ul>
-<h3 id="矩阵的微分与积分"><a href="#矩阵的微分与积分" class="headerlink" title="矩阵的微分与积分"></a>矩阵的微分与积分</h3><p>每个矩阵对应元素做积分或微分即可</p>
-<p>参考文献：<br>1.MD数学公式参考<a href="https://www.cnblogs.com/blknemo/p/16745637.html">https://www.cnblogs.com/blknemo/p/16745637.html</a></p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>数学</category>
-      </categories>
-      <tags>
-        <tag>有限元</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>宏观经济学1-宏观经济的基本指标及其衡量</title>
-    <url>/2026/08/08/Macro_Economics_1/</url>
-    <content><![CDATA[<h2 id="宏观经济学"><a href="#宏观经济学" class="headerlink" title="宏观经济学"></a>宏观经济学</h2><ul>
-<li>定义<ul>
-<li>萨缪尔森： 宏观经济学是把整个经济作为一个整体来进行研究的学科</li>
-<li>高鸿业： 宏观经济学是研究社会总体的经济行为及其后果的学科</li>
-<li>与微观经济学的区别：<ul>
-<li>微观解决个体效益最大化，研究个量分析，资源分配</li>
-<li>宏观解决全社会效益最大化， 研究总量分析，资源利用</li>
-<li>微观以价格为核心，宏观以产出为核心<blockquote>
-<p>微观在个体成本收益曲线上追求最佳配置，但可能存在某些原因失衡导致个体无法在曲线上配置最佳资源的情况，此时宏观需要解决如何将其拉回到正常成本收益曲线</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li>分析框架： 三个部门在三个市场围绕研究对象展开的分析<ul>
-<li>研究对象（宏观经济的“三大目标”）：就业(失业)，经济（产出），物价水平（通胀）</li>
-<li>社会整体（宏观经济的“四大部门”）：家庭，企业，政府（，外部环境）</li>
-<li>市场（宏观经济的“运行机制”）： 产品市场，货币市场，劳动力市场</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="宏观经济的基本指标及其衡量"><a href="#宏观经济的基本指标及其衡量" class="headerlink" title="宏观经济的基本指标及其衡量"></a>宏观经济的基本指标及其衡量</h3><ul>
-<li><p>GDP(Gross Domestic Product): 国内生产总值</p>
+<li><p>投资的影响因素</p>
+<ol>
+<li><p>利率</p>
 <ul>
-<li>定义：一段时间内一个地区新生产的所有最终产品和劳动的全部市场价值<ul>
-<li>一段时间内</li>
-<li>一个地域范围内，例如外资在国内设厂，GDP计入国内</li>
-<li>新生产的，即流量（新增量，区别于存量）</li>
-<li>最终产品和劳务：被最后的使用者使用而且消费掉的产品或者劳务</li>
-<li>市场，必须是进入市场中才计入，资产自销不计</li>
-<li>价值，用钱来衡量</li>
+<li>资的本质:一是花钱，二是生产新资本。花钱是因，生产新资本是果</li>
+<li>投资的机会成本:利率<ul>
+<li>自有一笔钱的用途是1是投资获得投资利润，2是借出去获得利息，此时利率为利润</li>
+<li>借钱投资，此时利率为成本</li>
 </ul>
 </li>
-<li>核算方法：一段时间内总产出&#x3D;总支出&#x3D;总收入（最后价值为最终购买价格，同时每个环节增值部分都等于要素提供者的收入）<ul>
-<li>支出法：GDP &#x3D; C+I+G+（X-M），即消费+投资+政府购买+（出口额-进口额）<ul>
-<li>家庭：纯消费者<ul>
-<li>耐用消费品、 非耐用消费品， 服务</li>
+<li>i&#x3D;i(r)&#x3D;e-dr<ul>
+<li>该函数曲线即为投资边际效益曲线(Marginal Efficiency of Investment. MEl)</li>
 </ul>
-</li>
-<li>企业：主要是生产者，支出认为是投资行为<ul>
-<li>固定资产投资：新的， 不包括原材料<blockquote>
-<p>折旧：不能一次性用完的生产资料在生产过程中产生的磨损</p>
-</blockquote>
-</li>
-<li>存货投资： 新生产而没有卖出去的</li>
-</ul>
-</li>
-<li>政府：<ul>
-<li>政府购买:转移支付不能计入GDP</li>
-</ul>
-</li>
-<li>净出口&#x3D;出口总额-进口总额</li>
-</ul>
-</li>
-<li>收入法（按要素成本）：GDP &#x3D; 工资+利息+利润+租金+间接税+企业转移支付+折旧+统计误差</li>
-<li>产出法：各环节价值增值总和（或最终产品价值总和）<blockquote>
-<p>支出法侧重描绘消费方面, 收入法侧重描绘生产成本,产出法侧重描绘劳动和服务价值增值</p>
-</blockquote>
 </li>
 </ul>
 </li>
-<li>GDP的4大缺陷:<ol>
-<li>GDP不能反映社会成本</li>
-<li>GDP不能反映经济增长质量</li>
-<li>GDP不能反映经济增长效率</li>
-<li>GDP不能反映人民生活质量</li>
-</ol>
-</li>
-<li>QA<ol>
-<li>为什么从公司债中得到的利息收入能算入GDP，而从政府公债中得到的利息就不算GDP?</li>
-<li>买卖股票赚的钱为什么不计入GDP?</li>
-<li>生产了10个亿，卖了8个亿品动算存货投资。那明年把今年剩下的2亿库存卖出去了，明年消费支出那边就增加了2个亿，而这2个亿在今年已经算成投资支出了，明年要是再算一次消费支出，是不是就重复计算了呢?</li>
-<li>以下各项交易能否计入我国的GDP?如果能，说明计入到哪部分，不能的话，说明理由。<br> a. 买一台二手的海信电视<br> b. 买2000股海信的股票<br> c. 海信电器库存电视增加了一万台<br> d. 也门政府购买1000台海信电视<br> e. 政府向海信电视的下岗工人提供失业救济金</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><p>其他指标</p>
+<li><p>资本边际效益（Marginal Efficiency of Capital, MEC)</p>
 <ul>
-<li>国民生产总值GNP（Gross National Product）: 区别与GDP属地原则, GNP属人原则，几乎没什么用</li>
-<li>国内生产净值NDP（Net Domestic Product）: NDP &#x3D; GDP-折旧</li>
-<li>国民收入NI（National Income）: NI &#x3D; NDP-间接税- 企业转移支付+政府给企业的补贴</li>
-<li>个人收入PI（Personal Income）: PI&#x3D;NI-企业未分配利润-公司所得税-社会保险+政府转移支付</li>
-<li>个人可支配收入DPI（Disposable Personal Income）: PI-个税</li>
-</ul>
-</li>
-<li><p>国民经济恒等式：投资&#x3D;储蓄</p>
-</li>
-<li><p>名义GDP和实际GDP: 考虑物价水平</p>
+<li><p>使得一项资本品全部使用期内所有预期未来收益的现值总和正好等于这项资本品购买价格的贴现率。</p>
 <ul>
-<li>名义GDP： 单纯用当年的物价水平确定的全部最终产品和劳务</li>
-<li>实际GDP： 以某一年的物价作为基期价格计算出来的全部最终产品和劳务</li>
-</ul>
+<li>资本的边际效率MEC是一笔投资预期的真实收益率。</li>
+<li>同一笔钱未来的价值不等于现在的价值。所以把未来不同时间点上的每一笔现金流都换算成现在这个时间点的价值。<ul>
+<li>终值换算成现值的过程就叫贴现<ul>
+<li>现值:未来一笔钱在现在的价值</li>
+<li>终值:现在一笔钱在未来的价值:</li>
+<li>贴现公式<ul>
+<li><p>连续复利终值：$F &#x3D; A e^{rt}$</p>
 </li>
-<li><p>失业的衡量</p>
-<ul>
-<li>失业： 有劳动能力而且想工作的人找不到工作就叫失业</li>
-<li>失业率 &#x3D; 失业人数&#x2F;劳动力人数</li>
-<li>缺陷<ol>
-<li>失业结构</li>
-<li>就业质量</li>
-<li>容易造假</li>
-</ol>
+<li><p>连续复利现值：$A &#x3D; F e^{-rt}$</p>
 </li>
-</ul>
+<li><p>复利终值： $F &#x3D; A (1+r)^{t}$</p>
 </li>
-<li><p>物价水平的衡量</p>
-<ul>
-<li><p>CPI(Consumer Price Index）:消费品价值指数，衡量消费品</p>
-<ul>
-<li>CPI &#x3D;（计算期加权消费品价格总和&#x2F;基期消费品加权价格总和）* 100 ， &gt;100物价上涨, &lt;100 下降<blockquote>
-<p>（基期篮子<em>计算期间价格）&#x2F;（基期篮子</em>基期价格）</p>
-</blockquote>
-</li>
-<li>缺陷：<ol>
-<li>商品不能变</li>
-<li>无法反应新商品淘汰了旧商品，导致CPI被高估，产生CPI替代偏向</li>
-<li>反映不出商品质量更好或更便宜了，消费数量被高估，导致CPI被高估</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><p>PPI(Producer Price Index):生产者价格指数，衡量工业品</p>
-</li>
-<li><p>GDP平减指数： 衡量所有</p>
-<ul>
-<li>GDP平减指数 &#x3D; 名义GDP&#x2F;实际GDP &#x3D; （计算期间篮子<em>计算期间价格）&#x2F;（计算期间篮子</em>基期价格）</li>
-<li>缺点：<ol>
-<li>太笼统，缺乏针对性</li>
-<li>计算期篮子内的新商品，基期可能不存在</li>
-</ol>
+<li><p>复利贴现公式：$A &#x3D; F &#x2F;(1+r)^{t}$</p>
 </li>
 </ul>
 </li>
 </ul>
 <blockquote>
-<p>CPI是“用老眼光看新世界”（拉式指数，使用基期的消费结构作为权重），GDP平减指数是“用新眼光看新世界”（帕式， 计算期的实际产出结构作为权重）。前者容易高估通胀，后者更贴近实际经济结构，但计算更复杂、发布更滞后。</p>
+<p>F:本息和(终值)、A:本金(现值)、r:利率（贴现率）、t:计息周期</p>
 </blockquote>
+</li>
+<li>各期收益贴现率之和<ul>
+<li>大于投资成本，净现值（NPV）&gt; 0，有利可图</li>
+<li>小于投资成本，NPV &lt; 0， 会亏本</li>
+<li>刚好相等是，贴现率<strong>等于</strong>资本边际效益</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>		</p>
+</li>
+<li><p>到期收益率(Yield to Maturity, YTM)</p>
+<ul>
+<li>使得债券持有到期所获得的所有现金流的贴现总和正好等于债券购买价格的贴现率。</li>
+<li>区别于EMC, 债券收益固定</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>预期收益</p>
+</li>
+</ol>
 </li>
 </ul>
 <p>参考文献：<br><a href="https://www.bilibili.com/video/BV1nP411t7fu?spm_id_from=333.788.videopod.episodes&vd_source=86c1ad7f51cb73781eb44a0799117b7a">宏观经济学（老邢）</a></p>
@@ -5488,39 +5798,98 @@
       </tags>
   </entry>
   <entry>
-    <title>经济学原理</title>
-    <url>/2026/08/07/Economics/</url>
-    <content><![CDATA[<h1 id="经济学十个原理"><a href="#经济学十个原理" class="headerlink" title="经济学十个原理"></a>经济学十个原理</h1><ul>
-<li>人们如何决策。 How people make decisions<ol>
-<li>人们面临权衡取舍。 People face tradoffs.</li>
-<li>某物的成本是为此放弃的东西。 The cost of something is what you give up to get it.</li>
-<li>理性人思考边际量。 Rational people think at the margin.</li>
-<li>人们会对激励做出反应。 People respond to incentives.</li>
-</ol>
-</li>
-<li>人们如何相互作用。 How people interact.<ol start="5">
-<li>贸易使每个人收益。Trade can make everone better off.</li>
-<li>市场通常是组织经济活动的好方法。 Markets are usually a good way to organize economic activity.</li>
-<li>市场有时可以改进市场结果。 Governments can somtimes improve market outcomes.</li>
-</ol>
-</li>
-<li>整体经济如何运行。 How the economic as a whole works.<ol start="8">
-<li>一国的生活水平取决于它的生产。 The standard of living depends on a conuntry’s production.</li>
-<li>当政府发行了过多的货币时，物价上涨。 Prices rise when govermment prints too much money.</li>
-<li>社会面临通货膨胀和失业之间的短期得失交换。 Society facecs a short-run tradeoff bettween inflation and unemployment.</li>
-</ol>
-</li>
+    <title>python爬虫初探</title>
+    <url>/2024/08/26/Spider/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>声明</strong>：本文记录使用python抓取数据过程，仅供学习！</p>
+</blockquote>
+<h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h2><p>爬虫的原理总的来说就是向目标网站发送请求，然后根据需要过滤返回的数据，问题关键在于如何提取数据和破解目标网站反扒。<br>主要有两个思路<br>一是通过抓包分析获取相应取数据的api，大网站一般需要逆向模拟加密算法， 优点是取到的数据纯粹，缺点是需要分析代码，算法更新之后需要重新定分<br>二是模拟用户点击浏览器的操作，再配合分析工具提取数据，优点是简单方便，缺点执行比较慢<br>以下记录个人提取指定视频点赞数的学习过程</p>
+<h2 id="2-环境安装"><a href="#2-环境安装" class="headerlink" title="2. 环境安装"></a>2. 环境安装</h2><ol>
+<li>下载python </li>
+<li>下载pythoncharm</li>
+<li>pycharm 安装 pyinstaller(需要打包exe的话)<ul>
+<li>pip install pyinstaller</li>
+<li>pyinstaller -F {target.py}</li>
 </ul>
+</li>
+</ol>
+<h2 id="3-方案一"><a href="#3-方案一" class="headerlink" title="3. 方案一"></a>3. 方案一</h2><ol>
+<li>抓包分析</li>
+<li>打开网页，打开浏览器开发者工具，找到网络，逐个分析想要的数据是哪个请求得到的<br><img src="/assets/Spider/sp1.png" alt="sp1.png"></li>
+<li>伪造http请求,发现返回数据为空，逐个修改请求参数发现逆向字段为a_bogus</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">cookie = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">url=<span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="string">&#x27;?...&#x27;</span></span><br><span class="line"><span class="string">&#x27;&amp;msToken=&#x27;</span></span><br><span class="line"><span class="string">&#x27;&amp;a_bogus=&#x27;</span></span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;Accept-Language&#x27;</span>:<span class="string">&#x27;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Priority&#x27;</span>:<span class="string">&#x27;u=1, i&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Ch-Ua&#x27;</span>:<span class="string">&#x27;&quot;Microsoft Edge&quot;;v=&quot;125&quot;, &quot;Chromium&quot;;v=&quot;125&quot;, &quot;Not.A/Brand&quot;;v=&quot;24&quot;&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Ch-Ua-Mobile&#x27;</span>:<span class="string">&#x27;?0&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Ch-Ua-Platform&#x27;</span>:<span class="string">&#x27;&quot;Windows&quot;&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Fetch-Dest&#x27;</span>:<span class="string">&#x27;empty&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Fetch-Mode&#x27;</span>: <span class="string">&#x27;cors&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Fetch-Site&#x27;</span>:<span class="string">&#x27;same-origin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Accept&#x27;</span>:<span class="string">&#x27;application/json, text/plain, */*&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Accept-Encoding&#x27;</span>:<span class="string">&#x27;gzip, deflate, br, zstd&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Cookie&#x27;</span>:cookie,</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>:<span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">r = requests.get(url=url, headers=headers)</span><br><span class="line">r.encoding = <span class="string">&#x27;utf-8&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(r.content)</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>通过对调用堆栈，使用XHR断点条件断点，控制台输出来确定加密代码的位置</li>
+<li>拷贝加密代码，测试好之后使用execjs 调用</li>
+</ol>
+<blockquote>
+<p>一些静态网站也可以直接发http请求之后分析html元素，一些知名网站可以直接在网上搜索逆向分析</p>
+</blockquote>
+<h2 id="4-方案二"><a href="#4-方案二" class="headerlink" title="4.方案二"></a>4.方案二</h2><ol>
+<li><p>模拟浏览器点击网页</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> lxml</span><br><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.edge.service <span class="keyword">import</span> Service</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.edge.options <span class="keyword">import</span> Options</span><br><span class="line"></span><br><span class="line">options = Options()</span><br><span class="line">options.add_argument(<span class="string">&quot;--incognito&quot;</span>)</span><br><span class="line">options.add_argument(<span class="string">&quot;--mute-audio&quot;</span>)</span><br><span class="line"><span class="comment"># 无窗口模式,更多参数参考资料2</span></span><br><span class="line"><span class="keyword">if</span> HideBroser:</span><br><span class="line">    options.add_argument(<span class="string">&quot;--headless&quot;</span>)</span><br><span class="line">    options.add_argument(<span class="string">&quot;--disable-gpu&quot;</span>)</span><br><span class="line"></span><br><span class="line">service = Service()</span><br><span class="line">browser = webdriver.Edge(service=service, options=options)	</span><br><span class="line">browser.get(url=url)</span><br><span class="line">time.sleep(sec)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>分析网页标签重点，发现点赞数总是位于data-e2e&#x3D;video-player-digg的标签的第二个子div标签下，故而提取数据</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> lxml</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line">tag = <span class="string">&#x27;data-e2e&#x27;</span></span><br><span class="line">key = <span class="string">&#x27;video-player-digg&#x27;</span></span><br><span class="line">soup = BeautifulSoup(browser.page_source, <span class="string">&#x27;lxml&#x27;</span>)</span><br><span class="line">base_tag = soup.find(<span class="string">&#x27;div&#x27;</span>, attrs=&#123;tag: key&#125;)</span><br><span class="line">children_tag = father_tag.select(<span class="string">&#x27;div&#x27;</span>)</span><br><span class="line">result = children_tag[<span class="number">2</span>].text</span><br></pre></td></tr></table></figure></li>
+</ol>
 <p>参考文献：</p>
 <ol>
-<li>《经济学原理》 曼昆</li>
+<li><a href="https://blog.csdn.net/weixin_43804047/article/details/119704965">https://blog.csdn.net/weixin_43804047/article/details/119704965</a></li>
+<li><a href="https://peter.sh/experiments/chromium-command-line-switches/">https://peter.sh/experiments/chromium-command-line-switches/</a></li>
 </ol>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>经济学</category>
+        <category>编程</category>
       </categories>
       <tags>
-        <tag>经济学原理</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>step文件初探</title>
+    <url>/2022/11/05/StepIntro/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>声明</strong>：本文简单介绍step 文件的基础知识</p>
+</blockquote>
+<h3 id="1-什么是STEP标准"><a href="#1-什么是STEP标准" class="headerlink" title="1. 什么是STEP标准"></a>1. 什么是STEP标准</h3><p>STEP 全称Starndard for Exchange of Product Model Data,即产品模型数据交换规范，代号为<strong>ISO-10303</strong>. 它提供一种不依赖具体系统的中性机制，旨在实现产品间数据的交换和共享，从而提高产品的开发效率。<br>比如说芯片设计环节可能先建模，再对模型求解，此时就可能需要在建模软件和求解软件这两种产品间传递模型数据。目前工业应用中涉及模型的部分基本会兼容这种格式，比如CAD, HFSS等。 </p>
+<h3 id="2-STEP标准层次结构"><a href="#2-STEP标准层次结构" class="headerlink" title="2. STEP标准层次结构"></a>2. STEP标准层次结构</h3><p>STEP 系统主要分为三个层次， 如图（出自参考资料④）</p>
+<p><img src="/assets/StepIntro/step.png" alt="step"></p>
+<blockquote>
+<p>每part对应一个ISO文档，每个ISO 文档都要收费，不过 <a href="https://www.doc88.com/">道巴客客</a> 还能看到免费的文档， 国标也有一些协议会直接引用这些ISO协议（国标对于我们是免费查看的）</p>
+</blockquote>
+<p>一般而言，我们只需要关注应用层协议即可， 主流的建模协议主要如下（出自参考资料 ⑤ ，其各自特性可以前往参考， 目前最广泛的应该是AP214）：</p>
+<ul>
+<li>AP203:Configuration controlled 3d design of mechanical parts and assemblies.</li>
+<li>AP214:Core data for automotive mechanical design processes.</li>
+<li>AP242：Managed model-based 3D engineering.</li>
+</ul>
+<p>现在我们探讨step文件的话，也就是说实现方法为P21，假设应用层协议使用AP214，描述方法为P11，那么三者的关系可以简单的理解为：<br>P11 描述Express语法<br>P21 描述.step 的文件格式及其与P11的转换<br>P214 使用P11定义了一系列汽车行业的实体</p>
+<p>如果P214中定义了车如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Entity car</span><br><span class="line"> year: Integer</span><br><span class="line"> color: COLOR</span><br><span class="line">Entity</span><br><span class="line"></span><br><span class="line">Entity color</span><br><span class="line">  name: string</span><br><span class="line">Entity</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>当我们设计两辆车之后, 保存为step文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">HEADER</span><br><span class="line">...</span><br><span class="line">ENDSEC</span><br><span class="line">DATA</span><br><span class="line">#1=CAR(1993，#2)</span><br><span class="line">#2=COLOR(&#x27;red&#x27;)</span><br><span class="line">#3=Car(1994，#2)</span><br><span class="line">ENDSEC</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>STEP文件分为头部和数据段，应用协议其实就是定义数据段的实体（’#’代表一个实体），也就是schema</p>
+</blockquote>
+<h3 id="3-STEP文件格式"><a href="#3-STEP文件格式" class="headerlink" title="3. STEP文件格式"></a>3. STEP文件格式</h3><p>上文介绍了step文件的生成， 以下简单介绍一下格式，用<b>&#x2F;&#x2F;</b>和<b>&#x2F;**&#x2F;</b>注释说明，实际文件不会出现这种标志</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">ISO<span class="number">-10303</span><span class="number">-21</span>; <span class="comment">//表明文件协议类型，文件格式实际定义在ISO-10303-21 Table3</span></span><br><span class="line">HEADER;	<span class="comment">//头段开始, 每个文件有且仅有一个头段，但可以有多个数据段</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> 在ISO-10303-21搜索file_description对应8.2.1节定义如下</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> ENTITY file_description;</span></span><br><span class="line"><span class="comment">  description : LIST [1:?] OF STRING (256) ; //至少有一个值的string list</span></span><br><span class="line"><span class="comment">  implementation_level : STRING (256) ;//这个等级需要对应文档确定</span></span><br><span class="line"><span class="comment"> END_ENTITY;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> 其余头部实体均可类似查找, Express语法不明确时可以参照ISO-10303-11</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="built_in">FILE_DESCRIPTION</span>((<span class="string">&#x27;FreeCAD Model&#x27;</span>),<span class="string">&#x27;2;1&#x27;</span>); <span class="comment">//（）表示list</span></span><br><span class="line"><span class="built_in">FILE_NAME</span>(<span class="string">&#x27;Open CASCADE Shape Model&#x27;</span>,<span class="string">&#x27;2022-11-19T22:00:49&#x27;</span>,(<span class="string">&#x27;Author&#x27;</span>),(</span><br><span class="line">    <span class="string">&#x27;&#x27;),&#x27;</span>Open CASCADE STEP processor <span class="number">7.6&#x27;</span>,<span class="string">&#x27;FreeCAD&#x27;</span>,<span class="string">&#x27;Unknown&#x27;</span>);</span><br><span class="line"><span class="built_in">FILE_SCHEMA</span>((<span class="string">&#x27;AUTOMOTIVE_DESIGN &#123; 1 0 10303 214 1 1 1 1 &#125;&#x27;</span>));<span class="comment">//表明数据段schema</span></span><br><span class="line">ENDSEC;<span class="comment">//段结束标志，上面三个实体在必须出现且按顺序出现，其余可选</span></span><br><span class="line">DATA;<span class="comment">//数据段开始</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> 在ISO-10303-214 中搜索entity APPLICATION_PROTOCOL_DEFINITION 可以找到</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> ENTITY application_protocol_definition;</span></span><br><span class="line"><span class="comment">   status : label;</span></span><br><span class="line"><span class="comment">   application_interpreted_model_schema_name : label;</span></span><br><span class="line"><span class="comment">   application_protocol_year : year_number;</span></span><br><span class="line"><span class="comment">   application : application_context; //引用entity application_context</span></span><br><span class="line"><span class="comment"> END_ENTITY;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> 其余数据段类似查找</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">#<span class="number">1</span> = <span class="built_in">APPLICATION_PROTOCOL_DEFINITION</span>(<span class="string">&#x27;international standard&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;automotive_design&#x27;</span>,<span class="number">2000</span>,#<span class="number">2</span>); </span><br><span class="line">#<span class="number">2</span> = <span class="built_in">APPLICATION_CONTEXT</span>(</span><br><span class="line">  <span class="string">&#x27;core data for automotive mechanical design processes&#x27;</span>);</span><br><span class="line">...</span><br><span class="line">ENDSEC; <span class="comment">//结束段</span></span><br><span class="line">END-ISO<span class="number">-10303</span><span class="number">-21</span>; <span class="comment">//协议结束</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>对于step文件的解析目前比较知名的开源免费软件是OpenCasCade（LGPL授权），目前能支持AP214CD,AP214DIS,AP203,AP214IS,AP242DIS 5个版本。 对于使用OCC的开发而言可能一般只关注TopoDSToStep和 StepToTopo里面的图形转换，自行开发step引擎的话还是需要仔细阅读ISO-10303相关文档</p>
+<br/>
+<br/>
+<br/>
+
+<p>参考文献：<br>1.ISO 10303-1:1994<br>2.ISO 10303-21:2002<br>3.ISO 10303-214-2003<br>4.<a href="https://blog.csdn.net/lyalong0616/article/details/90231001">https://blog.csdn.net/lyalong0616/article/details/90231001</a><br>5.<a href="https://www.capvidia.com/blog/best-step-file-to-use-ap203-vs-ap214-vs-ap242">https://www.capvidia.com/blog/best-step-file-to-use-ap203-vs-ap214-vs-ap242</a><br>6.<a href="https://dev.opencascade.org/doc/overview/html/occt_user_guides__step.html">https://dev.opencascade.org/doc/overview/html/occt_user_guides__step.html</a> </p>
+<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>工业软件</category>
+      </categories>
+      <tags>
+        <tag>step</tag>
       </tags>
   </entry>
   <entry>
@@ -6046,48 +6415,39 @@
       </tags>
   </entry>
   <entry>
-    <title>step文件初探</title>
-    <url>/2022/11/05/StepIntro/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>声明</strong>：本文简单介绍step 文件的基础知识</p>
-</blockquote>
-<h3 id="1-什么是STEP标准"><a href="#1-什么是STEP标准" class="headerlink" title="1. 什么是STEP标准"></a>1. 什么是STEP标准</h3><p>STEP 全称Starndard for Exchange of Product Model Data,即产品模型数据交换规范，代号为<strong>ISO-10303</strong>. 它提供一种不依赖具体系统的中性机制，旨在实现产品间数据的交换和共享，从而提高产品的开发效率。<br>比如说芯片设计环节可能先建模，再对模型求解，此时就可能需要在建模软件和求解软件这两种产品间传递模型数据。目前工业应用中涉及模型的部分基本会兼容这种格式，比如CAD, HFSS等。 </p>
-<h3 id="2-STEP标准层次结构"><a href="#2-STEP标准层次结构" class="headerlink" title="2. STEP标准层次结构"></a>2. STEP标准层次结构</h3><p>STEP 系统主要分为三个层次， 如图（出自参考资料④）</p>
-<p><img src="/assets/StepIntro/step.png" alt="step"></p>
-<blockquote>
-<p>每part对应一个ISO文档，每个ISO 文档都要收费，不过 <a href="https://www.doc88.com/">道巴客客</a> 还能看到免费的文档， 国标也有一些协议会直接引用这些ISO协议（国标对于我们是免费查看的）</p>
-</blockquote>
-<p>一般而言，我们只需要关注应用层协议即可， 主流的建模协议主要如下（出自参考资料 ⑤ ，其各自特性可以前往参考， 目前最广泛的应该是AP214）：</p>
-<ul>
-<li>AP203:Configuration controlled 3d design of mechanical parts and assemblies.</li>
-<li>AP214:Core data for automotive mechanical design processes.</li>
-<li>AP242：Managed model-based 3D engineering.</li>
+    <title>经济学原理</title>
+    <url>/2026/08/07/Economics/</url>
+    <content><![CDATA[<h1 id="经济学十个原理"><a href="#经济学十个原理" class="headerlink" title="经济学十个原理"></a>经济学十个原理</h1><ul>
+<li>人们如何决策。 How people make decisions<ol>
+<li>人们面临权衡取舍。 People face tradoffs.</li>
+<li>某物的成本是为此放弃的东西。 The cost of something is what you give up to get it.</li>
+<li>理性人思考边际量。 Rational people think at the margin.</li>
+<li>人们会对激励做出反应。 People respond to incentives.</li>
+</ol>
+</li>
+<li>人们如何相互作用。 How people interact.<ol start="5">
+<li>贸易使每个人收益。Trade can make everone better off.</li>
+<li>市场通常是组织经济活动的好方法。 Markets are usually a good way to organize economic activity.</li>
+<li>市场有时可以改进市场结果。 Governments can somtimes improve market outcomes.</li>
+</ol>
+</li>
+<li>整体经济如何运行。 How the economic as a whole works.<ol start="8">
+<li>一国的生活水平取决于它的生产。 The standard of living depends on a conuntry’s production.</li>
+<li>当政府发行了过多的货币时，物价上涨。 Prices rise when govermment prints too much money.</li>
+<li>社会面临通货膨胀和失业之间的短期得失交换。 Society facecs a short-run tradeoff bettween inflation and unemployment.</li>
+</ol>
+</li>
 </ul>
-<p>现在我们探讨step文件的话，也就是说实现方法为P21，假设应用层协议使用AP214，描述方法为P11，那么三者的关系可以简单的理解为：<br>P11 描述Express语法<br>P21 描述.step 的文件格式及其与P11的转换<br>P214 使用P11定义了一系列汽车行业的实体</p>
-<p>如果P214中定义了车如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Entity car</span><br><span class="line"> year: Integer</span><br><span class="line"> color: COLOR</span><br><span class="line">Entity</span><br><span class="line"></span><br><span class="line">Entity color</span><br><span class="line">  name: string</span><br><span class="line">Entity</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>当我们设计两辆车之后, 保存为step文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">HEADER</span><br><span class="line">...</span><br><span class="line">ENDSEC</span><br><span class="line">DATA</span><br><span class="line">#1=CAR(1993，#2)</span><br><span class="line">#2=COLOR(&#x27;red&#x27;)</span><br><span class="line">#3=Car(1994，#2)</span><br><span class="line">ENDSEC</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>STEP文件分为头部和数据段，应用协议其实就是定义数据段的实体（’#’代表一个实体），也就是schema</p>
-</blockquote>
-<h3 id="3-STEP文件格式"><a href="#3-STEP文件格式" class="headerlink" title="3. STEP文件格式"></a>3. STEP文件格式</h3><p>上文介绍了step文件的生成， 以下简单介绍一下格式，用<b>&#x2F;&#x2F;</b>和<b>&#x2F;**&#x2F;</b>注释说明，实际文件不会出现这种标志</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">ISO<span class="number">-10303</span><span class="number">-21</span>; <span class="comment">//表明文件协议类型，文件格式实际定义在ISO-10303-21 Table3</span></span><br><span class="line">HEADER;	<span class="comment">//头段开始, 每个文件有且仅有一个头段，但可以有多个数据段</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> 在ISO-10303-21搜索file_description对应8.2.1节定义如下</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> ENTITY file_description;</span></span><br><span class="line"><span class="comment">  description : LIST [1:?] OF STRING (256) ; //至少有一个值的string list</span></span><br><span class="line"><span class="comment">  implementation_level : STRING (256) ;//这个等级需要对应文档确定</span></span><br><span class="line"><span class="comment"> END_ENTITY;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> 其余头部实体均可类似查找, Express语法不明确时可以参照ISO-10303-11</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="built_in">FILE_DESCRIPTION</span>((<span class="string">&#x27;FreeCAD Model&#x27;</span>),<span class="string">&#x27;2;1&#x27;</span>); <span class="comment">//（）表示list</span></span><br><span class="line"><span class="built_in">FILE_NAME</span>(<span class="string">&#x27;Open CASCADE Shape Model&#x27;</span>,<span class="string">&#x27;2022-11-19T22:00:49&#x27;</span>,(<span class="string">&#x27;Author&#x27;</span>),(</span><br><span class="line">    <span class="string">&#x27;&#x27;),&#x27;</span>Open CASCADE STEP processor <span class="number">7.6&#x27;</span>,<span class="string">&#x27;FreeCAD&#x27;</span>,<span class="string">&#x27;Unknown&#x27;</span>);</span><br><span class="line"><span class="built_in">FILE_SCHEMA</span>((<span class="string">&#x27;AUTOMOTIVE_DESIGN &#123; 1 0 10303 214 1 1 1 1 &#125;&#x27;</span>));<span class="comment">//表明数据段schema</span></span><br><span class="line">ENDSEC;<span class="comment">//段结束标志，上面三个实体在必须出现且按顺序出现，其余可选</span></span><br><span class="line">DATA;<span class="comment">//数据段开始</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> 在ISO-10303-214 中搜索entity APPLICATION_PROTOCOL_DEFINITION 可以找到</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> ENTITY application_protocol_definition;</span></span><br><span class="line"><span class="comment">   status : label;</span></span><br><span class="line"><span class="comment">   application_interpreted_model_schema_name : label;</span></span><br><span class="line"><span class="comment">   application_protocol_year : year_number;</span></span><br><span class="line"><span class="comment">   application : application_context; //引用entity application_context</span></span><br><span class="line"><span class="comment"> END_ENTITY;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"> 其余数据段类似查找</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">#<span class="number">1</span> = <span class="built_in">APPLICATION_PROTOCOL_DEFINITION</span>(<span class="string">&#x27;international standard&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;automotive_design&#x27;</span>,<span class="number">2000</span>,#<span class="number">2</span>); </span><br><span class="line">#<span class="number">2</span> = <span class="built_in">APPLICATION_CONTEXT</span>(</span><br><span class="line">  <span class="string">&#x27;core data for automotive mechanical design processes&#x27;</span>);</span><br><span class="line">...</span><br><span class="line">ENDSEC; <span class="comment">//结束段</span></span><br><span class="line">END-ISO<span class="number">-10303</span><span class="number">-21</span>; <span class="comment">//协议结束</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>对于step文件的解析目前比较知名的开源免费软件是OpenCasCade（LGPL授权），目前能支持AP214CD,AP214DIS,AP203,AP214IS,AP242DIS 5个版本。 对于使用OCC的开发而言可能一般只关注TopoDSToStep和 StepToTopo里面的图形转换，自行开发step引擎的话还是需要仔细阅读ISO-10303相关文档</p>
-<br/>
-<br/>
-<br/>
-
-<p>参考文献：<br>1.ISO 10303-1:1994<br>2.ISO 10303-21:2002<br>3.ISO 10303-214-2003<br>4.<a href="https://blog.csdn.net/lyalong0616/article/details/90231001">https://blog.csdn.net/lyalong0616/article/details/90231001</a><br>5.<a href="https://www.capvidia.com/blog/best-step-file-to-use-ap203-vs-ap214-vs-ap242">https://www.capvidia.com/blog/best-step-file-to-use-ap203-vs-ap214-vs-ap242</a><br>6.<a href="https://dev.opencascade.org/doc/overview/html/occt_user_guides__step.html">https://dev.opencascade.org/doc/overview/html/occt_user_guides__step.html</a> </p>
+<p>参考文献：</p>
+<ol>
+<li>《经济学原理》 曼昆</li>
+</ol>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>工业软件</category>
+        <category>经济学</category>
       </categories>
       <tags>
-        <tag>step</tag>
+        <tag>经济学原理</tag>
       </tags>
   </entry>
   <entry>
@@ -6574,53 +6934,817 @@
       </tags>
   </entry>
   <entry>
-    <title>python爬虫初探</title>
-    <url>/2024/08/26/Spider/</url>
+    <title>中医诊断学</title>
+    <url>/2024/11/03/TCMD_1/</url>
     <content><![CDATA[<blockquote>
-<p><strong>声明</strong>：本文记录使用python抓取数据过程，仅供学习！</p>
+<p><strong>声明</strong>：本文是中医诊断学的学习笔记，包括四诊。</p>
 </blockquote>
-<h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h2><p>爬虫的原理总的来说就是向目标网站发送请求，然后根据需要过滤返回的数据，问题关键在于如何提取数据和破解目标网站反扒。<br>主要有两个思路<br>一是通过抓包分析获取相应取数据的api，大网站一般需要逆向模拟加密算法， 优点是取到的数据纯粹，缺点是需要分析代码，算法更新之后需要重新定分<br>二是模拟用户点击浏览器的操作，再配合分析工具提取数据，优点是简单方便，缺点执行比较慢<br>以下记录个人提取指定视频点赞数的学习过程</p>
-<h2 id="2-环境安装"><a href="#2-环境安装" class="headerlink" title="2. 环境安装"></a>2. 环境安装</h2><ol>
-<li>下载python </li>
-<li>下载pythoncharm</li>
-<li>pycharm 安装 pyinstaller(需要打包exe的话)<ul>
-<li>pip install pyinstaller</li>
-<li>pyinstaller -F {target.py}</li>
+<h2 id="1-绪论"><a href="#1-绪论" class="headerlink" title="1. 绪论"></a>1. 绪论</h2><ul>
+<li><p>定义： 在中医理论指导下研究诊察病情，判断病种，辨别证候的基础理论，基础知识，基本技能的一门学科</p>
+</li>
+<li><p>范围及原则：</p>
+<ul>
+<li>审察内外：整体病理联系与所处环境结合，综合判断病情 </li>
+<li>辩证求因：通过辨别，分析，综合，判断，归纳，以探求疾病本质及规律</li>
+<li>四诊合参：四诊收集病情资料，综合判断，全面准确作出诊断</li>
 </ul>
 </li>
-</ol>
-<h2 id="3-方案一"><a href="#3-方案一" class="headerlink" title="3. 方案一"></a>3. 方案一</h2><ol>
-<li>抓包分析</li>
-<li>打开网页，打开浏览器开发者工具，找到网络，逐个分析想要的数据是哪个请求得到的<br><img src="/assets/Spider/sp1.png" alt="sp1.png"></li>
-<li>伪造http请求,发现返回数据为空，逐个修改请求参数发现逆向字段为a_bogus</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">cookie = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">url=<span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="string">&#x27;?...&#x27;</span></span><br><span class="line"><span class="string">&#x27;&amp;msToken=&#x27;</span></span><br><span class="line"><span class="string">&#x27;&amp;a_bogus=&#x27;</span></span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;Accept-Language&#x27;</span>:<span class="string">&#x27;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Priority&#x27;</span>:<span class="string">&#x27;u=1, i&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Ch-Ua&#x27;</span>:<span class="string">&#x27;&quot;Microsoft Edge&quot;;v=&quot;125&quot;, &quot;Chromium&quot;;v=&quot;125&quot;, &quot;Not.A/Brand&quot;;v=&quot;24&quot;&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Ch-Ua-Mobile&#x27;</span>:<span class="string">&#x27;?0&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Ch-Ua-Platform&#x27;</span>:<span class="string">&#x27;&quot;Windows&quot;&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Fetch-Dest&#x27;</span>:<span class="string">&#x27;empty&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Fetch-Mode&#x27;</span>: <span class="string">&#x27;cors&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sec-Fetch-Site&#x27;</span>:<span class="string">&#x27;same-origin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Accept&#x27;</span>:<span class="string">&#x27;application/json, text/plain, */*&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Accept-Encoding&#x27;</span>:<span class="string">&#x27;gzip, deflate, br, zstd&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Cookie&#x27;</span>:cookie,</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>:<span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">r = requests.get(url=url, headers=headers)</span><br><span class="line">r.encoding = <span class="string">&#x27;utf-8&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(r.content)</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>通过对调用堆栈，使用XHR断点条件断点，控制台输出来确定加密代码的位置</li>
-<li>拷贝加密代码，测试好之后使用execjs 调用</li>
-</ol>
-<blockquote>
-<p>一些静态网站也可以直接发http请求之后分析html元素，一些知名网站可以直接在网上搜索逆向分析</p>
-</blockquote>
-<h2 id="4-方案二"><a href="#4-方案二" class="headerlink" title="4.方案二"></a>4.方案二</h2><ol>
-<li><p>模拟浏览器点击网页</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> lxml</span><br><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.edge.service <span class="keyword">import</span> Service</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.edge.options <span class="keyword">import</span> Options</span><br><span class="line"></span><br><span class="line">options = Options()</span><br><span class="line">options.add_argument(<span class="string">&quot;--incognito&quot;</span>)</span><br><span class="line">options.add_argument(<span class="string">&quot;--mute-audio&quot;</span>)</span><br><span class="line"><span class="comment"># 无窗口模式,更多参数参考资料2</span></span><br><span class="line"><span class="keyword">if</span> HideBroser:</span><br><span class="line">    options.add_argument(<span class="string">&quot;--headless&quot;</span>)</span><br><span class="line">    options.add_argument(<span class="string">&quot;--disable-gpu&quot;</span>)</span><br><span class="line"></span><br><span class="line">service = Service()</span><br><span class="line">browser = webdriver.Edge(service=service, options=options)	</span><br><span class="line">browser.get(url=url)</span><br><span class="line">time.sleep(sec)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>分析网页标签重点，发现点赞数总是位于data-e2e&#x3D;video-player-digg的标签的第二个子div标签下，故而提取数据</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> lxml</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line">tag = <span class="string">&#x27;data-e2e&#x27;</span></span><br><span class="line">key = <span class="string">&#x27;video-player-digg&#x27;</span></span><br><span class="line">soup = BeautifulSoup(browser.page_source, <span class="string">&#x27;lxml&#x27;</span>)</span><br><span class="line">base_tag = soup.find(<span class="string">&#x27;div&#x27;</span>, attrs=&#123;tag: key&#125;)</span><br><span class="line">children_tag = father_tag.select(<span class="string">&#x27;div&#x27;</span>)</span><br><span class="line">result = children_tag[<span class="number">2</span>].text</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>参考文献：</p>
+<li><p>主要内容</p>
 <ol>
-<li><a href="https://blog.csdn.net/weixin_43804047/article/details/119704965">https://blog.csdn.net/weixin_43804047/article/details/119704965</a></li>
-<li><a href="https://peter.sh/experiments/chromium-command-line-switches/">https://peter.sh/experiments/chromium-command-line-switches/</a></li>
+<li>四诊<ul>
+<li>望：神 色 形 态 舌 局部 分泌排泄物 </li>
+<li>闻：语言 呼吸 咳嗽 气体</li>
+<li>问： 发病 症状 病史</li>
+<li>切：脉象 触按身体部分</li>
+</ul>
+</li>
+<li>八纲：阴阳，表里，寒热，虚实</li>
+<li>辩证：对病因，病位，病性，病势等判断进行判断，做出诊断的思维过程</li>
 </ol>
+</li>
+<li><p>中医认识疾病的基本原理</p>
+<ol>
+<li>司外揣内：有诸内者必行诸外</li>
+<li>见微知著</li>
+<li>以常达变：以正常的值做标准发现异常</li>
+</ol>
+</li>
+</ul>
+<h3 id="2-1-问诊"><a href="#2-1-问诊" class="headerlink" title="2.1 问诊"></a>2.1 问诊</h3><ul>
+<li>方法：<ul>
+<li>有目的（围绕辩证要点），有重点（现病史），有次序（既往史，个人史，家族史）等查询病情</li>
+<li>适当提示</li>
+<li>对危重者应抓住要点扼要询问</li>
+</ul>
+</li>
+<li>内容：<ul>
+<li>一般情况</li>
+<li>生活史（生活习惯）</li>
+<li>家族史， 既往史</li>
+<li>起病</li>
+<li>现在症状（重点）</li>
+</ul>
+</li>
+<li>十问歌<br>一问寒热二问汗，三问头身四问便，<br>五问饮食六问胸，七聋八渴俱当辨，<br>九问旧病十问因，再兼服药参机变，<br>妇人尤必问经期，迟速闭崩皆可见，<br>再添片语告儿科，天花麻疹全占验。</li>
+</ul>
+<h4 id="2-1-1-问寒热"><a href="#2-1-1-问寒热" class="headerlink" title="2.1.1 问寒热"></a>2.1.1 问寒热</h4><p>要点： 有无寒热、寒热时间、特点及兼证</p>
+<ul>
+<li><p>寒热类型</p>
+<ul>
+<li>恶寒发热：表证<ul>
+<li>寒重热轻，无汗：表寒证</li>
+<li>热重寒轻，汗出：表热证</li>
+<li>热轻，恶风汗出：表虚证<blockquote>
+<p>注意区别畏寒，畏寒加衣服后可以消除，恶寒只能减轻，前者一贯性的，后者临时性的</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>但寒不热：里寒<ul>
+<li>新病恶寒： 里实寒证</li>
+<li>久病畏寒： 里虚寒证</li>
+</ul>
+</li>
+<li>但热不寒：里热<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>特点</th>
+<th>兼证</th>
+<th>临床意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>壮热</td>
+<td>高热持续不退</td>
+<td>面赤、汗多、烦渴饮冷</td>
+<td>里实热证</td>
+</tr>
+<tr>
+<td>潮热</td>
+<td>日晡潮热 热势较高，日晡热甚</td>
+<td>腹痛拒按，大便燥结</td>
+<td>阳明腑证</td>
+</tr>
+<tr>
+<td></td>
+<td>湿温潮热 身热不扬，午后热甚</td>
+<td>头身困重，苔黄而腻</td>
+<td>湿温病</td>
+</tr>
+<tr>
+<td></td>
+<td>阴虚潮热 午后或入夜微热</td>
+<td>五心烦热，骨蒸而热</td>
+<td>阴虚证</td>
+</tr>
+<tr>
+<td>微热</td>
+<td>轻度发热，热势较低</td>
+<td>气虚、阴虚及气郁的表现</td>
+<td>气虚、阴虚、气郁</td>
+</tr>
+</tbody></table>
+</li>
+<li>寒热往来：半表半里</li>
+</ul>
+</li>
+<li><p>按病机分：阴虚发热，气虚发热，小儿夏季热</p>
+</li>
+</ul>
+<h4 id="2-1-2-问汗"><a href="#2-1-2-问汗" class="headerlink" title="2.1.2 问汗"></a>2.1.2 问汗</h4><ul>
+<li>形成：阳加于阴谓之汗，血汗同源</li>
+<li>询问要点：汗之有无，汗出时间，多少，部位，冷热及主要兼证</li>
+<li>表证辩汗：<ul>
+<li>表证有汗<ul>
+<li>表热证【银翘散&#x2F;桑菊饮】：外感热邪</li>
+<li>表虚证（太阳中风证）：外感风邪</li>
+</ul>
+</li>
+<li>表证无汗–表寒证：外感寒邪</li>
+</ul>
+</li>
+<li>里证辩汗：<ul>
+<li>自汗：日间汗出，活动尤甚，出汗后有疲惫感–气虚或阳虚<blockquote>
+<p>注意：必须有虚证才是病理，一般脏器是心，肺<br>中基：气的固摄作用;心在液为汗；肺司汗孔开合</p>
+</blockquote>
+</li>
+<li>盗汗：睡时汗出，醒则汗止–阴虚</li>
+<li>大汗：实热证或亡阳证</li>
+<li>战汗：先全身恶寒战栗，接着大汗出–邪正相争，疾病转折点</li>
+<li>黄汗：全身汗出色如柏汁，汗出粘衣–湿热交蒸</li>
+</ul>
+</li>
+<li>局部辨汗：<ul>
+<li>头汗：上焦邪热上蒸&#x2F;中焦湿热上蒸&#x2F;素体（热底体质）阳气偏盛炎上&#x2F;虚阳上越</li>
+<li>半身无汗：经络闭塞，气血运行不周</li>
+<li>手足心汗：阴盛阳亢，中焦湿热，脾虚不摄</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-1-3-问头身"><a href="#2-1-3-问头身" class="headerlink" title="2.1.3 问头身"></a>2.1.3 问头身</h4><ul>
+<li>问头部<ul>
+<li>头痛<ul>
+<li>前额连眉棱骨痛–阳明经</li>
+<li>头颞或一侧头痛–少阳经</li>
+<li>后枕痛连项背–太阳经</li>
+<li>巅顶痛–督脉，厥阴经等</li>
+<li>头痛连齿–少阴经（纠正为肾问题，在体合骨）</li>
+<li>头痛晕沉，腹泻自汗–太阴经（纠正为脾的问题）</li>
+</ul>
+</li>
+<li>性质<ul>
+<li>发病急，病程短，头痛较剧，痛无休止<ul>
+<li>外感头痛，属实证： 风寒&#x2F;风热&#x2F;风湿 头痛</li>
+</ul>
+</li>
+<li>发病慢，病程常，头痛较缓，时痛时止<ul>
+<li>内伤头痛：<ul>
+<li>气虚：清阳不升，遇劳加重</li>
+<li>血虚：血不上涌，绵绵痛</li>
+<li>肾虚：水为血海，空痛</li>
+<li>痰湿：沉痛</li>
+<li>淤血：刺痛</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>问周身<ul>
+<li>身痛<ul>
+<li>新病–实证：外感风寒湿邪，阳毒</li>
+<li>久病–虚证：气血亏虚</li>
+</ul>
+</li>
+<li>身重：湿邪，脾气亏虚</li>
+<li>四肢关节痛：多见于痹症<ul>
+<li>行痹： 风痹，游走性关节痛</li>
+<li>痛痹： 寒痹，遇寒加重</li>
+<li>著痹： 湿痹，沉重感</li>
+<li>热痹：一般出现在风湿病急性发作期，关节红肿热<blockquote>
+<p>风湿：关节不变形，易侵犯内脏；类风湿：关节变形</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>腰痛： <ul>
+<li>肾虚： 腰膝酸软，阳虚伴有冷感</li>
+<li>寒湿： 阴天发作寒，雨天发作湿</li>
+<li>淤血： 刺痛，腰上有伤</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-1-4-问胸胁皖腹"><a href="#2-1-4-问胸胁皖腹" class="headerlink" title="2.1.4 问胸胁皖腹"></a>2.1.4 问胸胁皖腹</h4><ul>
+<li>问胸部<ul>
+<li>胸痹（心绞痛）：胸痛憋闷，痛引肩臂（常3-5分钟），时轻时重–心脉运行不畅</li>
+<li>真心痛（心梗）：胸背彻痛剧烈，痛无休止–心脉急骤闭塞</li>
+<li>肺痈（肺脓疡）：胸闷痛而咳吐脓血腥臭痰–热毒蕴肺，腐肉成脓</li>
+<li>痞（胀满兼堵塞感）满：<ul>
+<li>寒痞：胸满而不痛，胸冷，咳吐涎沫，脉迟，遇寒加重</li>
+<li>热痞：烦渴，脉数，遇热加重，有烧心感</li>
+<li>虚痞：少气，呼吸不畅，脉弱，喜太息，喜按</li>
+<li>痰痞：咯痰多，脉滑</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>问胁部（肝胆）<ul>
+<li>肝气郁结：胁胀，心情忧郁，闷闷不乐</li>
+<li>肝火郁滞：灼热感，心情忧郁，闷闷不乐，烦躁易怒–肝郁化火</li>
+<li>肝胆湿热：胁胀，口苦</li>
+<li>血瘀：刺痛</li>
+<li>悬引（积水）：胀</li>
+<li>少阳证：胸胁苦满</li>
+</ul>
+</li>
+<li>问胃皖部<ul>
+<li>寒邪犯胃：冷（注意问有无吃寒凉物，有无露肚子睡觉以区分阳虚和寒邪）</li>
+<li>胃火：烧灼感</li>
+<li>气滞：胀</li>
+<li>血瘀：刺痛</li>
+<li>食滞：撑</li>
+<li>胃阳虚：冷，喜按，经常性</li>
+<li>胃阴虚：烧心感或隐痛</li>
+</ul>
+</li>
+<li>问腹部<ul>
+<li>大腹隐痛，喜温喜按–脾胃虚寒</li>
+<li>小腹胀痛，小便不利–膀胱湿热<blockquote>
+<p>少腹两侧，小腹正中</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-1-5-问耳目"><a href="#2-1-5-问耳目" class="headerlink" title="2.1.5 问耳目"></a>2.1.5 问耳目</h4><ul>
+<li><p>问目</p>
+<ul>
+<li>耳鸣<table>
+<thead>
+<tr>
+<th>性质</th>
+<th>病机</th>
+<th>表现特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>实证</td>
+<td>肝胆火盛， 上扰清窍</td>
+<td>骤发，声大如潮，按之不减或加重</td>
+</tr>
+<tr>
+<td>虚证</td>
+<td>肝肾阴虚、 肾精亏虚、 脾虚失养</td>
+<td>渐发，声小如蜂鸣， 按之减轻</td>
+</tr>
+</tbody></table>
+</li>
+<li>耳聋<table>
+<thead>
+<tr>
+<th>性质</th>
+<th>病机</th>
+<th>表现特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>实证</td>
+<td>肝胆火炽、外伤、药</td>
+<td>新病暴聋</td>
+</tr>
+<tr>
+<td>虚证</td>
+<td>物</td>
+<td>久病渐聋</td>
+</tr>
+<tr>
+<td>生理现象</td>
+<td>年高气虚精衰</td>
+<td></td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p>问目</p>
+<ul>
+<li>目痛<ul>
+<li>痛剧： 实证，肝火上炎，风热上攻<blockquote>
+<p>先怀疑青光眼，抢时间的病</p>
+</blockquote>
+</li>
+<li>微痛： 虚证，阴虚火旺</li>
+</ul>
+</li>
+<li>目眩<ul>
+<li>实证：风火上扰、痰湿上蒙清窍</li>
+<li>虚证：中气下陷、肝肾精血亏虚</li>
+</ul>
+</li>
+<li>目昏<ul>
+<li>气血、肝血不足、肾精亏虚</li>
+</ul>
+</li>
+<li>雀目（夜盲）<ul>
+<li>肝血不足</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-1-6-问饮食与口味"><a href="#2-1-6-问饮食与口味" class="headerlink" title="2.1.6 问饮食与口味"></a>2.1.6 问饮食与口味</h4><ul>
+<li>口渴与饮水<ul>
+<li>口不渴：寒证，湿证，无明显燥热病证</li>
+<li>口渴多饮： 燥证，热证，消渴证</li>
+<li>渴不多饮： 阴虚，湿热，痰饮，淤血</li>
+</ul>
+</li>
+<li>问食欲与食量<ul>
+<li>食欲减退<ul>
+<li>新病、暴病： 正气抗邪</li>
+<li>久病：脾胃虚弱、湿邪困脾</li>
+</ul>
+</li>
+<li>厌食<ul>
+<li>食积胃皖、肝胆湿热、脾胃湿热、妊娠恶阻</li>
+</ul>
+</li>
+<li>多食易饥<ul>
+<li>胃火亢盛、胃强脾弱、消渴病、痿病</li>
+</ul>
+</li>
+<li>饥不欲食<ul>
+<li>胃阴不足、虚火内扰</li>
+</ul>
+</li>
+<li>偏嗜食物<ul>
+<li>虫积或妊娠</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>问口味<ul>
+<li>口淡： 脾胃气虚、寒症</li>
+<li>口甜或粘腻： 脾胃湿热、肝胆火旺</li>
+<li>口中泛酸： 肝胃蕴热</li>
+<li>口苦： 热证</li>
+<li>口咸： 肾虚、寒证</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-1-7-问睡眠"><a href="#2-1-7-问睡眠" class="headerlink" title="2.1.7 问睡眠"></a>2.1.7 问睡眠</h4><ul>
+<li><p>失眠：阳不入阴</p>
+<blockquote>
+<p>半夏效果好，但是有毒性不敢用</p>
+</blockquote>
+<ul>
+<li>心肾不交，心脾两虚，胆郁痰扰</li>
+<li>病机：<ul>
+<li>阴血亏虚，心神失养（虚）</li>
+<li>邪气内盛，心神被扰（实）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>嗜睡：阳不出表</p>
+<ul>
+<li>痰湿困脾、脾气虚弱、心肾阳虚</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-1-8-问二便"><a href="#2-1-8-问二便" class="headerlink" title="2.1.8 问二便"></a>2.1.8 问二便</h4><p>要点：次数、质、量、排便感</p>
+<ul>
+<li>大便<ul>
+<li>次数<ul>
+<li>便秘： <ul>
+<li>实证：热盛伤津、阴寒内结</li>
+<li>虚证：津亏血少、气阴两亏</li>
+</ul>
+</li>
+<li>泄泻<ul>
+<li>实证： 新病暴泄–大肠湿热（泄下黄臭）【葛根岑连丸】、寒湿下住（泻下清晰）【藿香正气丸】、伤食</li>
+<li>虚证： 久病缓泄–脾虚【参苓白术散】、脾肾阳虚（只要饭粒菜渣即是）【四神丸&#x2F;艾灸神阙（非泄泻用附子理中）】</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>质<ul>
+<li>溏结不调： 肝郁乘脾、脾虚</li>
+<li>便血：<ul>
+<li>下痢脓血–痢疾（现在少见）</li>
+<li>鲜红–近血（痔疮、肛裂）</li>
+<li>黑便–远血（消化道出血）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>偏便感<ul>
+<li>肛门灼热： 大便湿热下注</li>
+<li>里急后重（拉完又想拉，肛门有重坠感）： 湿热内阻，肠道气滞后【马齿苋&#x2F;黄连】<blockquote>
+<p>里急后重常伴肛门灼热</p>
+</blockquote>
+</li>
+<li>排便不爽–大肠湿热，肝郁乘脾</li>
+<li>肛门气坠–脾虚中气下陷</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>小便<ul>
+<li>尿量减少<ul>
+<li>尿量增多–虚寒、消渴病【艾灸肾俞】</li>
+<li>尿量减少–热证、汗吐下后、水肿病</li>
+</ul>
+</li>
+<li>尿次异常<ul>
+<li>小便频数–膀胱湿热、肾阳虚</li>
+<li>癃闭：小便不畅，点滴而出为癃（500ml），小便不通，点滴不出为闭（50ml）<ul>
+<li>实证–淤血（常见前列腺肥大）、结石</li>
+<li>虚证–肾阳不足、脾气不升</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>便感异常<ul>
+<li>小便涩痛–淋证</li>
+<li>余沥不尽–肾气不固</li>
+<li>小便失禁–肾气不固</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-1-9-问妇女"><a href="#2-1-9-问妇女" class="headerlink" title="2.1.9 问妇女"></a>2.1.9 问妇女</h4><ul>
+<li><p>问月经</p>
+<ul>
+<li>经期异常<ul>
+<li>月经先期–血热、气虚、血瘀</li>
+<li>月经后期–血虚、血瘀</li>
+<li>月经先后不定期：肝气郁结</li>
+</ul>
+</li>
+<li>经量异常<ul>
+<li>月经过多&#x2F;崩漏–热盛、脾肾气虚、血瘀</li>
+<li>月经过少–血虚、血瘀、肾精虚</li>
+<li>闭经–血瘀、肝气郁结、脾肾亏虚</li>
+</ul>
+</li>
+<li>经色、质异常<ul>
+<li>色淡红质稀：血虚</li>
+<li>色深红质稠：血热</li>
+<li>色紫暗夹血块：血瘀</li>
+</ul>
+</li>
+<li>痛经<ul>
+<li>气滞血瘀、阳虚寒凝、气血亏虚</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>问带下</p>
+<ul>
+<li>白带： 脾肾阳虚、寒湿下注或湿浊下注</li>
+<li>黄带：湿热下注</li>
+<li>赤白带：肝郁化热</li>
+</ul>
+</li>
+<li><p>其他略，参考妇科</p>
+</li>
+</ul>
+<h4 id="2-1-10-问小儿"><a href="#2-1-10-问小儿" class="headerlink" title="2.1.10 问小儿"></a>2.1.10 问小儿</h4><p>略，参考儿科</p>
+<h3 id="2-2-望诊"><a href="#2-2-望诊" class="headerlink" title="2.2 望诊"></a>2.2 望诊</h3><p>望诊内容包括：<br>    + 全身： 神、色、形、态<br>    + 局部：头面、颈项、五官、皮肤、小儿络脉<br>    + 排出物：痰涎涕唾、呕吐物、二便<br>    + 舌：质、苔</p>
+<h4 id="2-2-1-望神"><a href="#2-2-1-望神" class="headerlink" title="2.2.1 望神"></a>2.2.1 望神</h4><ul>
+<li>得神：精气充足</li>
+<li>失神：脏腑功能衰竭，预后不足</li>
+<li>假神：脏腑精气衰竭已极，阴不敛阳，虚阳外越</li>
+<li>少神：多见于虚证</li>
+</ul>
+<h4 id="2-2-2-望面色"><a href="#2-2-2-望面色" class="headerlink" title="2.2.2 望面色"></a>2.2.2 望面色</h4><ul>
+<li><p>常色： 红黄隐隐、明润含蓄</p>
+</li>
+<li><p>病色： 晦暗、暴露（如黄疸）</p>
+<blockquote>
+<p>五色善恶：<br>善色–五色光明润泽（气至）；恶色–五色晦暗枯暗（气不至）</p>
+</blockquote>
+</li>
+<li><p>五色主病 </p>
+<ul>
+<li>青<ul>
+<li>寒证：青紫</li>
+<li>痛证：青黑</li>
+<li>淤血：青紫</li>
+<li>惊风：眉间、鼻柱、唇周色青</li>
+</ul>
+</li>
+<li>赤<ul>
+<li>热证：<ul>
+<li>实热：满面通红</li>
+<li>虚热：面部潮红</li>
+</ul>
+</li>
+<li>戴阳证：额红如妆</li>
+</ul>
+</li>
+<li>黄<ul>
+<li>湿证：面黄而垢</li>
+<li>脾虚：<ul>
+<li>血虚： 萎黄：面色淡黄，干萎无泽</li>
+<li>湿阳： 黄胖：面黄虚浮</li>
+</ul>
+</li>
+<li>黄疸：<ul>
+<li>湿热：阳黄</li>
+<li>寒湿：阴黄</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>白<ul>
+<li>阳虚</li>
+<li>气虚</li>
+<li>血虚</li>
+<li>实寒</li>
+</ul>
+</li>
+<li>黑<ul>
+<li>寒证： 青黑</li>
+<li>肾虚：	<ul>
+<li>阳虚：黑而暗淡、黧黑</li>
+<li>阴虚：黑而干焦</li>
+</ul>
+</li>
+<li>水饮： 眼眶黑</li>
+<li>血瘀：自黑、黧黑</li>
+<li>痛证： 青黑</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-3-望形态"><a href="#2-2-3-望形态" class="headerlink" title="2.2.3 望形态"></a>2.2.3 望形态</h4><ul>
+<li>形体<ul>
+<li>强–实证、热证</li>
+<li>弱–虚证、寒证，湿证，无明显燥热病证</li>
+<li>胖–形盛气虚，肥人多痰–易中风、眩晕</li>
+<li>瘦–形瘦阴虚、瘦人多火–易患劳嗽</li>
+</ul>
+</li>
+<li>姿态<ul>
+<li>动静：<ul>
+<li>动、强、仰、伸–阳、热、实证</li>
+<li>静、弱、俯、屈–阴、寒、虚证</li>
+</ul>
+</li>
+<li>痛证的特殊姿态–互处必痛</li>
+</ul>
+</li>
+<li>异常动态<ul>
+<li>痫病–猝然昏倒，四肢抽搐，口中如作猪羊叫声</li>
+<li>中风–猝然昏倒，伴口眼歪斜，半身不遂</li>
+<li>肝风内动–四肢抽搐，角弓反张，颈项强直，双目上视</li>
+<li>淤证：肢体筋脉弛缓，肌肉萎软无力</li>
+<li>痹证： 关节红肿疼痛，活动障碍者</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-4-望头颈五官九窍"><a href="#2-2-4-望头颈五官九窍" class="headerlink" title="2.2.4 望头颈五官九窍"></a>2.2.4 望头颈五官九窍</h4><ul>
+<li>头形<ul>
+<li>过大–脑积水</li>
+<li>过小–小脑而、 卤门早闭</li>
+<li>方颅–佝偻病</li>
+</ul>
+</li>
+<li>头摇： 肝风上扰，或气血亏虚</li>
+<li>卤门：<ul>
+<li>高突–实热证（温病火邪上攻）</li>
+<li>凹陷–虚证（气血精亏， 吐泄伤津）</li>
+<li>迟闭–肾精气亏虚</li>
+</ul>
+</li>
+<li>面部<ul>
+<li>面部浮肿–水肿病</li>
+<li>面部红肿–抱头火丹</li>
+<li>腮处红肿–痄腮（腮腺炎，民间“猪头皮”）：温病火毒<blockquote>
+<p>腮腺炎要注意有没有伴随睾丸炎，卵巢炎，可能导致不育，仙人掌，青黛粉治疗</p>
+</blockquote>
+</li>
+<li>口眼歪斜–中风、风邪阻络</li>
+</ul>
+</li>
+<li>头发<ul>
+<li>白发、脱发、黄干、稀疏： 血虚、肾虚、血热</li>
+</ul>
+</li>
+<li>颈项<ul>
+<li>瘿瘤–肝郁气结痰凝、或与地方水土有关</li>
+<li>项强–实证</li>
+<li>项软–虚证</li>
+</ul>
+</li>
+<li>目<ul>
+<li>五轮学说<br>  <img src="/assets/TCMD/eyes.png" alt="fangzhi1.png"><ul>
+<li>目眦–心（血轮）</li>
+<li>白睛–肺（气轮）</li>
+<li>黑睛–肝（风轮）</li>
+<li>瞳仁–肾（水轮）</li>
+<li>眼胞（睑）–脾（肉轮）</li>
+</ul>
+</li>
+<li>目眦<ul>
+<li>淡白–血虚</li>
+<li>色红–心火</li>
+</ul>
+</li>
+<li>白睛<ul>
+<li>（局部）红赤–肺热</li>
+<li>（全睛）发黄–黄疸</li>
+</ul>
+</li>
+<li>黑睛<ul>
+<li>黑珠肿痛–肝火</li>
+<li>全目红肿–肝火</li>
+</ul>
+</li>
+<li>瞳仁<ul>
+<li>放大–肾精衰竭</li>
+<li>缩小–中毒、肝火</li>
+</ul>
+</li>
+<li>眼胞<ul>
+<li>红肿–脾火</li>
+<li>下垂–脾虚</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>耳<ul>
+<li>耳实证（如红肿、流脓）–肝胆火旺</li>
+<li>耳虚证（如干枯、瘦薄）–肾虚</li>
+<li>耳后红烙–麻疹先兆</li>
+</ul>
+</li>
+<li>鼻<ul>
+<li>红肿–胃热、血热</li>
+<li>酒糟鼻–肺胃湿热</li>
+<li>鼻柱塌陷–梅毒、麻风</li>
+<li>鼻渊–久流浊涕腥臭（风热、肝胆湿热）</li>
+</ul>
+</li>
+<li>口<ul>
+<li>口同殷桃红：煤气中毒</li>
+<li>口腔溃疡：心胃之热（反复发作大概率为阳虚阳浮）</li>
+<li>鹅口疮（雪口病）：脾胃湿热（湿重于热）</li>
+<li>口僻（口眼歪斜）：中风、面瘫</li>
+<li>口撮（牙关紧闭，专指小儿）：脐风</li>
+<li>口噤（牙关紧闭）：肝风扰动</li>
+<li>磨牙：（胃热、寄生虫、消化不良）扰动阳明经</li>
+<li>牙龈红肿：急性胃热，慢性上热下寒或阴虚火旺</li>
+<li>牙龈出血：急性胃热，慢性上热下寒或阴虚火旺+脾虚</li>
+</ul>
+</li>
+<li>咽喉<ul>
+<li>实证（如咽红肿、乳蛾）–肺胃热盛</li>
+<li>虚证（如咽媚红、少痛）–肺肾阴虚</li>
+<li>白喉–外感疫邪</li>
+</ul>
+</li>
+<li>下窍<ul>
+<li>阴囊肿大–疝气、水肿</li>
+<li>子宫脱垂–中气下陷</li>
+<li>脱肛–中气下陷</li>
+<li>痔疮–大肠湿热、大肠燥热</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-5-望皮肤"><a href="#2-2-5-望皮肤" class="headerlink" title="2.2.5 望皮肤"></a>2.2.5 望皮肤</h4><ul>
+<li>色泽形态<ul>
+<li>红–丹毒</li>
+<li>黄–黄疸</li>
+<li>白斑–白驳风</li>
+<li>肌肤甲错–血瘀</li>
+</ul>
+</li>
+<li>斑疹<ul>
+<li>斑<ul>
+<li>阳斑：热迫血行</li>
+<li>阴斑：脾不统血</li>
+</ul>
+</li>
+<li>疹<ul>
+<li>麻疹：风热时邪</li>
+<li>风疹：风热时邪</li>
+<li>隐疹：营血亏虚，风邪入络</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>白㾦<ul>
+<li>湿邪，汗出不彻</li>
+</ul>
+</li>
+<li>疮疡<ul>
+<li>痈： 湿热火毒</li>
+<li>疖： 外感热毒或湿热内蕴</li>
+<li>疽： 气血亏虚、阴寒痰浊湿滞<ul>
+<li>脱疽（脉管炎）</li>
+<li>糖尿病坏疽</li>
+<li>阴疽</li>
+</ul>
+</li>
+<li>疔</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-6-望脉络"><a href="#2-2-6-望脉络" class="headerlink" title="2.2.6 望脉络"></a>2.2.6 望脉络</h4><ul>
+<li>适用年龄： 3岁一下</li>
+<li>三关： 风关、气关、命关</li>
+<li>浮沉分表里：<ul>
+<li>浮显易见–表证</li>
+<li>沉隐模糊–里证</li>
+</ul>
+</li>
+<li>红紫辩寒热<ul>
+<li>鲜红–外感表证</li>
+<li>紫红–里热</li>
+<li>色青–痛、惊</li>
+<li>紫黑–血络闭郁</li>
+</ul>
+</li>
+<li>淡滞定虚实<ul>
+<li>色淡–虚证</li>
+<li>色滞–实证</li>
+</ul>
+</li>
+<li>三关测轻重<ul>
+<li>风关–病情轻浅</li>
+<li>气关–病位较深</li>
+<li>命关–病情深重</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-7-望排出物与分泌物"><a href="#2-2-7-望排出物与分泌物" class="headerlink" title="2.2.7 望排出物与分泌物"></a>2.2.7 望排出物与分泌物</h4><ul>
+<li><p>痰涎</p>
+<ul>
+<li>痰<ul>
+<li>寒痰：清稀色白、灰黑点</li>
+<li>热痰：痰黄质稠</li>
+<li>湿痰：痰多色白易咯</li>
+<li>燥痰： 痰少而粘粘难咯</li>
+<li>脓血痰：肺痈</li>
+<li>痰中带血–肺络损伤</li>
+</ul>
+</li>
+<li>涎<ul>
+<li>清稀：脾胃虚寒</li>
+<li>胶粘–脾胃湿热</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>呕吐物</p>
+<ul>
+<li>清稀无臭–寒呕</li>
+<li>秽浊酸臭–热呕</li>
+<li>呕吐不消化食物–食滞</li>
+<li>黄绿苦水–肝胆郁&#x2F;湿热</li>
+<li>清水痰涎–痰饮</li>
+<li>呕血–胃热、肝火、血瘀</li>
+</ul>
+</li>
+<li><p>大便</p>
+<ul>
+<li>清稀如水<ul>
+<li>急性：寒湿【藿香正气丸】</li>
+<li>慢性：阳虚</li>
+</ul>
+</li>
+<li>黄褐稀烂：湿热</li>
+<li>完谷不化：脾（肾）阳虚</li>
+<li>便血：痔疮或肛裂</li>
+<li>黑便：胃热或脾气虚</li>
+</ul>
+</li>
+<li><p>小便</p>
+<ul>
+<li>清长：肾阳虚（艾灸肾俞最快）</li>
+<li>黄短：热证</li>
+<li>尿血（无痛）：热，脾肾不固</li>
+<li>血淋（涩痛）：湿热</li>
+<li>小便浑浊：湿热、脾不升轻</li>
+</ul>
+</li>
+</ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>编程</category>
+        <category>中医</category>
       </categories>
       <tags>
-        <tag>python</tag>
+        <tag>中医</tag>
       </tags>
   </entry>
   <entry>
@@ -7667,820 +8791,6 @@
 <p>临床意义较大的是神，志</p>
 </blockquote>
 <p>参考文献：</p>
-<script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>中医</category>
-      </categories>
-      <tags>
-        <tag>中医</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>中医诊断学</title>
-    <url>/2024/11/03/TCMD_1/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>声明</strong>：本文是中医诊断学的学习笔记，包括四诊。</p>
-</blockquote>
-<h2 id="1-绪论"><a href="#1-绪论" class="headerlink" title="1. 绪论"></a>1. 绪论</h2><ul>
-<li><p>定义： 在中医理论指导下研究诊察病情，判断病种，辨别证候的基础理论，基础知识，基本技能的一门学科</p>
-</li>
-<li><p>范围及原则：</p>
-<ul>
-<li>审察内外：整体病理联系与所处环境结合，综合判断病情 </li>
-<li>辩证求因：通过辨别，分析，综合，判断，归纳，以探求疾病本质及规律</li>
-<li>四诊合参：四诊收集病情资料，综合判断，全面准确作出诊断</li>
-</ul>
-</li>
-<li><p>主要内容</p>
-<ol>
-<li>四诊<ul>
-<li>望：神 色 形 态 舌 局部 分泌排泄物 </li>
-<li>闻：语言 呼吸 咳嗽 气体</li>
-<li>问： 发病 症状 病史</li>
-<li>切：脉象 触按身体部分</li>
-</ul>
-</li>
-<li>八纲：阴阳，表里，寒热，虚实</li>
-<li>辩证：对病因，病位，病性，病势等判断进行判断，做出诊断的思维过程</li>
-</ol>
-</li>
-<li><p>中医认识疾病的基本原理</p>
-<ol>
-<li>司外揣内：有诸内者必行诸外</li>
-<li>见微知著</li>
-<li>以常达变：以正常的值做标准发现异常</li>
-</ol>
-</li>
-</ul>
-<h3 id="2-1-问诊"><a href="#2-1-问诊" class="headerlink" title="2.1 问诊"></a>2.1 问诊</h3><ul>
-<li>方法：<ul>
-<li>有目的（围绕辩证要点），有重点（现病史），有次序（既往史，个人史，家族史）等查询病情</li>
-<li>适当提示</li>
-<li>对危重者应抓住要点扼要询问</li>
-</ul>
-</li>
-<li>内容：<ul>
-<li>一般情况</li>
-<li>生活史（生活习惯）</li>
-<li>家族史， 既往史</li>
-<li>起病</li>
-<li>现在症状（重点）</li>
-</ul>
-</li>
-<li>十问歌<br>一问寒热二问汗，三问头身四问便，<br>五问饮食六问胸，七聋八渴俱当辨，<br>九问旧病十问因，再兼服药参机变，<br>妇人尤必问经期，迟速闭崩皆可见，<br>再添片语告儿科，天花麻疹全占验。</li>
-</ul>
-<h4 id="2-1-1-问寒热"><a href="#2-1-1-问寒热" class="headerlink" title="2.1.1 问寒热"></a>2.1.1 问寒热</h4><p>要点： 有无寒热、寒热时间、特点及兼证</p>
-<ul>
-<li><p>寒热类型</p>
-<ul>
-<li>恶寒发热：表证<ul>
-<li>寒重热轻，无汗：表寒证</li>
-<li>热重寒轻，汗出：表热证</li>
-<li>热轻，恶风汗出：表虚证<blockquote>
-<p>注意区别畏寒，畏寒加衣服后可以消除，恶寒只能减轻，前者一贯性的，后者临时性的</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li>但寒不热：里寒<ul>
-<li>新病恶寒： 里实寒证</li>
-<li>久病畏寒： 里虚寒证</li>
-</ul>
-</li>
-<li>但热不寒：里热<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>特点</th>
-<th>兼证</th>
-<th>临床意义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>壮热</td>
-<td>高热持续不退</td>
-<td>面赤、汗多、烦渴饮冷</td>
-<td>里实热证</td>
-</tr>
-<tr>
-<td>潮热</td>
-<td>日晡潮热 热势较高，日晡热甚</td>
-<td>腹痛拒按，大便燥结</td>
-<td>阳明腑证</td>
-</tr>
-<tr>
-<td></td>
-<td>湿温潮热 身热不扬，午后热甚</td>
-<td>头身困重，苔黄而腻</td>
-<td>湿温病</td>
-</tr>
-<tr>
-<td></td>
-<td>阴虚潮热 午后或入夜微热</td>
-<td>五心烦热，骨蒸而热</td>
-<td>阴虚证</td>
-</tr>
-<tr>
-<td>微热</td>
-<td>轻度发热，热势较低</td>
-<td>气虚、阴虚及气郁的表现</td>
-<td>气虚、阴虚、气郁</td>
-</tr>
-</tbody></table>
-</li>
-<li>寒热往来：半表半里</li>
-</ul>
-</li>
-<li><p>按病机分：阴虚发热，气虚发热，小儿夏季热</p>
-</li>
-</ul>
-<h4 id="2-1-2-问汗"><a href="#2-1-2-问汗" class="headerlink" title="2.1.2 问汗"></a>2.1.2 问汗</h4><ul>
-<li>形成：阳加于阴谓之汗，血汗同源</li>
-<li>询问要点：汗之有无，汗出时间，多少，部位，冷热及主要兼证</li>
-<li>表证辩汗：<ul>
-<li>表证有汗<ul>
-<li>表热证【银翘散&#x2F;桑菊饮】：外感热邪</li>
-<li>表虚证（太阳中风证）：外感风邪</li>
-</ul>
-</li>
-<li>表证无汗–表寒证：外感寒邪</li>
-</ul>
-</li>
-<li>里证辩汗：<ul>
-<li>自汗：日间汗出，活动尤甚，出汗后有疲惫感–气虚或阳虚<blockquote>
-<p>注意：必须有虚证才是病理，一般脏器是心，肺<br>中基：气的固摄作用;心在液为汗；肺司汗孔开合</p>
-</blockquote>
-</li>
-<li>盗汗：睡时汗出，醒则汗止–阴虚</li>
-<li>大汗：实热证或亡阳证</li>
-<li>战汗：先全身恶寒战栗，接着大汗出–邪正相争，疾病转折点</li>
-<li>黄汗：全身汗出色如柏汁，汗出粘衣–湿热交蒸</li>
-</ul>
-</li>
-<li>局部辨汗：<ul>
-<li>头汗：上焦邪热上蒸&#x2F;中焦湿热上蒸&#x2F;素体（热底体质）阳气偏盛炎上&#x2F;虚阳上越</li>
-<li>半身无汗：经络闭塞，气血运行不周</li>
-<li>手足心汗：阴盛阳亢，中焦湿热，脾虚不摄</li>
-</ul>
-</li>
-</ul>
-<h4 id="2-1-3-问头身"><a href="#2-1-3-问头身" class="headerlink" title="2.1.3 问头身"></a>2.1.3 问头身</h4><ul>
-<li>问头部<ul>
-<li>头痛<ul>
-<li>前额连眉棱骨痛–阳明经</li>
-<li>头颞或一侧头痛–少阳经</li>
-<li>后枕痛连项背–太阳经</li>
-<li>巅顶痛–督脉，厥阴经等</li>
-<li>头痛连齿–少阴经（纠正为肾问题，在体合骨）</li>
-<li>头痛晕沉，腹泻自汗–太阴经（纠正为脾的问题）</li>
-</ul>
-</li>
-<li>性质<ul>
-<li>发病急，病程短，头痛较剧，痛无休止<ul>
-<li>外感头痛，属实证： 风寒&#x2F;风热&#x2F;风湿 头痛</li>
-</ul>
-</li>
-<li>发病慢，病程常，头痛较缓，时痛时止<ul>
-<li>内伤头痛：<ul>
-<li>气虚：清阳不升，遇劳加重</li>
-<li>血虚：血不上涌，绵绵痛</li>
-<li>肾虚：水为血海，空痛</li>
-<li>痰湿：沉痛</li>
-<li>淤血：刺痛</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>问周身<ul>
-<li>身痛<ul>
-<li>新病–实证：外感风寒湿邪，阳毒</li>
-<li>久病–虚证：气血亏虚</li>
-</ul>
-</li>
-<li>身重：湿邪，脾气亏虚</li>
-<li>四肢关节痛：多见于痹症<ul>
-<li>行痹： 风痹，游走性关节痛</li>
-<li>痛痹： 寒痹，遇寒加重</li>
-<li>著痹： 湿痹，沉重感</li>
-<li>热痹：一般出现在风湿病急性发作期，关节红肿热<blockquote>
-<p>风湿：关节不变形，易侵犯内脏；类风湿：关节变形</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li>腰痛： <ul>
-<li>肾虚： 腰膝酸软，阳虚伴有冷感</li>
-<li>寒湿： 阴天发作寒，雨天发作湿</li>
-<li>淤血： 刺痛，腰上有伤</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="2-1-4-问胸胁皖腹"><a href="#2-1-4-问胸胁皖腹" class="headerlink" title="2.1.4 问胸胁皖腹"></a>2.1.4 问胸胁皖腹</h4><ul>
-<li>问胸部<ul>
-<li>胸痹（心绞痛）：胸痛憋闷，痛引肩臂（常3-5分钟），时轻时重–心脉运行不畅</li>
-<li>真心痛（心梗）：胸背彻痛剧烈，痛无休止–心脉急骤闭塞</li>
-<li>肺痈（肺脓疡）：胸闷痛而咳吐脓血腥臭痰–热毒蕴肺，腐肉成脓</li>
-<li>痞（胀满兼堵塞感）满：<ul>
-<li>寒痞：胸满而不痛，胸冷，咳吐涎沫，脉迟，遇寒加重</li>
-<li>热痞：烦渴，脉数，遇热加重，有烧心感</li>
-<li>虚痞：少气，呼吸不畅，脉弱，喜太息，喜按</li>
-<li>痰痞：咯痰多，脉滑</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>问胁部（肝胆）<ul>
-<li>肝气郁结：胁胀，心情忧郁，闷闷不乐</li>
-<li>肝火郁滞：灼热感，心情忧郁，闷闷不乐，烦躁易怒–肝郁化火</li>
-<li>肝胆湿热：胁胀，口苦</li>
-<li>血瘀：刺痛</li>
-<li>悬引（积水）：胀</li>
-<li>少阳证：胸胁苦满</li>
-</ul>
-</li>
-<li>问胃皖部<ul>
-<li>寒邪犯胃：冷（注意问有无吃寒凉物，有无露肚子睡觉以区分阳虚和寒邪）</li>
-<li>胃火：烧灼感</li>
-<li>气滞：胀</li>
-<li>血瘀：刺痛</li>
-<li>食滞：撑</li>
-<li>胃阳虚：冷，喜按，经常性</li>
-<li>胃阴虚：烧心感或隐痛</li>
-</ul>
-</li>
-<li>问腹部<ul>
-<li>大腹隐痛，喜温喜按–脾胃虚寒</li>
-<li>小腹胀痛，小便不利–膀胱湿热<blockquote>
-<p>少腹两侧，小腹正中</p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="2-1-5-问耳目"><a href="#2-1-5-问耳目" class="headerlink" title="2.1.5 问耳目"></a>2.1.5 问耳目</h4><ul>
-<li><p>问目</p>
-<ul>
-<li>耳鸣<table>
-<thead>
-<tr>
-<th>性质</th>
-<th>病机</th>
-<th>表现特点</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>实证</td>
-<td>肝胆火盛， 上扰清窍</td>
-<td>骤发，声大如潮，按之不减或加重</td>
-</tr>
-<tr>
-<td>虚证</td>
-<td>肝肾阴虚、 肾精亏虚、 脾虚失养</td>
-<td>渐发，声小如蜂鸣， 按之减轻</td>
-</tr>
-</tbody></table>
-</li>
-<li>耳聋<table>
-<thead>
-<tr>
-<th>性质</th>
-<th>病机</th>
-<th>表现特点</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>实证</td>
-<td>肝胆火炽、外伤、药</td>
-<td>新病暴聋</td>
-</tr>
-<tr>
-<td>虚证</td>
-<td>物</td>
-<td>久病渐聋</td>
-</tr>
-<tr>
-<td>生理现象</td>
-<td>年高气虚精衰</td>
-<td></td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-</li>
-<li><p>问目</p>
-<ul>
-<li>目痛<ul>
-<li>痛剧： 实证，肝火上炎，风热上攻<blockquote>
-<p>先怀疑青光眼，抢时间的病</p>
-</blockquote>
-</li>
-<li>微痛： 虚证，阴虚火旺</li>
-</ul>
-</li>
-<li>目眩<ul>
-<li>实证：风火上扰、痰湿上蒙清窍</li>
-<li>虚证：中气下陷、肝肾精血亏虚</li>
-</ul>
-</li>
-<li>目昏<ul>
-<li>气血、肝血不足、肾精亏虚</li>
-</ul>
-</li>
-<li>雀目（夜盲）<ul>
-<li>肝血不足</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="2-1-6-问饮食与口味"><a href="#2-1-6-问饮食与口味" class="headerlink" title="2.1.6 问饮食与口味"></a>2.1.6 问饮食与口味</h4><ul>
-<li>口渴与饮水<ul>
-<li>口不渴：寒证，湿证，无明显燥热病证</li>
-<li>口渴多饮： 燥证，热证，消渴证</li>
-<li>渴不多饮： 阴虚，湿热，痰饮，淤血</li>
-</ul>
-</li>
-<li>问食欲与食量<ul>
-<li>食欲减退<ul>
-<li>新病、暴病： 正气抗邪</li>
-<li>久病：脾胃虚弱、湿邪困脾</li>
-</ul>
-</li>
-<li>厌食<ul>
-<li>食积胃皖、肝胆湿热、脾胃湿热、妊娠恶阻</li>
-</ul>
-</li>
-<li>多食易饥<ul>
-<li>胃火亢盛、胃强脾弱、消渴病、痿病</li>
-</ul>
-</li>
-<li>饥不欲食<ul>
-<li>胃阴不足、虚火内扰</li>
-</ul>
-</li>
-<li>偏嗜食物<ul>
-<li>虫积或妊娠</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>问口味<ul>
-<li>口淡： 脾胃气虚、寒症</li>
-<li>口甜或粘腻： 脾胃湿热、肝胆火旺</li>
-<li>口中泛酸： 肝胃蕴热</li>
-<li>口苦： 热证</li>
-<li>口咸： 肾虚、寒证</li>
-</ul>
-</li>
-</ul>
-<h4 id="2-1-7-问睡眠"><a href="#2-1-7-问睡眠" class="headerlink" title="2.1.7 问睡眠"></a>2.1.7 问睡眠</h4><ul>
-<li><p>失眠：阳不入阴</p>
-<blockquote>
-<p>半夏效果好，但是有毒性不敢用</p>
-</blockquote>
-<ul>
-<li>心肾不交，心脾两虚，胆郁痰扰</li>
-<li>病机：<ul>
-<li>阴血亏虚，心神失养（虚）</li>
-<li>邪气内盛，心神被扰（实）</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>嗜睡：阳不出表</p>
-<ul>
-<li>痰湿困脾、脾气虚弱、心肾阳虚</li>
-</ul>
-</li>
-</ul>
-<h4 id="2-1-8-问二便"><a href="#2-1-8-问二便" class="headerlink" title="2.1.8 问二便"></a>2.1.8 问二便</h4><p>要点：次数、质、量、排便感</p>
-<ul>
-<li>大便<ul>
-<li>次数<ul>
-<li>便秘： <ul>
-<li>实证：热盛伤津、阴寒内结</li>
-<li>虚证：津亏血少、气阴两亏</li>
-</ul>
-</li>
-<li>泄泻<ul>
-<li>实证： 新病暴泄–大肠湿热（泄下黄臭）【葛根岑连丸】、寒湿下住（泻下清晰）【藿香正气丸】、伤食</li>
-<li>虚证： 久病缓泄–脾虚【参苓白术散】、脾肾阳虚（只要饭粒菜渣即是）【四神丸&#x2F;艾灸神阙（非泄泻用附子理中）】</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>质<ul>
-<li>溏结不调： 肝郁乘脾、脾虚</li>
-<li>便血：<ul>
-<li>下痢脓血–痢疾（现在少见）</li>
-<li>鲜红–近血（痔疮、肛裂）</li>
-<li>黑便–远血（消化道出血）</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>偏便感<ul>
-<li>肛门灼热： 大便湿热下注</li>
-<li>里急后重（拉完又想拉，肛门有重坠感）： 湿热内阻，肠道气滞后【马齿苋&#x2F;黄连】<blockquote>
-<p>里急后重常伴肛门灼热</p>
-</blockquote>
-</li>
-<li>排便不爽–大肠湿热，肝郁乘脾</li>
-<li>肛门气坠–脾虚中气下陷</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>小便<ul>
-<li>尿量减少<ul>
-<li>尿量增多–虚寒、消渴病【艾灸肾俞】</li>
-<li>尿量减少–热证、汗吐下后、水肿病</li>
-</ul>
-</li>
-<li>尿次异常<ul>
-<li>小便频数–膀胱湿热、肾阳虚</li>
-<li>癃闭：小便不畅，点滴而出为癃（500ml），小便不通，点滴不出为闭（50ml）<ul>
-<li>实证–淤血（常见前列腺肥大）、结石</li>
-<li>虚证–肾阳不足、脾气不升</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>便感异常<ul>
-<li>小便涩痛–淋证</li>
-<li>余沥不尽–肾气不固</li>
-<li>小便失禁–肾气不固</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="2-1-9-问妇女"><a href="#2-1-9-问妇女" class="headerlink" title="2.1.9 问妇女"></a>2.1.9 问妇女</h4><ul>
-<li><p>问月经</p>
-<ul>
-<li>经期异常<ul>
-<li>月经先期–血热、气虚、血瘀</li>
-<li>月经后期–血虚、血瘀</li>
-<li>月经先后不定期：肝气郁结</li>
-</ul>
-</li>
-<li>经量异常<ul>
-<li>月经过多&#x2F;崩漏–热盛、脾肾气虚、血瘀</li>
-<li>月经过少–血虚、血瘀、肾精虚</li>
-<li>闭经–血瘀、肝气郁结、脾肾亏虚</li>
-</ul>
-</li>
-<li>经色、质异常<ul>
-<li>色淡红质稀：血虚</li>
-<li>色深红质稠：血热</li>
-<li>色紫暗夹血块：血瘀</li>
-</ul>
-</li>
-<li>痛经<ul>
-<li>气滞血瘀、阳虚寒凝、气血亏虚</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>问带下</p>
-<ul>
-<li>白带： 脾肾阳虚、寒湿下注或湿浊下注</li>
-<li>黄带：湿热下注</li>
-<li>赤白带：肝郁化热</li>
-</ul>
-</li>
-<li><p>其他略，参考妇科</p>
-</li>
-</ul>
-<h4 id="2-1-10-问小儿"><a href="#2-1-10-问小儿" class="headerlink" title="2.1.10 问小儿"></a>2.1.10 问小儿</h4><p>略，参考儿科</p>
-<h3 id="2-2-望诊"><a href="#2-2-望诊" class="headerlink" title="2.2 望诊"></a>2.2 望诊</h3><p>望诊内容包括：<br>    + 全身： 神、色、形、态<br>    + 局部：头面、颈项、五官、皮肤、小儿络脉<br>    + 排出物：痰涎涕唾、呕吐物、二便<br>    + 舌：质、苔</p>
-<h4 id="2-2-1-望神"><a href="#2-2-1-望神" class="headerlink" title="2.2.1 望神"></a>2.2.1 望神</h4><ul>
-<li>得神：精气充足</li>
-<li>失神：脏腑功能衰竭，预后不足</li>
-<li>假神：脏腑精气衰竭已极，阴不敛阳，虚阳外越</li>
-<li>少神：多见于虚证</li>
-</ul>
-<h4 id="2-2-2-望面色"><a href="#2-2-2-望面色" class="headerlink" title="2.2.2 望面色"></a>2.2.2 望面色</h4><ul>
-<li><p>常色： 红黄隐隐、明润含蓄</p>
-</li>
-<li><p>病色： 晦暗、暴露（如黄疸）</p>
-<blockquote>
-<p>五色善恶：<br>善色–五色光明润泽（气至）；恶色–五色晦暗枯暗（气不至）</p>
-</blockquote>
-</li>
-<li><p>五色主病 </p>
-<ul>
-<li>青<ul>
-<li>寒证：青紫</li>
-<li>痛证：青黑</li>
-<li>淤血：青紫</li>
-<li>惊风：眉间、鼻柱、唇周色青</li>
-</ul>
-</li>
-<li>赤<ul>
-<li>热证：<ul>
-<li>实热：满面通红</li>
-<li>虚热：面部潮红</li>
-</ul>
-</li>
-<li>戴阳证：额红如妆</li>
-</ul>
-</li>
-<li>黄<ul>
-<li>湿证：面黄而垢</li>
-<li>脾虚：<ul>
-<li>血虚： 萎黄：面色淡黄，干萎无泽</li>
-<li>湿阳： 黄胖：面黄虚浮</li>
-</ul>
-</li>
-<li>黄疸：<ul>
-<li>湿热：阳黄</li>
-<li>寒湿：阴黄</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>白<ul>
-<li>阳虚</li>
-<li>气虚</li>
-<li>血虚</li>
-<li>实寒</li>
-</ul>
-</li>
-<li>黑<ul>
-<li>寒证： 青黑</li>
-<li>肾虚：	<ul>
-<li>阳虚：黑而暗淡、黧黑</li>
-<li>阴虚：黑而干焦</li>
-</ul>
-</li>
-<li>水饮： 眼眶黑</li>
-<li>血瘀：自黑、黧黑</li>
-<li>痛证： 青黑</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="2-2-3-望形态"><a href="#2-2-3-望形态" class="headerlink" title="2.2.3 望形态"></a>2.2.3 望形态</h4><ul>
-<li>形体<ul>
-<li>强–实证、热证</li>
-<li>弱–虚证、寒证，湿证，无明显燥热病证</li>
-<li>胖–形盛气虚，肥人多痰–易中风、眩晕</li>
-<li>瘦–形瘦阴虚、瘦人多火–易患劳嗽</li>
-</ul>
-</li>
-<li>姿态<ul>
-<li>动静：<ul>
-<li>动、强、仰、伸–阳、热、实证</li>
-<li>静、弱、俯、屈–阴、寒、虚证</li>
-</ul>
-</li>
-<li>痛证的特殊姿态–互处必痛</li>
-</ul>
-</li>
-<li>异常动态<ul>
-<li>痫病–猝然昏倒，四肢抽搐，口中如作猪羊叫声</li>
-<li>中风–猝然昏倒，伴口眼歪斜，半身不遂</li>
-<li>肝风内动–四肢抽搐，角弓反张，颈项强直，双目上视</li>
-<li>淤证：肢体筋脉弛缓，肌肉萎软无力</li>
-<li>痹证： 关节红肿疼痛，活动障碍者</li>
-</ul>
-</li>
-</ul>
-<h4 id="2-2-4-望头颈五官九窍"><a href="#2-2-4-望头颈五官九窍" class="headerlink" title="2.2.4 望头颈五官九窍"></a>2.2.4 望头颈五官九窍</h4><ul>
-<li>头形<ul>
-<li>过大–脑积水</li>
-<li>过小–小脑而、 卤门早闭</li>
-<li>方颅–佝偻病</li>
-</ul>
-</li>
-<li>头摇： 肝风上扰，或气血亏虚</li>
-<li>卤门：<ul>
-<li>高突–实热证（温病火邪上攻）</li>
-<li>凹陷–虚证（气血精亏， 吐泄伤津）</li>
-<li>迟闭–肾精气亏虚</li>
-</ul>
-</li>
-<li>面部<ul>
-<li>面部浮肿–水肿病</li>
-<li>面部红肿–抱头火丹</li>
-<li>腮处红肿–痄腮（腮腺炎，民间“猪头皮”）：温病火毒<blockquote>
-<p>腮腺炎要注意有没有伴随睾丸炎，卵巢炎，可能导致不育，仙人掌，青黛粉治疗</p>
-</blockquote>
-</li>
-<li>口眼歪斜–中风、风邪阻络</li>
-</ul>
-</li>
-<li>头发<ul>
-<li>白发、脱发、黄干、稀疏： 血虚、肾虚、血热</li>
-</ul>
-</li>
-<li>颈项<ul>
-<li>瘿瘤–肝郁气结痰凝、或与地方水土有关</li>
-<li>项强–实证</li>
-<li>项软–虚证</li>
-</ul>
-</li>
-<li>目<ul>
-<li>五轮学说<br>  <img src="/assets/TCMD/eyes.png" alt="fangzhi1.png"><ul>
-<li>目眦–心（血轮）</li>
-<li>白睛–肺（气轮）</li>
-<li>黑睛–肝（风轮）</li>
-<li>瞳仁–肾（水轮）</li>
-<li>眼胞（睑）–脾（肉轮）</li>
-</ul>
-</li>
-<li>目眦<ul>
-<li>淡白–血虚</li>
-<li>色红–心火</li>
-</ul>
-</li>
-<li>白睛<ul>
-<li>（局部）红赤–肺热</li>
-<li>（全睛）发黄–黄疸</li>
-</ul>
-</li>
-<li>黑睛<ul>
-<li>黑珠肿痛–肝火</li>
-<li>全目红肿–肝火</li>
-</ul>
-</li>
-<li>瞳仁<ul>
-<li>放大–肾精衰竭</li>
-<li>缩小–中毒、肝火</li>
-</ul>
-</li>
-<li>眼胞<ul>
-<li>红肿–脾火</li>
-<li>下垂–脾虚</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>耳<ul>
-<li>耳实证（如红肿、流脓）–肝胆火旺</li>
-<li>耳虚证（如干枯、瘦薄）–肾虚</li>
-<li>耳后红烙–麻疹先兆</li>
-</ul>
-</li>
-<li>鼻<ul>
-<li>红肿–胃热、血热</li>
-<li>酒糟鼻–肺胃湿热</li>
-<li>鼻柱塌陷–梅毒、麻风</li>
-<li>鼻渊–久流浊涕腥臭（风热、肝胆湿热）</li>
-</ul>
-</li>
-<li>口<ul>
-<li>口同殷桃红：煤气中毒</li>
-<li>口腔溃疡：心胃之热（反复发作大概率为阳虚阳浮）</li>
-<li>鹅口疮（雪口病）：脾胃湿热（湿重于热）</li>
-<li>口僻（口眼歪斜）：中风、面瘫</li>
-<li>口撮（牙关紧闭，专指小儿）：脐风</li>
-<li>口噤（牙关紧闭）：肝风扰动</li>
-<li>磨牙：（胃热、寄生虫、消化不良）扰动阳明经</li>
-<li>牙龈红肿：急性胃热，慢性上热下寒或阴虚火旺</li>
-<li>牙龈出血：急性胃热，慢性上热下寒或阴虚火旺+脾虚</li>
-</ul>
-</li>
-<li>咽喉<ul>
-<li>实证（如咽红肿、乳蛾）–肺胃热盛</li>
-<li>虚证（如咽媚红、少痛）–肺肾阴虚</li>
-<li>白喉–外感疫邪</li>
-</ul>
-</li>
-<li>下窍<ul>
-<li>阴囊肿大–疝气、水肿</li>
-<li>子宫脱垂–中气下陷</li>
-<li>脱肛–中气下陷</li>
-<li>痔疮–大肠湿热、大肠燥热</li>
-</ul>
-</li>
-</ul>
-<h4 id="2-2-5-望皮肤"><a href="#2-2-5-望皮肤" class="headerlink" title="2.2.5 望皮肤"></a>2.2.5 望皮肤</h4><ul>
-<li>色泽形态<ul>
-<li>红–丹毒</li>
-<li>黄–黄疸</li>
-<li>白斑–白驳风</li>
-<li>肌肤甲错–血瘀</li>
-</ul>
-</li>
-<li>斑疹<ul>
-<li>斑<ul>
-<li>阳斑：热迫血行</li>
-<li>阴斑：脾不统血</li>
-</ul>
-</li>
-<li>疹<ul>
-<li>麻疹：风热时邪</li>
-<li>风疹：风热时邪</li>
-<li>隐疹：营血亏虚，风邪入络</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>白㾦<ul>
-<li>湿邪，汗出不彻</li>
-</ul>
-</li>
-<li>疮疡<ul>
-<li>痈： 湿热火毒</li>
-<li>疖： 外感热毒或湿热内蕴</li>
-<li>疽： 气血亏虚、阴寒痰浊湿滞<ul>
-<li>脱疽（脉管炎）</li>
-<li>糖尿病坏疽</li>
-<li>阴疽</li>
-</ul>
-</li>
-<li>疔</li>
-</ul>
-</li>
-</ul>
-<h4 id="2-2-6-望脉络"><a href="#2-2-6-望脉络" class="headerlink" title="2.2.6 望脉络"></a>2.2.6 望脉络</h4><ul>
-<li>适用年龄： 3岁一下</li>
-<li>三关： 风关、气关、命关</li>
-<li>浮沉分表里：<ul>
-<li>浮显易见–表证</li>
-<li>沉隐模糊–里证</li>
-</ul>
-</li>
-<li>红紫辩寒热<ul>
-<li>鲜红–外感表证</li>
-<li>紫红–里热</li>
-<li>色青–痛、惊</li>
-<li>紫黑–血络闭郁</li>
-</ul>
-</li>
-<li>淡滞定虚实<ul>
-<li>色淡–虚证</li>
-<li>色滞–实证</li>
-</ul>
-</li>
-<li>三关测轻重<ul>
-<li>风关–病情轻浅</li>
-<li>气关–病位较深</li>
-<li>命关–病情深重</li>
-</ul>
-</li>
-</ul>
-<h4 id="2-2-7-望排出物与分泌物"><a href="#2-2-7-望排出物与分泌物" class="headerlink" title="2.2.7 望排出物与分泌物"></a>2.2.7 望排出物与分泌物</h4><ul>
-<li><p>痰涎</p>
-<ul>
-<li>痰<ul>
-<li>寒痰：清稀色白、灰黑点</li>
-<li>热痰：痰黄质稠</li>
-<li>湿痰：痰多色白易咯</li>
-<li>燥痰： 痰少而粘粘难咯</li>
-<li>脓血痰：肺痈</li>
-<li>痰中带血–肺络损伤</li>
-</ul>
-</li>
-<li>涎<ul>
-<li>清稀：脾胃虚寒</li>
-<li>胶粘–脾胃湿热</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>呕吐物</p>
-<ul>
-<li>清稀无臭–寒呕</li>
-<li>秽浊酸臭–热呕</li>
-<li>呕吐不消化食物–食滞</li>
-<li>黄绿苦水–肝胆郁&#x2F;湿热</li>
-<li>清水痰涎–痰饮</li>
-<li>呕血–胃热、肝火、血瘀</li>
-</ul>
-</li>
-<li><p>大便</p>
-<ul>
-<li>清稀如水<ul>
-<li>急性：寒湿【藿香正气丸】</li>
-<li>慢性：阳虚</li>
-</ul>
-</li>
-<li>黄褐稀烂：湿热</li>
-<li>完谷不化：脾（肾）阳虚</li>
-<li>便血：痔疮或肛裂</li>
-<li>黑便：胃热或脾气虚</li>
-</ul>
-</li>
-<li><p>小便</p>
-<ul>
-<li>清长：肾阳虚（艾灸肾俞最快）</li>
-<li>黄短：热证</li>
-<li>尿血（无痛）：热，脾肾不固</li>
-<li>血淋（涩痛）：湿热</li>
-<li>小便浑浊：湿热、脾不升轻</li>
-</ul>
-</li>
-</ul>
 <script type="text&#x2F;javascript" src="https://unpkg.com/kity@2.0.4/dist/kity.min.js"></script><script type="text&#x2F;javascript" src="https://unpkg.com/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text&#x2F;javascript" src="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text&#x2F;css" href="https://unpkg.com/hexo-simple-mindmap@0.8.0/dist/mindmap.min.css">]]></content>
       <categories>
         <category>中医</category>
